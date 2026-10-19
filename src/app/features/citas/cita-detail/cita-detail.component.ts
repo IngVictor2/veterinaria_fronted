@@ -18,6 +18,10 @@ import { Factura } from '../../../core/models/factura';
 import { Servicio } from '../../../core/models/servicio';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {
+  SearchSelectComponent,
+  SearchSelectOption,
+} from '../../../shared/components/search-select/search-select.component';
 
 interface HistorialDetalle {
   tipoHistorial: string;
@@ -27,7 +31,7 @@ interface HistorialDetalle {
 
 @Component({
   selector: 'app-cita-detail',
-  imports: [FormsModule, ConfirmDialogComponent],
+  imports: [FormsModule, ConfirmDialogComponent, SearchSelectComponent],
   template: `
     <div class="max-w-5xl mx-auto">
       @if (error()) {
@@ -213,7 +217,7 @@ interface HistorialDetalle {
                     class="select select-bordered bg-[#2A2A2A] border-white/10"
                     name="formServicio"
                     [ngModel]="formServicio()"
-                    (ngModelChange)="formServicio.set($event)"
+                    (ngModelChange)="onServicioChange($event)"
                   >
                     <option [ngValue]="null" disabled>Seleccionar servicio</option>
                     @for (s of serviciosActivos(); track s.idServicio) {
@@ -242,20 +246,25 @@ interface HistorialDetalle {
                   />
                 </div>
                 <div class="form-control">
-                  <label class="label"><span class="label-text">Profesional</span></label>
-                  <div class="text-sm text-base-content/70">
-                    {{ cita.nombreEmpleado || 'Sin asignar' }}
-                  </div>
+                  <label class="label py-0">
+                    <span class="label-text font-medium text-sm">{{ etiquetaEmpleado() }} *</span>
+                  </label>
+                  <app-search-select
+                    [(value)]="formEmpleado"
+                    [options]="empleadoOptions()"
+                    [placeholder]="placeholderEmpleado()"
+                    [required]="true"
+                  />
                 </div>
               </div>
               <div class="modal-action">
                 <button class="btn btn-ghost" (click)="showAssignModal.set(false)">Cancelar</button>
                 <button
                   class="btn btn-primary"
-                  [disabled]="!formServicio() || !formFecha() || !formHora() || submitting()"
+                  [disabled]="!formServicio() || !formEmpleado() || !formFecha() || !formHora() || submitting()"
                   (click)="handleAssign()"
                 >
-                  {{ submitting() ? 'Confirmando...' : 'Confirmar' }}
+                  {{ submitting() ? 'Confirmando...' : (cita.idEmpleado ? 'Confirmar' : 'Confirmar y asignar') }}
                 </button>
               </div>
             </div>
@@ -416,6 +425,7 @@ export class CitaDetailComponent implements OnInit {
   readonly servicios = signal<Servicio[]>([]);
   readonly empleados = signal<Empleado[]>([]);
   readonly formServicio = signal<number | null>(null);
+  readonly formEmpleado = signal(0);
   readonly formFecha = signal('');
   readonly formHora = signal('');
   readonly submitting = signal(false);
@@ -442,14 +452,36 @@ export class CitaDetailComponent implements OnInit {
 
   readonly empleadosFiltrados = computed(() => {
     const activos = this.empleados().filter((e) => e.estado === true);
-    if (!this.formServicio()) return activos;
     const servicio = this.servicios().find((s) => s.idServicio === this.formServicio());
-    if (!servicio) return activos;
-    return activos.filter(
-      (e) =>
-        (servicio.tipoServicio === 'CONSULTA' && e.nombreCargo === 'VETERINARIO') ||
-        (servicio.tipoServicio === 'ESTETICA' && e.nombreCargo === 'ESTILISTA'),
-    );
+    if (!servicio) {
+      return activos.filter((e) => {
+        const roles = e.roles || [];
+        return roles.some((r) => r === 'VETERINARIO' || r === 'ESTILISTA');
+      });
+    }
+    const rolRequerido = servicio.tipoServicio === 'ESTETICA' ? 'ESTILISTA' : 'VETERINARIO';
+    return activos.filter((e) => {
+      const roles = e.roles || [];
+      return roles.some((r) => r === rolRequerido);
+    });
+  });
+
+  readonly empleadoOptions = computed<SearchSelectOption[]>(() =>
+    this.empleadosFiltrados().map((e) => ({
+      value: e.idEmpleado,
+      label: `${e.primerNombre} ${e.primerApellido}`,
+      sublabel: e.nombreCargo,
+    })),
+  );
+
+  readonly etiquetaEmpleado = computed(() => {
+    const servicio = this.servicios().find((s) => s.idServicio === this.formServicio());
+    return servicio?.tipoServicio === 'ESTETICA' ? 'Estilista' : 'Veterinario';
+  });
+
+  readonly placeholderEmpleado = computed(() => {
+    const servicio = this.servicios().find((s) => s.idServicio === this.formServicio());
+    return servicio?.tipoServicio === 'ESTETICA' ? 'Buscar estilista...' : 'Buscar veterinario...';
   });
 
   readonly puedeAtender = computed(() => {
@@ -635,20 +667,28 @@ export class CitaDetailComponent implements OnInit {
     const cita = this.cita();
     if (!cita) return;
     this.formServicio.set(cita.idServicio);
+    this.formEmpleado.set(cita.idEmpleado || 0);
     this.formFecha.set(cita.fechaCita || '');
     this.formHora.set(cita.horaCita?.substring(0, 5) || '');
     this.showAssignModal.set(true);
   }
 
+  onServicioChange(idServicio: number | null): void {
+    this.formServicio.set(idServicio);
+    this.formEmpleado.set(0);
+  }
+
   async handleAssign(): Promise<void> {
     const cita = this.cita();
     const idServicio = this.formServicio();
-    if (!idServicio || !this.formFecha() || !this.formHora() || !cita) return;
+    const idEmpleado = this.formEmpleado();
+    if (!idServicio || !idEmpleado || !this.formFecha() || !this.formHora() || !cita) return;
     this.submitting.set(true);
     try {
       await firstValueFrom(
         this.citasApi.confirmar(this.id, {
           idMascota: cita.idMascota,
+          idEmpleado,
           idServicio,
           fechaCita: this.formFecha(),
           horaCita: this.formHora(),
@@ -684,6 +724,13 @@ export class CitaDetailComponent implements OnInit {
   }
 
   async handleConfirmar(): Promise<void> {
+    const cita = this.cita();
+    if (!cita) return;
+    // Si la cita no tiene profesional asignado, primero hay que asignarlo.
+    if (!cita.idEmpleado) {
+      this.openAssignModal();
+      return;
+    }
     try {
       await firstValueFrom(this.citasApi.cambiarEstado(this.id, 'CONFIRMADA'));
       const actualizada = await firstValueFrom(this.citasApi.getById(this.id));

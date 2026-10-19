@@ -123,7 +123,14 @@ export class MisMascotasComponent implements OnInit {
   readonly error = signal('');
   readonly showLimitDialog = signal(false);
 
-  readonly mascotasActivas = computed(() => this.mascotas().filter((m) => m.estado === true));
+  readonly mascotasActivas = computed(() =>
+    [...this.mascotas()]
+      .filter((m) => m.estado === true)
+      .sort(
+        (a, b) =>
+          (b.createdAt || '').localeCompare(a.createdAt || '') || b.idMascota - a.idMascota,
+      ),
+  );
   readonly limiteAlcanzado = computed(() => this.mascotasActivas().length >= MAX_MASCOTAS);
 
   handleNuevaMascota(): void {

@@ -402,7 +402,7 @@ export class DashboardComponent implements OnInit {
         this.proximasCitas.set(
           todasCitas
             .filter((c) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA')
-            .sort((a, b) => `${a.fechaCita}T${a.horaCita || '00:00'}`.localeCompare(`${b.fechaCita}T${b.horaCita || '00:00'}`))
+            .sort((a, b) => `${b.fechaCita}T${b.horaCita || '00:00'}`.localeCompare(`${a.fechaCita}T${a.horaCita || '00:00'}`))
             .slice(0, 3),
         );
       } else {
@@ -437,7 +437,7 @@ export class DashboardComponent implements OnInit {
         this.proximasCitas.set(
           todasCitas
             .filter((c) => c.estadoCita === 'PENDIENTE' || c.estadoCita === 'CONFIRMADA')
-            .sort((a, b) => `${a.fechaCita}T${a.horaCita || '00:00'}`.localeCompare(`${b.fechaCita}T${b.horaCita || '00:00'}`))
+            .sort((a, b) => `${b.fechaCita}T${b.horaCita || '00:00'}`.localeCompare(`${a.fechaCita}T${a.horaCita || '00:00'}`))
             .slice(0, 3),
         );
       }

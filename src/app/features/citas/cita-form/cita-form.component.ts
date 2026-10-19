@@ -303,8 +303,12 @@ export class CitaFormComponent implements OnInit {
   );
 
   readonly mascotaOptions = computed<SearchSelectOption[]>(() =>
-    this.mascotas()
+    [...this.mascotas()]
       .filter((m) => m.estado === true)
+      .sort(
+        (a, b) =>
+          (b.createdAt || '').localeCompare(a.createdAt || '') || b.idMascota - a.idMascota,
+      )
       .map((m) => ({
         value: m.idMascota,
         label: m.nombre,
