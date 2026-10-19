@@ -192,6 +192,11 @@ interface EmpleadoPayload {
                 (ngModelChange)="correo.set($event)"
                 (blur)="normalizeCorreo()"
               />
+              @if (submitted() && !isEdit() && !correo().trim()) {
+                <label class="label py-0">
+                  <span class="label-text-alt text-error text-xs">Debes ingresar un correo electronico</span>
+                </label>
+              }
             </div>
           </div>
           <div class="form-control">
@@ -284,11 +289,6 @@ interface EmpleadoPayload {
                 [ngModel]="password()"
                 (ngModelChange)="password.set($event)"
               />
-              @if (submitted() && !correo().trim()) {
-                <label class="label py-0">
-                  <span class="label-text-alt text-error text-xs">Debes ingresar un correo electronico</span>
-                </label>
-              }
               @if (submitted() && password().length < 8) {
                 <label class="label py-0">
                   <span class="label-text-alt text-error text-xs">La contrasena debe tener minimo 8 caracteres</span>

@@ -113,6 +113,11 @@ import { ActualizarClienteRequest, CrearClienteRequest } from '../../../core/mod
             <div class="form-control">
               <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>
               <input name="correo" type="email" class="input input-bordered input-sm w-full" placeholder="Correo electronico" [ngModel]="correo()" (ngModelChange)="correo.set($event)" (blur)="normalizeCorreo()" />
+              @if (submitted() && crearUsuario() && !correo().trim()) {
+                <label class="label py-0">
+                  <span class="label-text-alt text-error text-xs">Debes ingresar un correo electronico</span>
+                </label>
+              }
             </div>
           </div>
           <div class="form-control">
@@ -143,11 +148,6 @@ import { ActualizarClienteRequest, CrearClienteRequest } from '../../../core/mod
                 <div class="form-control">
                   <label class="label py-0"><span class="label-text font-medium text-sm">Contrasena *</span></label>
                   <input name="usuarioPassword" type="password" class="input input-bordered input-sm w-full" placeholder="Minimo 8 caracteres" [ngModel]="usuarioPassword()" (ngModelChange)="usuarioPassword.set($event)" />
-                  @if (submitted() && crearUsuario() && !correo().trim()) {
-                    <label class="label py-0">
-                      <span class="label-text-alt text-error text-xs">Debes ingresar un correo electronico</span>
-                    </label>
-                  }
                   @if (submitted() && crearUsuario() && usuarioPassword().length < 8) {
                     <label class="label py-0">
                       <span class="label-text-alt text-error text-xs">La contrasena debe tener minimo 8 caracteres</span>
