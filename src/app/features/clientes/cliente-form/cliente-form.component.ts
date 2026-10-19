@@ -111,7 +111,7 @@ import { ActualizarClienteRequest, CrearClienteRequest } from '../../../core/mod
               }
             </div>
             <div class="form-control">
-              <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>
+              <label class="label py-0"><span class="label-text font-medium text-sm">Correo{{ crearUsuario() ? ' *' : '' }}</span></label>
               <input name="correo" type="email" class="input input-bordered input-sm w-full" placeholder="Correo electronico" [ngModel]="correo()" (ngModelChange)="correo.set($event)" (blur)="normalizeCorreo()" />
               @if (submitted() && crearUsuario() && !correo().trim()) {
                 <label class="label py-0">

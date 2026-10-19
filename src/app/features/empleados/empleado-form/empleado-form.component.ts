@@ -182,7 +182,7 @@ interface EmpleadoPayload {
               }
             </div>
             <div class="form-control">
-              <label class="label py-0"><span class="label-text font-medium text-sm">Correo</span></label>
+              <label class="label py-0"><span class="label-text font-medium text-sm">Correo{{ !isEdit() ? ' *' : '' }}</span></label>
               <input
                 name="correo"
                 type="email"
