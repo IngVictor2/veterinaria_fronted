@@ -1,59 +1,68 @@
-# FrontedVet
+# VetClinic — Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Migración a **Angular 22** (zoneless + signals) del frontend Vue 3 + Vite original
+(`github.com/SapoTurco/veterinaria-frontend`).
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 22 (standalone components, zoneless, `signal()`/`computed()`)
+- Tailwind CSS 4 + daisyUI 5 (`src/styles.css`)
+- `HttpClient` + RxJS `firstValueFrom` (los servicios devuelven `Observable<T>`)
+- Autenticación JWT: `AuthService` (signals) + `authInterceptor` + guards funcionales
 
-```bash
-ng serve
+## Estructura
+
+```
+src/app/
+├── core/
+│   ├── models/        # Tipos del dominio (cliente, mascota, cita, factura, pago, ...)
+│   ├── services/      # Servicios API (clientes-api, citas-api, ...) + auth.service
+│   ├── interceptors/  # authInterceptor (Bearer + manejo 401)
+│   ├── guards/        # authGuard, guestGuard, permisosGuard
+│   └── utils/         # getApiErrorMessage, ...
+├── shared/components/ # DataTable, SearchSelect, SearchFilter, PaginationBar,
+│                      # ConfirmDialog, LoadingSpinner, CalendarDayPicker
+├── layouts/           # auth-layout, default-layout (sidebar/header)
+├── features/          # Vistas por familia (auth, dashboard, clientes, mascotas,
+│                      # citas, facturas, pagos, servicios, empleados, admin)
+└── app.routes.ts      # Rutas con lazy loading y guards (espejo del router original)
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Desarrollo
 
 ```bash
-ng generate component component-name
+npm start        # ng serve → http://localhost:4200
+npm run build    # build de producción → dist/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Backend
+
+El backend (Kotlin + Spring Boot, repo `veterinaria_backend`) corre por defecto en
+`http://localhost:8080` y no usa prefijo `/api` en los controladores
+(`/auth`, `/clientes`, `/citas`, ...).
+
+En desarrollo, el dev server proxifica `/api` hacia el backend y **reescribe**
+`/api/...` → `...` (ver `proxy.conf.json`). Por eso `environment.apiUrl = '/api'`
+funciona sin cambios:
 
 ```bash
-ng generate --help
+# 1) backend: variables requeridas (PostgreSQL + JWT)
+DB_HOST=... DB_NAME=... DB_USER=... DB_PASSWORD=... JWT_SECRET=... ./gradlew bootRun
+# 2) frontend
+npm start
 ```
 
-## Building
+El backend ya permite CORS desde `http://localhost:4200`
+(`app.cors.allowed-origins` / `CORS_ALLOWED_ORIGINS`) y expone Swagger en
+`/swagger-ui.html`.
 
-To build the project run:
+> **Producción**: configura un rewrite equivalente (`/api/*` → backend) en el
+> hosting, o cambia `apiUrl` en `src/environments/environment.ts` por la URL
+> absoluta del backend. Sin backend, las vistas muestran sus mensajes de error
+> (comportamiento esperado).
 
-```bash
-ng build
-```
+## Notas de la migración
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Convenciones y patrones usados en el port (señales, `ngModel` dividido,
+  control flow `@if`/`@for`, componentes compartidos): ver `MIGRATION_GUIDE.md`.
+- El proyecto Vue original (referencia de paridad visual) está en `github.com/SapoTurco/veterinaria-frontend`.
