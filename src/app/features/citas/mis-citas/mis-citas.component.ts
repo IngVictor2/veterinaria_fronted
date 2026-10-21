@@ -132,7 +132,7 @@ export class MisCitasComponent implements OnInit {
   readonly loading = signal(true);
   readonly error = signal('');
   readonly page = signal(0);
-  readonly size = signal(4);
+  readonly size = signal(3);
   readonly filtroEstado = signal('');
 
   readonly numerosCitas = computed(() => {
