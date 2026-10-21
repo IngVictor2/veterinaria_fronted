@@ -6,10 +6,11 @@ import { PagosApiService } from '../../../core/services/pagos-api.service';
 import { MetodosPagoApiService, MetodoPago } from '../../../core/services/metodos-pago-api.service';
 import { Factura } from '../../../core/models/factura';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
+import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 
 @Component({
   selector: 'app-mis-facturas',
-  imports: [FormsModule],
+  imports: [FormsModule, PaginationBarComponent],
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
@@ -42,7 +43,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
         </div>
       } @else {
         <div class="space-y-4">
-          @for (factura of facturasOrdenadas(); track factura.idFactura) {
+          @for (factura of paginatedFacturas(); track factura.idFactura) {
             <div class="card bg-base-100 shadow-md">
               <div class="card-body">
                 <div class="flex items-center justify-between">
@@ -98,6 +99,12 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
               </div>
             </div>
           }
+          <app-pagination-bar
+            [(page)]="page"
+            [totalPages]="totalPages()"
+            [totalElements]="facturasOrdenadas().length"
+            [size]="size()"
+          />
         </div>
       }
 
@@ -200,6 +207,8 @@ export class MisFacturasComponent implements OnInit {
   readonly facturas = signal<Factura[]>([]);
   readonly loading = signal(true);
   readonly error = signal('');
+  readonly page = signal(0);
+  readonly size = signal(3);
 
   readonly showPayModal = signal(false);
   readonly facturaSeleccionada = signal<Factura | null>(null);
@@ -219,6 +228,13 @@ export class MisFacturasComponent implements OnInit {
 
   readonly facturasOrdenadas = computed(() => {
     return [...this.facturas()].sort((a, b) => b.idFactura - a.idFactura);
+  });
+
+  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.facturasOrdenadas().length / this.size())));
+
+  readonly paginatedFacturas = computed(() => {
+    const start = this.page() * this.size();
+    return this.facturasOrdenadas().slice(start, start + this.size());
   });
 
   readonly numerosFacturas = computed(() => {
