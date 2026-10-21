@@ -2,10 +2,6 @@ import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
-/**
- * Encabezado de la página. Está fuera de la vista principal y lee
- * el mismo estado que la agenda mediante el servicio compartido.
- */
 @Component({
   selector: 'app-demo-header',
   imports: [CurrencyPipe],
@@ -17,7 +13,7 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
           <div class="min-w-0">
             <p class="truncate font-bold leading-tight text-[#FFFFE3]">VetClinic</p>
             <p class="text-[10px] uppercase tracking-[0.2em] text-[#7FE7E9]">
-              Entrega 1 · SPA Angular
+              Agenda de citas
             </p>
           </div>
         </div>
@@ -32,7 +28,6 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
           <div
             class="flex items-center gap-2 rounded-full border border-[#0D7377]/50 bg-[#0D7377]/20 px-3 py-1.5"
-            title="Citas pendientes calculadas con computed()"
           >
             <span class="h-2 w-2 rounded-full bg-[#7FE7E9]"></span>
             <span class="text-sm font-bold text-[#FFFFE3]">

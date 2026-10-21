@@ -9,13 +9,11 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
   imports: [FormsModule, RouterLink],
   template: `
     <div>
-      <!-- Title -->
       <div class="text-center mb-8 form-field">
         <h2 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Bienvenido de vuelta</h2>
         <p class="text-sm text-[#CBCBCB] mt-2">Ingresa tus credenciales para continuar</p>
       </div>
 
-      <!-- Error -->
       @if (error()) {
         <div class="alert alert-error mb-6 animate-shake">
           <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
@@ -26,7 +24,6 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       }
 
       <form (ngSubmit)="handleLogin()" class="space-y-5">
-        <!-- Email -->
         <div class="form-field form-control">
           <label class="label">
             <span class="label-text font-semibold text-sm text-[#CBCBCB]">Correo electrónico</span>
@@ -54,7 +51,6 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
           </div>
         </div>
 
-        <!-- Password -->
         <div class="form-field form-control">
           <label class="label">
             <span class="label-text font-semibold text-sm text-[#CBCBCB]">Contraseña</span>
@@ -98,7 +94,6 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
           </div>
         </div>
 
-        <!-- Submit -->
         <div class="form-field">
           <button
             type="submit"
@@ -114,13 +109,31 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
         </div>
       </form>
 
-      <!-- Divider -->
-      <div class="divider-icon flex items-center gap-4 my-6 form-field">
-        <span class="text-xs text-[#9a9a9a] font-medium whitespace-nowrap">O continua con</span>
+      <div class="mt-4 form-field">
+        <a
+          routerLink="/entrega-1"
+          class="btn btn-outline w-full h-11 rounded-xl border-[#0D7377]/50 text-[#7FE7E9] hover:border-[#0D7377] hover:bg-[#0D7377]/15 hover:text-[#FFFFE3] font-semibold text-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          Ver agenda de citas
+        </a>
       </div>
 
-      <!-- Register link -->
-      <div class="text-center form-field">
+      <div class="mt-6 text-center form-field">
         <p class="text-sm text-[#CBCBCB]">
           No tienes una cuenta?
           <a routerLink="/register" class="font-bold text-[#0D7377] hover:text-[#1A8A8E] ml-1">

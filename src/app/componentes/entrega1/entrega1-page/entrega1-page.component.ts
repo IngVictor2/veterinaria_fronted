@@ -14,7 +14,7 @@ import { Entrega1ViewComponent } from '../entrega1-view/entrega1-view.component'
       </main>
 
       <footer class="border-t border-white/10 py-5 text-center text-xs text-base-content/40">
-        VetClinic · Grupo 6 · Entrega 1 · Angular 22 · Datos locales
+        VetClinic · Gestión de citas veterinarias
       </footer>
     </div>
   `,

@@ -2,11 +2,6 @@ import { computed, Injectable, signal } from '@angular/core';
 import { CITAS_DEMO } from '../datos/citas-demo';
 import { CitaDemo } from '../modelos/cita-demo';
 
-/**
- * Dueño del estado de la agenda de demostración.
- * La señal es privada; el exterior solo puede leerla mediante asReadonly().
- * Todos los cambios se hacen con actualizaciones inmutables.
- */
 @Injectable({ providedIn: 'root' })
 export class CitasDemoService {
   private readonly _citas = signal<CitaDemo[]>(CITAS_DEMO);

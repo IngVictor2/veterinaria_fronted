@@ -14,19 +14,19 @@ type FiltroCitas = 'TODAS' | EstadoCitaDemo;
       <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#7FE7E9]">
-            Vista principal · Entrega 1
+            Resumen de la agenda
           </p>
           <h1 class="mt-2 text-2xl font-extrabold text-[#FFFFE3] sm:text-3xl">
             Agenda de citas veterinarias
           </h1>
           <p class="mt-2 max-w-2xl text-sm text-base-content/60">
-            Consulta las citas, filtra por estado y confirma las pendientes. Los datos son locales y
-            el estado se comparte entre esta vista y el encabezado mediante un servicio con signals.
+            Consulta las citas de la clínica, filtra por estado y confirma las pendientes. Los
+            cambios se reflejan de inmediato en la agenda y en los indicadores.
           </p>
         </div>
 
         <button type="button" class="btn btn-ghost btn-sm self-start sm:self-auto" (click)="reiniciarDemo()">
-          Reiniciar demo
+          Restablecer agenda
         </button>
       </div>
 
@@ -36,7 +36,7 @@ type FiltroCitas = 'TODAS' | EstadoCitaDemo;
             Total de citas
           </p>
           <p class="mt-1 text-3xl font-extrabold text-[#FFFFE3]">{{ citasDemo.totalCitas() }}</p>
-          <p class="mt-1 text-xs text-base-content/40">Registros cargados desde datos/</p>
+          <p class="mt-1 text-xs text-base-content/40">Citas registradas en la agenda</p>
         </article>
 
         <article class="rounded-xl border border-white/10 bg-base-100 p-5">
@@ -46,7 +46,7 @@ type FiltroCitas = 'TODAS' | EstadoCitaDemo;
           <p class="mt-1 text-3xl font-extrabold text-[#FFFFE3]">
             {{ citasDemo.totalPendientes() }}
           </p>
-          <p class="mt-1 text-xs text-base-content/40">Valor derivado con computed()</p>
+          <p class="mt-1 text-xs text-base-content/40">Requieren confirmación</p>
         </article>
 
         <article class="rounded-xl border border-white/10 bg-base-100 p-5">
@@ -69,7 +69,7 @@ type FiltroCitas = 'TODAS' | EstadoCitaDemo;
           <div>
             <p class="font-semibold">Cita de {{ mascota }} confirmada</p>
             <p class="text-emerald-200/70">
-              El contador de pendientes y los ingresos confirmados del encabezado cambiaron.
+              La agenda y los indicadores se actualizaron.
             </p>
           </div>
         </div>

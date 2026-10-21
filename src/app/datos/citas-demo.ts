@@ -1,11 +1,5 @@
 import { CitaDemo } from '../modelos/cita-demo';
 
-/**
- * Datos locales de la vista de la Entrega 1.
- * No se consumen desde la API: son el origen de verdad de la demostración.
- * No se incluye ninguna cita CANCELADA para poder mostrar el caso límite
- * del bloque @empty al seleccionar ese filtro.
- */
 export const CITAS_DEMO: CitaDemo[] = [
   {
     id: 1,

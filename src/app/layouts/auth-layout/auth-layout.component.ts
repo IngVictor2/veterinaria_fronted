@@ -6,12 +6,10 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   template: `
     <div class="min-h-screen bg-animated flex items-center justify-center p-4 relative overflow-hidden">
-      <!-- Floating decorative shapes -->
       <div class="floating-shape floating-shape-1"></div>
       <div class="floating-shape floating-shape-2"></div>
       <div class="floating-shape floating-shape-3"></div>
 
-      <!-- Floating paw prints (decorative) -->
       <div class="absolute top-20 left-10 animate-float opacity-10 pointer-events-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[#0D7377]" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -29,7 +27,6 @@ import { RouterOutlet } from '@angular/router';
       </div>
 
       <div class="w-full max-w-md relative z-10">
-        <!-- Logo with animation -->
         <div class="text-center mb-8 animate-slide-up">
           <div class="inline-flex items-center justify-center w-20 h-20 rounded-full shadow-lg shadow-[#0D7377]/25 mb-4 logo-hover">
             <img src="/logo.svg" alt="VetClinic" class="w-20 h-20 rounded-full" />
@@ -37,7 +34,6 @@ import { RouterOutlet } from '@angular/router';
           <h1 class="text-3xl font-extrabold gradient-text">VetClinic</h1>
         </div>
 
-        <!-- Auth card with glass effect -->
         <div class="auth-card rounded-3xl animate-scale-in">
           <div class="card-body p-8">
             <router-outlet />

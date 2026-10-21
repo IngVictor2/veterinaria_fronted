@@ -47,7 +47,7 @@ import { EstadoCitaPipe } from '../../../pipes/estado-cita.pipe';
       </div>
 
       <div
-        class="flex shrink-0 items-center justify-between gap-4 border-t border-white/5 pt-3 lg:border-0 lg:pt-0"
+        class="flex shrink-0 items-center justify-end gap-4 border-t border-white/5 pt-3 lg:border-0 lg:pt-0"
       >
         <span class="font-bold text-[#FFFFE3]">
           {{ cita().precio | currency: 'COP' : 'symbol' : '1.0-0' : 'es-CO' }}
@@ -57,12 +57,6 @@ import { EstadoCitaPipe } from '../../../pipes/estado-cita.pipe';
           <button type="button" class="btn btn-primary btn-sm" (click)="confirmar.emit(cita().id)">
             Confirmar
           </button>
-        } @else {
-          <span
-            class="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-wide text-base-content/40"
-          >
-            Sin acciones
-          </span>
         }
       </div>
     </article>

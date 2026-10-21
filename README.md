@@ -24,7 +24,7 @@ La **Entrega 1** del proyecto integrador se demuestra en una vista pública con 
 | Local | http://localhost:4200/entrega-1 |
 | Producción | https://veterinaria-one-nu.vercel.app/entrega-1 |
 
-La ruta es **pública** (no requiere iniciar sesión) y usa exclusivamente datos locales de `src/app/datos/citas-demo.ts`. No llama a la API, de modo que la demostración funciona sin backend.
+La ruta es **pública** (no requiere iniciar sesión) y usa exclusivamente datos locales de `src/app/datos/citas-demo.ts`. No llama a la API, de modo que la demostración funciona sin backend. También puedes entrar desde el botón **Ver agenda de citas** de la pantalla de login.
 
 Qué se puede ver:
 
