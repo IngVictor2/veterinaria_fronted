@@ -5,6 +5,13 @@ import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.
 
 export const routes: Routes = [
   {
+    path: 'entrega-1',
+    loadComponent: () =>
+      import('./componentes/entrega1/entrega1-page/entrega1-page.component').then(
+        (m) => m.Entrega1PageComponent,
+      ),
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     canActivate: [authGuard],
