@@ -1,12 +1,11 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PORTAFOLIO_SERVICIOS } from '../../../datos/servicios-portafolio';
 import { BlogService } from '../../../servicios/blog.service';
-import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
 @Component({
   selector: 'app-hero-section',
-  imports: [RouterLink, CurrencyPipe, DatePipe],
+  imports: [RouterLink],
   template: `
     <section
       id="inicio"
@@ -32,8 +31,8 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
           </h1>
 
           <p class="mt-6 max-w-xl text-base leading-relaxed text-[#CBCBCB]/75 sm:text-lg">
-            Consulta, estética y prevención para perros y gatos en un solo lugar. Agenda tu cita,
-            revisa el cuidado de tu mascota y aprende con nuestro blog veterinario.
+            Consulta y estética para perros y gatos en un solo lugar. Agenda tu cita, revisa el
+            cuidado de tu mascota y aprende con nuestro blog veterinario.
           </p>
 
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -54,9 +53,9 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
           <dl class="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6">
             <div>
-              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Agenda</dt>
-              <dd class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ citas.totalCitas() }}</dd>
-              <p class="text-[11px] text-[#CBCBCB]/45">citas registradas</p>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Servicios</dt>
+              <dd class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ totalServicios() }}</dd>
+              <p class="text-[11px] text-[#CBCBCB]/45">consulta y estética</p>
             </div>
             <div>
               <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Blog</dt>
@@ -79,8 +78,8 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
           >
             <div class="flex items-center justify-between gap-3">
               <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#7FE7E9]">Hoy en la clínica</p>
-                <p class="mt-1 text-sm font-semibold text-[#FFFFE3]">Agenda compartida</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#7FE7E9]">Nuestros servicios</p>
+                <p class="mt-1 text-sm font-semibold text-[#FFFFE3]">Consulta y estética</p>
               </div>
               <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-300">
                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>
@@ -97,30 +96,28 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
             <div class="mt-7 grid grid-cols-2 gap-3">
               <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Por confirmar</p>
-                <p class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ citas.totalPendientes() }}</p>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Consulta</p>
+                <p class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ totalConsultas() }}</p>
+                <p class="text-[11px] text-[#CBCBCB]/45">servicios</p>
               </div>
               <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Ingresos</p>
-                <p class="mt-1 text-lg font-extrabold text-[#7FE7E9]">
-                  {{ citas.ingresosConfirmados() | currency: 'COP' : 'symbol' : '1.0-0' : 'es-CO' }}
-                </p>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Estética</p>
+                <p class="mt-1 text-2xl font-extrabold text-[#7FE7E9]">{{ totalEstetica() }}</p>
+                <p class="text-[11px] text-[#CBCBCB]/45">servicios</p>
               </div>
             </div>
-          </div>
 
-          @if (proximaCita(); as cita) {
-            <div
-              class="absolute -bottom-6 -left-2 w-60 rounded-2xl border border-white/10 bg-[#132a2a]/95 p-4 shadow-xl backdrop-blur sm:-left-6"
-            >
-              <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#E8650A]">Próxima cita</p>
-              <p class="mt-1 truncate text-sm font-bold text-[#FFFFE3]">{{ cita.mascota }}</p>
-              <p class="mt-0.5 text-xs text-[#CBCBCB]/70">{{ cita.servicio }}</p>
-              <p class="mt-2 text-[11px] text-[#7FE7E9]">
-                {{ cita.fechaHora | date: 'EEE d MMM · h:mm a' : undefined : 'es-CO' }}
+            <div class="mt-3 flex items-center justify-between gap-4 rounded-2xl border border-[#E8650A]/20 bg-[#E8650A]/5 p-4">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#E8650A]">Horario de atención</p>
+                <p class="mt-1 text-xs font-semibold text-[#FFFFE3]">Lunes a sábado · 7:00 a 18:00</p>
+              </div>
+              <p class="shrink-0 text-right text-[11px] text-[#7FE7E9]">
+                Domingos
+                <span class="block text-[#CBCBCB]/50">7:00 a 13:00</span>
               </p>
             </div>
-          }
+          </div>
         </div>
       </div>
     </section>
@@ -135,16 +132,13 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
   `,
 })
 export class HeroSectionComponent {
-  readonly citas = inject(CitasDemoService);
   readonly blog = inject(BlogService);
 
-  readonly proximaCita = computed(() => {
-    const pendientes = this.citas
-      .citas()
-      .filter((cita) => cita.estado === 'PENDIENTE' || cita.estado === 'CONFIRMADA')
-      .slice()
-      .sort((a, b) => a.fechaHora.localeCompare(b.fechaHora));
-
-    return pendientes[0] ?? null;
-  });
+  readonly totalServicios = computed(() => PORTAFOLIO_SERVICIOS.length);
+  readonly totalConsultas = computed(
+    () => PORTAFOLIO_SERVICIOS.filter((servicio) => servicio.tipo === 'CONSULTA').length,
+  );
+  readonly totalEstetica = computed(
+    () => PORTAFOLIO_SERVICIOS.filter((servicio) => servicio.tipo === 'ESTETICA').length,
+  );
 }
