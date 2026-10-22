@@ -25,12 +25,13 @@ La landing es la cara pública del proyecto. Usa datos locales, no pide autentic
 
 ### Secciones
 
-1. **Encabezado:** navegación a Inicio, Servicios, Blog y Contacto. Cuando hay artículos guardados, muestra un contador que lee el mismo estado del blog.
+1. **Encabezado:** navegación a Inicio, Quiénes somos, Servicios, Blog y Contacto. Cuando hay artículos guardados, muestra un contador que lee el mismo estado del blog.
 2. **Hero:** presentación de la clínica, accesos a la agenda y al blog, total de servicios, total de artículos y horario.
-3. **Portafolio de servicios:** 8 servicios divididos en **Consulta** (3) y **Estética** (5). Permite filtrar por tipo y abrir el detalle de cada servicio.
-4. **Blog de cuidado:** 10 artículos con búsqueda, filtro por categoría, artículo destacado, detalle y opción de guardar.
-5. **Contacto:** formulario de demostración que valida los campos y muestra un mensaje local; no envía correos.
-6. **Pie de página:** enlaces a las secciones, horario y accesos al sistema.
+3. **Quiénes somos:** presentación de la clínica, enfoque de trabajo y valores de atención.
+4. **Portafolio de servicios:** 7 servicios divididos en **Consulta** (4) y **Estética** (3). Permite filtrar por tipo y abrir el detalle de cada servicio.
+5. **Blog de cuidado:** 10 artículos con búsqueda, filtro por categoría, artículo destacado, detalle y opción de guardar.
+6. **Contacto:** formulario de demostración que valida los campos y muestra un mensaje local; no envía correos.
+7. **Pie de página:** enlaces a las secciones, horario y accesos al sistema.
 
 ### Qué puedes probar
 
@@ -47,8 +48,8 @@ La landing es la cara pública del proyecto. Usa datos locales, no pide autentic
 
 | Tipo | Servicios |
 | --- | --- |
-| Consulta | Consulta general, Consulta de seguimiento, Consulta preventiva |
-| Estética | Baño y corte, Estética canina, Baño de mantenimiento, Corte de uñas y limpieza de oídos, Peluquería felina |
+| Consulta | Consulta general, Consulta especializada, Vacunación, Consulta avanzada |
+| Estética | Baño medicado, Corte de pelo, Limpieza dental |
 
 ## 3. Demo de la Entrega 1 (`/entrega-1`)
 
@@ -141,7 +142,7 @@ src/app/
 │   └── servicio-portafolio.ts       # Interfaz ServicioPortafolio y tipos
 ├── datos/
 │   ├── articulos-blog.ts            # 10 artículos de ejemplo
-│   └── servicios-portafolio.ts      # 8 servicios de consulta y estética
+│   └── servicios-portafolio.ts      # 7 servicios de consulta y estética
 ├── servicios/
 │   └── blog.service.ts              # Estado del blog y de los guardados
 ├── pipes/
@@ -151,6 +152,7 @@ src/app/
         ├── inicio-page/             # Página pública /
         ├── site-header/             # Encabezado; lee el contador de guardados
         ├── hero-section/            # Presentación e indicadores
+        ├── quienes-somos-section/   # Presentación de la clínica y valores
         ├── servicios-section/       # Filtros y detalle de servicios
         ├── portafolio-card/         # Tarjeta de un servicio
         ├── blog-section/            # Búsqueda, filtros y detalle del blog
@@ -204,8 +206,9 @@ App
 └── InicioPageComponent                        (página /)
     ├── SiteHeaderComponent                    (barra superior)
     ├── HeroSectionComponent                   (presentación)
+    ├── QuienesSomosSectionComponent           (quiénes somos)
     ├── ServiciosSectionComponent              (portafolio)
-    │   └── PortafolioCardComponent × 8        (una tarjeta por servicio)
+    │   └── PortafolioCardComponent × 7        (una tarjeta por servicio)
     ├── BlogSectionComponent                   (blog)
     │   └── BlogCardComponent × 10             (una tarjeta por artículo)
     ├── ContactoSectionComponent               (formulario)
@@ -282,6 +285,7 @@ Un **contrato** es la forma en que un componente se comunica:
 | `InicioPageComponent` | — | — | Arma la página con todas las secciones. |
 | `SiteHeaderComponent` | — | — | Navegación y contador de artículos guardados. |
 | `HeroSectionComponent` | — | — | Presentación, accesos e indicadores. |
+| `QuienesSomosSectionComponent` | — | — | Presenta la clínica y sus valores de atención. |
 | `ServiciosSectionComponent` | — | — | Filtra servicios y controla el detalle. |
 | `PortafolioCardComponent` | `servicio: ServicioPortafolio` (**required**) | `verDetalle: number` | Muestra un servicio y envía su id al padre. |
 | `BlogSectionComponent` | — | — | Búsqueda, filtros, guardados y detalle del blog. |
@@ -343,7 +347,7 @@ El **estado** son los datos que la aplicación necesita recordar. Si dos compone
 | **R2** | Al menos 3 componentes propios; un hijo repetido con `@for`, `input.required()` y `output()`. | `InicioPageComponent`, `SiteHeaderComponent`, `HeroSectionComponent`, `ServiciosSectionComponent`, `BlogSectionComponent` y sus tarjetas. `BlogCardComponent` se repite con `@for (articulo of blog.articulosFiltrados(); track articulo.id)` y usa `input.required()` y `output()`. |
 | **R3** | Servicio en root, señal privada con `asReadonly()`, métodos con nombre, `computed` visible y encabezado leyendo el mismo estado. | `src/app/servicios/blog.service.ts`: `_articulos`, `_categoria`, `_busqueda` y `_guardados` son privadas; se exponen con `asReadonly()`. `SiteHeaderComponent` lee `totalGuardados()` y el blog lo modifica con `alternarGuardado()`. |
 | **R4** | `@if`, `@for` con `track`, `@empty`, `@switch`, pipes con `es-CO` y un pipe propio. | `blog-section.component.ts` y `servicios-section.component.ts`; `categoria-blog.pipe.ts`; locale `es-CO` en `app.config.ts`; pipes `currency`, `date` y `number` con `es-CO`. |
-| **R5** | Interfaz en `modelos/`, al menos 8 registros en `datos/` y un caso límite visible. | `src/app/modelos/articulo-blog.ts` y `servicio-portafolio.ts`; `src/app/datos/articulos-blog.ts` (10 registros) y `servicios-portafolio.ts` (8 registros). Una búsqueda sin resultados muestra el `@empty` del blog. |
+| **R5** | Interfaz en `modelos/`, al menos 8 registros en `datos/` y un caso límite visible. | `src/app/modelos/articulo-blog.ts` y `servicio-portafolio.ts`; `src/app/datos/articulos-blog.ts` (10 registros) y `servicios-portafolio.ts` (7 registros). Una búsqueda sin resultados muestra el `@empty` del blog. |
 | **R6** | Estructura, repositorio público, sin `node_modules`, commits y PDF. | Estructura de `modelos/`, `datos/`, `servicios/`, `pipes/` y `componentes/inicio/`; `.gitignore` excluye `node_modules`; repositorio público; el PDF se entrega en el aula. |
 
 ## 11. Preguntas rápidas
