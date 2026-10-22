@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BlogService } from '../../../servicios/blog.service';
-import { CitasDemoService } from '../../../servicios/citas-demo.service';
 
 @Component({
   selector: 'app-site-header',
@@ -37,14 +36,6 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
         </nav>
 
         <div class="flex items-center gap-2">
-          <a
-            href="#agenda"
-            class="hidden items-center gap-2 rounded-full border border-[#0D7377]/50 bg-[#0D7377]/15 px-3 py-1.5 text-xs font-semibold text-[#FFFFE3] transition hover:bg-[#0D7377]/30 sm:flex"
-          >
-            <span class="h-2 w-2 rounded-full bg-[#7FE7E9]"></span>
-            <span>{{ citas.totalPendientes() }} pendientes</span>
-          </a>
-
           @if (blog.totalGuardados() > 0) {
             <a
               href="#blog"
@@ -98,16 +89,6 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
                 {{ enlace.texto }}
               </a>
             }
-            <a
-              href="#agenda"
-              class="mt-2 flex items-center justify-between rounded-xl border border-[#0D7377]/40 bg-[#0D7377]/15 px-3 py-2.5 text-sm font-semibold text-[#FFFFE3]"
-              (click)="cerrarMenu()"
-            >
-              <span>Citas pendientes</span>
-              <span class="rounded-full bg-[#7FE7E9]/20 px-2 py-0.5 text-xs text-[#7FE7E9]">
-                {{ citas.totalPendientes() }}
-              </span>
-            </a>
           </div>
         </nav>
       }
@@ -115,7 +96,6 @@ import { CitasDemoService } from '../../../servicios/citas-demo.service';
   `,
 })
 export class SiteHeaderComponent {
-  readonly citas = inject(CitasDemoService);
   readonly blog = inject(BlogService);
   readonly menuAbierto = signal(false);
 
@@ -123,8 +103,6 @@ export class SiteHeaderComponent {
     { texto: 'Inicio', href: '#inicio' },
     { texto: 'Servicios', href: '#servicios' },
     { texto: 'Blog', href: '#blog' },
-    { texto: 'Agenda', href: '#agenda' },
-    { texto: 'Enfoque', href: '#enfoque' },
     { texto: 'Contacto', href: '#contacto' },
   ];
 

@@ -22,8 +22,8 @@ import { RouterLink } from '@angular/router';
             </span>
           </a>
           <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#CBCBCB]/70">
-            Agenda, historia clínica y bienestar para perros y gatos, con información clara para
-            cada familia.
+            Consulta, estética e información de cuidado para perros y gatos, con contenidos claros
+            para cada familia.
           </p>
         </div>
 
@@ -32,8 +32,7 @@ import { RouterLink } from '@angular/router';
           <ul class="mt-4 space-y-2 text-sm text-[#CBCBCB]/70">
             <li><a href="#servicios" class="transition hover:text-[#7FE7E9]">Servicios</a></li>
             <li><a href="#blog" class="transition hover:text-[#7FE7E9]">Blog de cuidado</a></li>
-            <li><a href="#agenda" class="transition hover:text-[#7FE7E9]">Agenda de citas</a></li>
-            <li><a href="#enfoque" class="transition hover:text-[#7FE7E9]">Enfoque de trabajo</a></li>
+            <li><a href="#contacto" class="transition hover:text-[#7FE7E9]">Contacto</a></li>
           </ul>
         </div>
 
