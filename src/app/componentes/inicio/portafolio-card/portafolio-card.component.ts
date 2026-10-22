@@ -20,34 +20,34 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.5 5.5v6a4 4 0 0 0 4 4h2m9-10v6a4 4 0 0 1-4 4h-2m-2 0v3m-3 0h6M6 3.5v2m12-2v2" />
               </svg>
             }
-            @case ('seguimiento') {
+            @case ('especializada') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 4 4M8.5 11h5M11 8.5v5" />
               </svg>
             }
-            @case ('bano') {
+            @case ('vacunacion') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 10h14v4a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5v-4Zm2-4a2 2 0 0 1 4 0v4m-4 9-1 2m10-2 1 2" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m18 3 3 3m-2-2-7 7m0 0 2 2m-2-2-4 4m6-2 3 3m-7-1-4 4m0 0-2-2m2 2-3 3m1-7 6 6" />
               </svg>
             }
-            @case ('estetica') {
+            @case ('avanzada') {
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6m-2 0h2v2" />
+              </svg>
+            }
+            @case ('bano-medicado') {
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 10h14v4a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5v-4Zm2-4a2 2 0 0 1 4 0v4m-4 9-1 2m10-2 1 2M9 4.5V3m6 3V4.5" />
+              </svg>
+            }
+            @case ('corte') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m14 6 4 4m-8 8 4-4m-7 3 2.5-.5L19 7a2.1 2.1 0 0 0-3-3l-9.5 9.5L6 17h1Zm10-14 2 2" />
               </svg>
             }
-            @case ('preventiva') {
+            @case ('dental') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3 4 6v6c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V6l-8-3Zm-3 9 2 2 4-4" />
-              </svg>
-            }
-            @case ('mantenimiento') {
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4h10v3a5 5 0 0 1-10 0V4Zm-2 0h14M12 12v6m-3 0h6" />
-              </svg>
-            }
-            @case ('unas') {
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4c0 5 1 8 5 8s5-3 5-8M5 20l2-4m12 4-2-4M8 20h8" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 5.5c-1.5 0-2.5.8-3.5.8S7 5.5 6 6.2C4.8 7 4.5 8.5 5 10c.4 1.2 1.2 2.1 1.5 3.5.2 1 .1 2.1.6 2.9.7 1.1 1.9.6 2.2-.8.3-1.4.7-2.6 2.7-2.6s2.4 1.2 2.7 2.6c.3 1.4 1.5 1.9 2.2.8.5-.8.4-1.9.6-2.9.3-1.4 1.1-2.3 1.5-3.5.5-1.5.2-3-1-3.8-1-.7-1.5.1-2.5.1s-2-.8-3.5-.8Z" />
               </svg>
             }
             @default {

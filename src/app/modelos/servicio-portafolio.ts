@@ -2,13 +2,12 @@ export type TipoServicioPortafolio = 'CONSULTA' | 'ESTETICA';
 
 export type IconoServicio =
   | 'consulta'
-  | 'seguimiento'
-  | 'preventiva'
-  | 'bano'
-  | 'estetica'
-  | 'mantenimiento'
-  | 'unas'
-  | 'felino';
+  | 'especializada'
+  | 'vacunacion'
+  | 'avanzada'
+  | 'bano-medicado'
+  | 'corte'
+  | 'dental';
 
 export interface ServicioPortafolio {
   id: number;
