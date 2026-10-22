@@ -87,14 +87,7 @@ import { BlogService } from '../../../servicios/blog.service';
               </span>
             </div>
 
-            <div class="relative mx-auto mt-7 flex h-44 w-44 items-center justify-center rounded-full border border-[#7FE7E9]/20 bg-[#0D7377]/15">
-              <div class="absolute inset-3 rounded-full border border-dashed border-[#7FE7E9]/20 animate-float"></div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-[#7FE7E9]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M11.5 3.5c0-.83-.67-1.5-1.5-1.5S8.5 2.67 8.5 3.5 9.17 5 10 5s1.5-.67 1.5-1.5zm4 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-8 3c0-.83-.67-1.5-1.5-1.5S4.5 5.67 4.5 6.5 5.17 8 6 8s1.5-.67 1.5-1.5zm12 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zM12 22c-3 0-5.5-1.5-5.5-4 0-2 1.5-3.5 3-4.5.7-.5 1.5-.8 2.5-.8s1.8.3 2.5.8c1.5 1 3 2.5 3 4.5 0 2.5-2.5 4-5.5 4z" />
-              </svg>
-            </div>
-
-            <div class="mt-7 grid grid-cols-2 gap-3">
+            <div class="mt-6 grid grid-cols-2 gap-3">
               <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                 <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Consulta</p>
                 <p class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ totalConsultas() }}</p>
