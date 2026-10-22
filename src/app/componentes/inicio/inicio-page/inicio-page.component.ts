@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BlogSectionComponent } from '../blog-section/blog-section.component';
 import { ContactoSectionComponent } from '../contacto-section/contacto-section.component';
 import { HeroSectionComponent } from '../hero-section/hero-section.component';
+import { QuienesSomosSectionComponent } from '../quienes-somos-section/quienes-somos-section.component';
 import { ServiciosSectionComponent } from '../servicios-section/servicios-section.component';
 import { SiteFooterComponent } from '../site-footer/site-footer.component';
 import { SiteHeaderComponent } from '../site-header/site-header.component';
@@ -11,6 +12,7 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
   imports: [
     SiteHeaderComponent,
     HeroSectionComponent,
+    QuienesSomosSectionComponent,
     ServiciosSectionComponent,
     BlogSectionComponent,
     ContactoSectionComponent,
@@ -29,6 +31,7 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
 
       <main id="contenido">
         <app-hero-section />
+        <app-quienes-somos-section />
         <app-servicios-section />
         <app-blog-section />
         <app-contacto-section />
