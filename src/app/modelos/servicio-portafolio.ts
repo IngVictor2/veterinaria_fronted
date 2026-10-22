@@ -1,14 +1,14 @@
-export type TipoServicioPortafolio = 'CONSULTA' | 'ESTETICA' | 'PREVENCION' | 'BIENESTAR';
+export type TipoServicioPortafolio = 'CONSULTA' | 'ESTETICA';
 
 export type IconoServicio =
   | 'consulta'
   | 'seguimiento'
+  | 'preventiva'
   | 'bano'
   | 'estetica'
-  | 'vacuna'
-  | 'desparasitacion'
-  | 'procedimiento'
-  | 'bienestar';
+  | 'mantenimiento'
+  | 'unas'
+  | 'felino';
 
 export interface ServicioPortafolio {
   id: number;
@@ -29,6 +29,4 @@ export const TIPOS_PORTAFOLIO: ReadonlyArray<{
   { valor: 'TODOS', etiqueta: 'Todos' },
   { valor: 'CONSULTA', etiqueta: 'Consulta' },
   { valor: 'ESTETICA', etiqueta: 'Estética' },
-  { valor: 'PREVENCION', etiqueta: 'Prevención' },
-  { valor: 'BIENESTAR', etiqueta: 'Bienestar' },
 ];

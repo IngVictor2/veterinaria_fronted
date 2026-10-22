@@ -35,19 +35,19 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m14 6 4 4m-8 8 4-4m-7 3 2.5-.5L19 7a2.1 2.1 0 0 0-3-3l-9.5 9.5L6 17h1Zm10-14 2 2" />
               </svg>
             }
-            @case ('vacuna') {
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m18 3 3 3m-2-2-7 7m0 0 2 2m-2-2-4 4m6-2 3 3m-7-1-4 4m0 0-2-2m2 2-3 3m1-7 6 6" />
-              </svg>
-            }
-            @case ('desparasitacion') {
+            @case ('preventiva') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3 4 6v6c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V6l-8-3Zm-3 9 2 2 4-4" />
               </svg>
             }
-            @case ('procedimiento') {
+            @case ('mantenimiento') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3h6l1 4H8l1-4Zm-2 4h10v5a5 5 0 0 1-5 5 5 5 0 0 1-5-5V7Zm5 10v4m-3 0h6" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4h10v3a5 5 0 0 1-10 0V4Zm-2 0h14M12 12v6m-3 0h6" />
+              </svg>
+            }
+            @case ('unas') {
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 4c0 5 1 8 5 8s5-3 5-8M5 20l2-4m12 4-2-4M8 20h8" />
               </svg>
             }
             @default {
@@ -104,12 +104,8 @@ export class PortafolioCardComponent {
     switch (this.servicio().tipo) {
       case 'CONSULTA':
         return 'border-[#7FE7E9]/25 bg-[#7FE7E9]/10 text-[#7FE7E9]';
-      case 'ESTETICA':
-        return 'border-[#E8650A]/25 bg-[#E8650A]/10 text-[#FFB27A]';
-      case 'PREVENCION':
-        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-300';
       default:
-        return 'border-[#CBCBCB]/20 bg-white/5 text-[#CBCBCB]';
+        return 'border-[#E8650A]/25 bg-[#E8650A]/10 text-[#FFB27A]';
     }
   }
 }

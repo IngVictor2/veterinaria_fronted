@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PORTAFOLIO_SERVICIOS } from '../../../datos/servicios-portafolio';
 import {
   ServicioPortafolio,
@@ -12,7 +13,7 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
 
 @Component({
   selector: 'app-servicios-section',
-  imports: [PortafolioCardComponent, CurrencyPipe],
+  imports: [PortafolioCardComponent, CurrencyPipe, RouterLink],
   template: `
     <section id="servicios" class="scroll-mt-24 border-b border-white/5 px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-7xl">
@@ -25,8 +26,8 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
               Todo lo que tu mascota necesita, en un mismo lugar
             </h2>
             <p class="mt-4 text-sm leading-relaxed text-[#CBCBCB]/65 sm:text-base">
-              Consulta, estética y prevención con una agenda compartida. Estos son los servicios que
-              forman parte del alcance del proyecto VetClinic.
+              Consulta y estética para perros y gatos. Estos son los servicios que forman parte del
+              alcance del proyecto VetClinic.
             </p>
           </div>
 
@@ -123,11 +124,11 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
             </ul>
 
             <a
-              href="#agenda"
+              routerLink="/login"
               class="btn btn-primary mt-7 h-11 w-full rounded-full text-sm font-bold"
               (click)="cerrarDetalle()"
             >
-              Ver agenda y confirmar una cita
+              Agendar una cita
             </a>
           </div>
         </div>
