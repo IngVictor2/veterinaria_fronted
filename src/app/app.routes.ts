@@ -5,6 +5,15 @@ import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    title: 'VetClinic | Clínica veterinaria',
+    loadComponent: () =>
+      import('./componentes/inicio/inicio-page/inicio-page.component').then(
+        (m) => m.InicioPageComponent,
+      ),
+  },
+  {
     path: 'entrega-1',
     loadComponent: () =>
       import('./componentes/entrega1/entrega1-page/entrega1-page.component').then(
@@ -17,8 +26,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: '',
-        pathMatch: 'full',
+        path: 'dashboard',
+        title: 'Dashboard | VetClinic',
         loadComponent: () => import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
       },
       {

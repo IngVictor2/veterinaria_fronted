@@ -111,7 +111,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
 
       <div class="mt-4 form-field">
         <a
-          routerLink="/entrega-1"
+          routerLink="/"
           class="btn btn-outline w-full h-11 rounded-xl border-[#0D7377]/50 text-[#7FE7E9] hover:border-[#0D7377] hover:bg-[#0D7377]/15 hover:text-[#FFFFE3] font-semibold text-sm"
         >
           <svg
@@ -176,7 +176,7 @@ export class LoginComponent {
     this.error.set('');
     try {
       await this.auth.login({ correo: this.correo(), password: this.password() });
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/dashboard');
     } catch (e: unknown) {
       this.error.set(getApiErrorMessage(e, 'Credenciales inválidas'));
     } finally {

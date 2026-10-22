@@ -15,7 +15,7 @@ export const guestGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
   if (authService.isAuthenticated()) {
-    return router.createUrlTree(['/']);
+    return router.createUrlTree(['/dashboard']);
   }
   return true;
 };
@@ -26,12 +26,12 @@ export const permisosGuard: CanActivateFn = (route) => {
 
   const modulos = route.data['modulos'] as string[] | undefined;
   if (modulos && !authService.hasAnyModule(...modulos)) {
-    return router.createUrlTree(['/']);
+    return router.createUrlTree(['/dashboard']);
   }
 
   const roles = route.data['roles'] as string[] | undefined;
   if (roles && !authService.hasAnyRole(...roles)) {
-    return router.createUrlTree(['/']);
+    return router.createUrlTree(['/dashboard']);
   }
 
   return true;

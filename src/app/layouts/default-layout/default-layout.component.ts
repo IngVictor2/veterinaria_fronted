@@ -34,10 +34,10 @@ import { AuthService } from '../../core/services/auth.service';
           <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
             <!-- Dashboard -->
             <a
-              (click)="navigateTo('/')"
+              (click)="navigateTo('/dashboard')"
               class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer"
-              [class.nav-link-active]="isActive('/', true)"
-              [class.nav-link-inactive]="!isActive('/', true)"
+              [class.nav-link-active]="isActive('/dashboard', true)"
+              [class.nav-link-inactive]="!isActive('/dashboard', true)"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
