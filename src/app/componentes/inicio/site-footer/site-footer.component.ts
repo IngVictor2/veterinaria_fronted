@@ -51,7 +51,6 @@ import { RouterLink } from '@angular/router';
           <ul class="mt-4 space-y-2 text-sm text-[#CBCBCB]/70">
             <li><a routerLink="/login" class="transition hover:text-[#7FE7E9]">Ingresar al sistema</a></li>
             <li><a routerLink="/register" class="transition hover:text-[#7FE7E9]">Crear una cuenta</a></li>
-            <li><a routerLink="/entrega-1" class="transition hover:text-[#7FE7E9]">Demo de la Entrega 1</a></li>
           </ul>
           <p class="mt-4 text-xs leading-relaxed text-[#CBCBCB]/50">
             Barranquilla, Atlántico · Colombia
