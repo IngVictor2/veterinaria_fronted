@@ -17,8 +17,8 @@ import { RouterLink } from '@angular/router';
               Hablemos del cuidado de tu mascota
             </h2>
             <p class="mt-4 max-w-md text-sm leading-relaxed text-[#FFFFE3]/70">
-              Agenda una cita o escríbenos para resolver dudas sobre consulta, estética y
-              prevención. Este formulario es una demostración local del proyecto.
+              Agenda una cita o escríbenos para resolver dudas sobre consulta y estética. Este
+              formulario es una demostración local del proyecto.
             </p>
 
             <ul class="mt-8 space-y-4 text-sm text-[#FFFFE3]/80">
@@ -53,7 +53,7 @@ import { RouterLink } from '@angular/router';
                 </span>
                 <span>
                   <span class="block font-semibold text-[#FFFFE3]">Atención con cita</span>
-                  <span class="text-[#FFFFE3]/60">Consulta y estética se programan desde la agenda</span>
+                  <span class="text-[#FFFFE3]/60">Consulta y estética se programan desde el sistema</span>
                 </span>
               </li>
             </ul>
@@ -108,7 +108,7 @@ import { RouterLink } from '@angular/router';
                   name="mensaje"
                   required
                   rows="4"
-                  placeholder="Ejemplo: quiero agendar una valoración preventiva para mi perro."
+                  placeholder="Ejemplo: quiero agendar una consulta general para mi perro."
                   class="textarea textarea-bordered w-full rounded-xl text-sm"
                   [value]="mensaje()"
                   (input)="mensaje.set($any($event.target).value)"
