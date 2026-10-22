@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { AgendaSectionComponent } from '../agenda-section/agenda-section.component';
 import { BlogSectionComponent } from '../blog-section/blog-section.component';
 import { ContactoSectionComponent } from '../contacto-section/contacto-section.component';
-import { EnfoqueSectionComponent } from '../enfoque-section/enfoque-section.component';
 import { HeroSectionComponent } from '../hero-section/hero-section.component';
 import { ServiciosSectionComponent } from '../servicios-section/servicios-section.component';
 import { SiteFooterComponent } from '../site-footer/site-footer.component';
@@ -15,8 +13,6 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
     HeroSectionComponent,
     ServiciosSectionComponent,
     BlogSectionComponent,
-    AgendaSectionComponent,
-    EnfoqueSectionComponent,
     ContactoSectionComponent,
     SiteFooterComponent,
   ],
@@ -35,8 +31,6 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
         <app-hero-section />
         <app-servicios-section />
         <app-blog-section />
-        <app-agenda-section />
-        <app-enfoque-section />
         <app-contacto-section />
       </main>
 
