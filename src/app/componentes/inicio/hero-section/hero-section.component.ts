@@ -1,0 +1,150 @@
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { BlogService } from '../../../servicios/blog.service';
+import { CitasDemoService } from '../../../servicios/citas-demo.service';
+
+@Component({
+  selector: 'app-hero-section',
+  imports: [RouterLink, CurrencyPipe, DatePipe],
+  template: `
+    <section
+      id="inicio"
+      class="hero-section relative overflow-hidden border-b border-white/5 px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8"
+    >
+      <div class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#0D7377]/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute -right-16 top-1/3 h-80 w-80 rounded-full bg-[#E8650A]/10 blur-3xl"></div>
+
+      <div class="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="animate-slide-up">
+          <p
+            class="inline-flex items-center gap-2 rounded-full border border-[#7FE7E9]/25 bg-[#0D7377]/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#7FE7E9]"
+          >
+            <span class="h-1.5 w-1.5 rounded-full bg-[#7FE7E9]"></span>
+            Clínica veterinaria · Barranquilla
+          </p>
+
+          <h1 class="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#FFFFE3] sm:text-5xl lg:text-6xl">
+            Cuidamos a quienes
+            <span class="block bg-gradient-to-r from-[#7FE7E9] via-[#FFFFE3] to-[#E8650A] bg-clip-text text-transparent">
+              te acompañan.
+            </span>
+          </h1>
+
+          <p class="mt-6 max-w-xl text-base leading-relaxed text-[#CBCBCB]/75 sm:text-lg">
+            Consulta, estética y prevención para perros y gatos en un solo lugar. Agenda tu cita,
+            revisa el cuidado de tu mascota y aprende con nuestro blog veterinario.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a routerLink="/login" class="btn btn-primary h-12 rounded-full px-6 text-sm font-bold">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z" />
+              </svg>
+              Agendar una cita
+            </a>
+            <a
+              href="#blog"
+              class="btn h-12 rounded-full border border-white/15 bg-white/5 px-6 text-sm font-semibold text-[#FFFFE3] hover:border-[#7FE7E9]/40 hover:bg-white/10"
+            >
+              Leer el blog
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <dl class="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6">
+            <div>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Agenda</dt>
+              <dd class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ citas.totalCitas() }}</dd>
+              <p class="text-[11px] text-[#CBCBCB]/45">citas registradas</p>
+            </div>
+            <div>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Blog</dt>
+              <dd class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ blog.totalArticulos() }}</dd>
+              <p class="text-[11px] text-[#CBCBCB]/45">artículos de cuidado</p>
+            </div>
+            <div>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#CBCBCB]/50">Horario</dt>
+              <dd class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">7–18</dd>
+              <p class="text-[11px] text-[#CBCBCB]/45">lunes a sábado</p>
+            </div>
+          </dl>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-lg animate-fade-in">
+          <div class="absolute -inset-4 rounded-[3rem] bg-gradient-to-br from-[#0D7377]/30 via-transparent to-[#E8650A]/20 blur-2xl"></div>
+
+          <div
+            class="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#123333] via-[#0c2020] to-[#071313] p-6 shadow-2xl sm:p-8"
+          >
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#7FE7E9]">Hoy en la clínica</p>
+                <p class="mt-1 text-sm font-semibold text-[#FFFFE3]">Agenda compartida</p>
+              </div>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-300">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>
+                Abierto
+              </span>
+            </div>
+
+            <div class="relative mx-auto mt-7 flex h-44 w-44 items-center justify-center rounded-full border border-[#7FE7E9]/20 bg-[#0D7377]/15">
+              <div class="absolute inset-3 rounded-full border border-dashed border-[#7FE7E9]/20 animate-float"></div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-[#7FE7E9]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11.5 3.5c0-.83-.67-1.5-1.5-1.5S8.5 2.67 8.5 3.5 9.17 5 10 5s1.5-.67 1.5-1.5zm4 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-8 3c0-.83-.67-1.5-1.5-1.5S4.5 5.67 4.5 6.5 5.17 8 6 8s1.5-.67 1.5-1.5zm12 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zM12 22c-3 0-5.5-1.5-5.5-4 0-2 1.5-3.5 3-4.5.7-.5 1.5-.8 2.5-.8s1.8.3 2.5.8c1.5 1 3 2.5 3 4.5 0 2.5-2.5 4-5.5 4z" />
+              </svg>
+            </div>
+
+            <div class="mt-7 grid grid-cols-2 gap-3">
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Por confirmar</p>
+                <p class="mt-1 text-2xl font-extrabold text-[#FFFFE3]">{{ citas.totalPendientes() }}</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/50">Ingresos</p>
+                <p class="mt-1 text-lg font-extrabold text-[#7FE7E9]">
+                  {{ citas.ingresosConfirmados() | currency: 'COP' : 'symbol' : '1.0-0' : 'es-CO' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          @if (proximaCita(); as cita) {
+            <div
+              class="absolute -bottom-6 -left-2 w-60 rounded-2xl border border-white/10 bg-[#132a2a]/95 p-4 shadow-xl backdrop-blur sm:-left-6"
+            >
+              <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#E8650A]">Próxima cita</p>
+              <p class="mt-1 truncate text-sm font-bold text-[#FFFFE3]">{{ cita.mascota }}</p>
+              <p class="mt-0.5 text-xs text-[#CBCBCB]/70">{{ cita.servicio }}</p>
+              <p class="mt-2 text-[11px] text-[#7FE7E9]">
+                {{ cita.fechaHora | date: 'EEE d MMM · h:mm a' : undefined : 'es-CO' }}
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  `,
+  styles: `
+    .hero-section {
+      background:
+        radial-gradient(circle at 12% 8%, rgba(13, 115, 119, 0.22), transparent 38%),
+        radial-gradient(circle at 88% 20%, rgba(232, 101, 10, 0.08), transparent 32%),
+        #071313;
+    }
+  `,
+})
+export class HeroSectionComponent {
+  readonly citas = inject(CitasDemoService);
+  readonly blog = inject(BlogService);
+
+  readonly proximaCita = computed(() => {
+    const pendientes = this.citas
+      .citas()
+      .filter((cita) => cita.estado === 'PENDIENTE' || cita.estado === 'CONFIRMADA')
+      .slice()
+      .sort((a, b) => a.fechaHora.localeCompare(b.fechaHora));
+
+    return pendientes[0] ?? null;
+  });
+}
