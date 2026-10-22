@@ -101,6 +101,7 @@ export class SiteHeaderComponent {
 
   readonly enlaces: ReadonlyArray<{ texto: string; href: string }> = [
     { texto: 'Inicio', href: '#inicio' },
+    { texto: 'Quiénes somos', href: '#quienes-somos' },
     { texto: 'Servicios', href: '#servicios' },
     { texto: 'Blog', href: '#blog' },
     { texto: 'Contacto', href: '#contacto' },

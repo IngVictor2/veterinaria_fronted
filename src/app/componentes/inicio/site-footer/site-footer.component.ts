@@ -30,6 +30,7 @@ import { RouterLink } from '@angular/router';
         <div>
           <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-[#FFFFE3]">Explora</h2>
           <ul class="mt-4 space-y-2 text-sm text-[#CBCBCB]/70">
+            <li><a href="#quienes-somos" class="transition hover:text-[#7FE7E9]">Quiénes somos</a></li>
             <li><a href="#servicios" class="transition hover:text-[#7FE7E9]">Servicios</a></li>
             <li><a href="#blog" class="transition hover:text-[#7FE7E9]">Blog de cuidado</a></li>
             <li><a href="#contacto" class="transition hover:text-[#7FE7E9]">Contacto</a></li>
