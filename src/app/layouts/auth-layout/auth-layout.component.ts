@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-auth-layout',
   imports: [RouterOutlet],
   template: `
-    <div class="min-h-screen bg-animated flex items-center justify-center p-4 relative overflow-hidden">
+    <div class="min-h-screen bg-animated top-fade flex items-center justify-center p-4 relative overflow-hidden">
 
       <div class="w-full max-w-md relative z-10">
         <div class="text-center mb-8 animate-slide-up">

@@ -8,7 +8,7 @@ import { AuthService } from '../../core/services/auth.service';
   selector: 'app-default-layout',
   imports: [RouterOutlet],
   template: `
-    <div class="min-h-screen bg-layout">
+    <div class="min-h-screen bg-layout top-fade">
       <div class="flex min-h-screen">
         <!-- Mobile overlay -->
         @if (sidebarOpen()) {
@@ -283,7 +283,7 @@ import { AuthService } from '../../core/services/auth.service';
   `,
   styles: `
     .bg-layout {
-      background: #FFFFFF;
+      background-color: #FFFFFF;
       min-height: 100vh;
     }
 
