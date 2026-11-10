@@ -481,8 +481,8 @@ h1, h2, h3, h4, h5, h6 {
   background: #DEE1E6;
 }
 
-/* Static wine tint that fades into the white page. */
+/* Sidebar gray that fades into the white page. */
 .top-fade {
-  background-image: radial-gradient(ellipse 100% 320px at 50% 0, rgba(157, 52, 60, 0.16), rgba(157, 52, 60, 0.05) 55%, transparent 100%);
+  background-image: radial-gradient(ellipse 100% 320px at 50% 0, #CDD2DA, rgba(205, 210, 218, 0.35) 55%, transparent 100%);
   background-repeat: no-repeat;
 }
