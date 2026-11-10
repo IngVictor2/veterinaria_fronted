@@ -219,7 +219,7 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
     .day-selecting { animation: select-day 300ms ease-out; }
     .day-deselecting { animation: deselect-day 300ms ease-out; }
     @keyframes select-day {
-      0% { transform: scale(1); background-color: rgba(157, 52, 60, 0.1); }
+      0% { transform: scale(1); background-color: #4B5563; color: #FFFFFF; }
       45% { transform: scale(0.94); }
       100% { transform: scale(1); background-color: #9D343C; }
     }
@@ -441,8 +441,8 @@ export class CalendarDayPickerComponent {
   clasesDia(day: number): string {
     const selected = this.isSelected(day);
     const disabled = this.isDisabled(day);
-    if (selected) return 'bg-primary hover:bg-primary/80 text-primary-content font-bold shadow-md cursor-pointer';
-    if (!disabled) return 'bg-transparent hover:bg-primary/10 cursor-pointer text-base-content';
+    if (selected) return 'bg-primary hover:bg-[#4B5563] text-primary-content font-bold shadow-md cursor-pointer';
+    if (!disabled) return 'bg-transparent hover:bg-[#4B5563] hover:text-white cursor-pointer text-base-content';
     return 'text-base-content/30 cursor-not-allowed';
   }
 
