@@ -501,3 +501,12 @@ h1, h2, h3, h4, h5, h6 {
 input[type="checkbox"], input[type="radio"] {
   accent-color: #9D343C;
 }
+
+/* Use the wine border instead of the browser's dark focus outline. */
+.input:focus, .input:focus-visible, .input:focus-within,
+.select:focus, .select:focus-visible, .select:focus-within,
+.textarea:focus, .textarea:focus-visible, .textarea:focus-within {
+  outline: none;
+  border-color: #9D343C !important;
+  box-shadow: 0 0 0 2px rgba(157, 52, 60, 0.12) !important;
+}
