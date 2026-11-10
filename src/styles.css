@@ -20,9 +20,8 @@
 
 /* Shared glass card style */
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(55, 65, 81, 0.08);
+  background: #E5E7EB;
+  border: 1px solid #BFC5CE;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
@@ -33,9 +32,8 @@
 
 /* Shared section card style */
 .section-card {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(55, 65, 81, 0.08);
+  background: #E5E7EB;
+  border: 1px solid #BFC5CE;
   border-radius: 1rem;
 }
 
@@ -471,4 +469,14 @@ h1, h2, h3, h4, h5, h6 {
 /* Keep decorative backgrounds static. */
 .animate-pulse-soft, .floating-shape {
   animation: none;
+}
+
+/* Give cards a clear edge against the white page. */
+.surface-card {
+  background: #E5E7EB;
+  border-color: #BFC5CE;
+  box-shadow: 0 4px 14px rgba(31, 41, 55, 0.09);
+}
+.surface-card:hover {
+  background: #DEE1E6;
 }

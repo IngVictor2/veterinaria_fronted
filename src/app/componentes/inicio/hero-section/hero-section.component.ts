@@ -72,7 +72,7 @@ import { BlogService } from '../../../servicios/blog.service';
           <div class="absolute -inset-4 rounded-[3rem] bg-white    blur-2xl"></div>
 
           <div
-            class="relative overflow-hidden rounded-[2.5rem] border border-gray-200 bg-white    p-6 shadow-2xl sm:p-8"
+            class="surface-card relative overflow-hidden rounded-[2.5rem] border border-gray-200     p-6 shadow-2xl sm:p-8"
           >
             <div class="flex items-center justify-between gap-3">
               <div>

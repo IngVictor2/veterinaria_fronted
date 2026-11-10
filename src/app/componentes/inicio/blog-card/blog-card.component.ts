@@ -8,7 +8,7 @@ import { CategoriaBlogPipe } from '../../../pipes/categoria-blog.pipe';
   imports: [DatePipe, DecimalPipe, CategoriaBlogPipe],
   template: `
     <article
-      class="group flex h-full flex-col rounded-3xl border border-gray-200 bg-gray-50 p-5 transition duration-300 hover:-translate-y-1 hover:border-[#9D343C]/25 hover:bg-gray-50 sm:p-6"
+      class="surface-card group flex h-full flex-col rounded-3xl border border-gray-200  p-5 transition duration-300 hover:-translate-y-1 hover:border-[#9D343C]/25  sm:p-6"
     >
       <div class="flex items-center justify-between gap-3">
         <span

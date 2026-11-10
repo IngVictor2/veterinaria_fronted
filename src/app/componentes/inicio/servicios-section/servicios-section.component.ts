@@ -73,7 +73,7 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
           (click)="cerrarDetalle()"
         >
           <div
-            class="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-gray-200 bg-[#FFFFFF] p-6 shadow-2xl sm:rounded-3xl sm:p-8"
+            class="surface-card max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-gray-200  p-6 shadow-2xl sm:rounded-3xl sm:p-8"
             role="dialog"
             aria-modal="true"
             [attr.aria-label]="'Detalle de ' + servicio.nombre"

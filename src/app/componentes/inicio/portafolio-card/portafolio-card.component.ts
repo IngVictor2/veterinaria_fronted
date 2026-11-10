@@ -7,7 +7,7 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
   imports: [CurrencyPipe],
   template: `
     <article
-      class="group flex h-full flex-col rounded-3xl border border-gray-200 bg-gray-50 p-6 transition duration-300 hover:-translate-y-1 hover:border-[#9D343C]/30 hover:bg-gray-50"
+      class="surface-card group flex h-full flex-col rounded-3xl border border-gray-200  p-6 transition duration-300 hover:-translate-y-1 hover:border-[#9D343C]/30 "
     >
       <div class="flex items-start justify-between gap-3">
         <span

@@ -54,7 +54,7 @@ import { Component } from '@angular/core';
         <div class="relative">
           <div class="absolute -inset-4 rounded-[2.5rem] bg-white    blur-2xl"></div>
 
-          <div class="relative rounded-[2rem] border border-gray-200 bg-gray-50 p-6 sm:p-8">
+          <div class="surface-card relative rounded-[2rem] border border-gray-200  p-6 sm:p-8">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">

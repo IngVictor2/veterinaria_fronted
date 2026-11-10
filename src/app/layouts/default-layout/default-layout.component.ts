@@ -288,8 +288,9 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .sidebar-glass {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
+      background: #CDD2DA;
+      border-right: 1px solid #AAB2BE;
+      box-shadow: 3px 0 12px rgba(31, 41, 55, 0.08);
     }
 
     .header-glass {
@@ -315,7 +316,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .nav-link {
-      color: #4B5563;
+      color: #263140;
     }
 
     .nav-link:hover {
@@ -330,7 +331,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .nav-link-inactive {
-      color: #4B5563;
+      color: #263140;
     }
 
 

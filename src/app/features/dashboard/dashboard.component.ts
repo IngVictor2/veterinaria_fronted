@@ -313,7 +313,8 @@ import { Factura } from '../../core/models/factura';
   `,
   styles: `
     .stat-card {
-      background: rgba(255, 255, 255, 0.7);
+      background: #E5E7EB;
+      border: 1px solid #BFC5CE;
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
     }
@@ -323,7 +324,8 @@ import { Factura } from '../../core/models/factura';
     }
 
     .dashboard-card {
-      background: rgba(255, 255, 255, 0.6);
+      background: #E5E7EB;
+      border: 1px solid #BFC5CE;
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
     }
@@ -347,7 +349,7 @@ import { Factura } from '../../core/models/factura';
     }
 
     .cita-item {
-      background: rgba(255, 255, 255, 0.03);
+      background: #D5DAE1;
       transition: all 0.2s ease;
     }
 
