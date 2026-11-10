@@ -247,7 +247,7 @@ import { AuthService } from '../../core/services/auth.service';
                     <span class="text-[#374151]">{{ auth.nombreCompleto() }}</span>
                   </li>
                   <li>
-                    <a (click)="navigateTo('/mi-perfil')" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">
+                    <a (click)="navigateTo('/mi-perfil')" class="profile-menu-link text-[#374151]">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
@@ -322,6 +322,17 @@ import { AuthService } from '../../core/services/auth.service';
     }
     @media (prefers-reduced-motion: reduce) {
       .sidebar-glass { transition: none; }
+    }
+
+    .profile-menu-link {
+      border-radius: 8px;
+      transition: background-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .profile-menu-link:hover, .profile-menu-link:focus-visible {
+      background-color: #E5E7EB;
+      box-shadow: inset 0 0 8px rgba(55, 65, 81, 0.08);
+      color: #1F2937;
     }
 
     .header-glass {
