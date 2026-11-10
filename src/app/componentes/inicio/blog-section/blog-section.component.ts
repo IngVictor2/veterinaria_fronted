@@ -35,7 +35,7 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
           }
         </div>
 
-        @if (destacadoVisible(); as destacado) {
+        @if (blog.articuloDestacado(); as destacado) {
           <button
             type="button"
             class="mt-9 flex w-full flex-col gap-5 rounded-3xl border border-[#9D343C]/20 bg-white    p-6 text-left transition hover:border-[#9D343C]/40 sm:flex-row sm:items-center sm:justify-between sm:p-8"
@@ -68,11 +68,11 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
             @for (opcion of categorias; track opcion.valor) {
               <button
                 type="button"
-                class="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
+                class="blog-category-filter rounded-full border px-3 py-1.5 text-xs font-semibold transition duration-200"
                 [class]="
                   blog.categoria() === opcion.valor
                     ? 'border-[#9D343C] bg-[#9D343C] text-white'
-                    : 'border-transparent text-[#374151] hover:bg-gray-50 hover:text-[#374151]'
+                    : 'border-transparent text-[#374151] hover:bg-gray-200 hover:text-[#374151]'
                 "
                 [attr.aria-pressed]="blog.categoria() === opcion.valor"
                 (click)="blog.cambiarCategoria(opcion.valor)"
@@ -260,6 +260,16 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
       }
     </section>
   `,
+  styles: `
+    .blog-category-filter:hover, .blog-category-filter:focus-visible {
+      box-shadow: 0 2px 8px rgba(55, 65, 81, 0.12);
+    }
+    .blog-category-filter[aria-pressed='true']:hover,
+    .blog-category-filter[aria-pressed='true']:focus-visible {
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(125, 41, 49, 0.35));
+      box-shadow: 0 3px 10px rgba(125, 41, 49, 0.25);
+    }
+  `,
 })
 export class BlogSectionComponent {
   readonly blog = inject(BlogService);
@@ -268,10 +278,6 @@ export class BlogSectionComponent {
 
   readonly sinFiltros = computed(
     () => this.blog.categoria() === 'TODAS' && this.blog.busqueda().trim().length === 0,
-  );
-
-  readonly destacadoVisible = computed(() =>
-    this.sinFiltros() ? this.blog.articuloDestacado() : null,
   );
 
   totalCategoria(categoria: FiltroCategoriaBlog): number {
