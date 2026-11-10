@@ -200,27 +200,15 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                       </span>
                     </span>
                   </label>
-                  <select
-                    class="select select-bordered select-sm w-full"
-                    name="confirmHoraCita"
+                  <app-search-select
+                    [value]="confirmHoraCita()"
+                    (valueChange)="confirmHoraCita.set('' + $event)"
+                    [options]="horaOptions()"
                     [disabled]="!confirmFechaCita() || horasDisponibles().length === 0"
-                    [ngModel]="confirmHoraCita()"
-                    (ngModelChange)="confirmHoraCita.set($event)"
-                    required
-                  >
-                    <option value="" disabled>
-                      {{
-                        !confirmFechaCita()
-                          ? 'Selecciona una fecha primero'
-                          : horasDisponibles().length === 0
-                            ? 'No hay horas disponibles'
-                            : 'Seleccionar hora'
-                      }}
-                    </option>
-                    @for (hora of horasDisponibles(); track hora) {
-                      <option [value]="hora">{{ formatHora(hora) }}</option>
-                    }
-                  </select>
+                    [placeholder]="!confirmFechaCita() ? 'Selecciona una fecha primero' : horasDisponibles().length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora'"
+                    [maxListHeight]="160"
+                    [required]="true"
+                  />
                 </div>
 
                 <div class="form-control">
@@ -405,6 +393,10 @@ export class CitasListComponent implements OnInit {
     const fecha = new Date(this.confirmFechaCita() + 'T00:00:00');
     return getHorarioLaboral(fecha);
   });
+
+  readonly horaOptions = computed<SearchSelectOption[]>(() =>
+    this.horasDisponibles().map((hora) => ({ value: hora, label: this.formatHora(hora) })),
+  );
 
   readonly horasDisponibles = computed(() => {
     const { inicio, fin } = this.horarioLaboral();

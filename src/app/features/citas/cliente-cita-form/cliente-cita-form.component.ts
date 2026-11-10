@@ -87,16 +87,13 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
               </h4>
               <div class="form-control">
                 <label class="label py-0"><span class="label-text font-medium text-sm">Tipo de servicio *</span></label>
-                <select
-                  class="select select-bordered select-sm w-full"
-                  name="tipoServicio"
-                  [ngModel]="tipoServicio()"
-                  (ngModelChange)="onTipoServicioChange($event)"
-                >
-                  <option value="" disabled>Seleccionar tipo</option>
-                  <option value="CONSULTA">Consulta</option>
-                  <option value="ESTETICA">Estética</option>
-                </select>
+                <app-search-select
+                  [value]="tipoServicio()"
+                  (valueChange)="onTipoServicioChange('' + $event)"
+                  [options]="tipoServicioOptions"
+                  placeholder="Seleccionar tipo"
+                  [required]="true"
+                />
                 @if (submitted() && !tipoServicio()) {
                   <label class="label py-0">
                     <span class="label-text-alt text-error text-xs">Debes seleccionar un tipo de servicio</span>
@@ -160,20 +157,15 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
                     Hora * <span class="font-normal text-base-content/50">(horario: {{ horarioLaboral().inicio }}:00 - {{ horarioLaboral().fin }}:00)</span>
                   </span>
                 </label>
-                <select
-                  class="select select-bordered select-sm w-full"
-                  name="horaCita"
+                <app-search-select
+                  [value]="horaCita()"
+                  (valueChange)="horaCita.set('' + $event)"
+                  [options]="horaOptions()"
                   [disabled]="!fechaCita() || horasDisponibles().length === 0"
-                  [ngModel]="horaCita()"
-                  (ngModelChange)="horaCita.set($event)"
-                >
-                  <option value="" disabled>
-                    {{ !fechaCita() ? 'Selecciona una fecha primero' : horasDisponibles().length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora' }}
-                  </option>
-                  @for (hora of horasDisponibles(); track hora) {
-                    <option [value]="hora">{{ formatHora(hora) }}</option>
-                  }
-                </select>
+                  [placeholder]="!fechaCita() ? 'Selecciona una fecha primero' : horasDisponibles().length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora'"
+                  [maxListHeight]="160"
+                  [required]="true"
+                />
                 @if (submitted() && !horaCita()) {
                   <label class="label py-0">
                     <span class="label-text-alt text-error text-xs">Debes seleccionar una hora</span>
@@ -243,6 +235,10 @@ export class ClienteCitaFormComponent implements OnInit {
   readonly motivo = signal('');
   readonly idMascota = signal(0);
   readonly tipoServicio = signal('');
+  readonly tipoServicioOptions: SearchSelectOption[] = [
+    { value: 'CONSULTA', label: 'Consulta' },
+    { value: 'ESTETICA', label: 'Estética' },
+  ];
   readonly idServicio = signal(0);
 
   readonly mascotas = signal<Mascota[]>([]);
@@ -313,6 +309,10 @@ export class ClienteCitaFormComponent implements OnInit {
     const fecha = new Date(this.fechaCita() + 'T00:00:00');
     return getHorarioLaboral(fecha);
   });
+
+  readonly horaOptions = computed<SearchSelectOption[]>(() =>
+    this.horasDisponibles().map((hora) => ({ value: hora, label: this.formatHora(hora) })),
+  );
 
   readonly horasDisponibles = computed(() => {
     const { inicio, fin } = this.horarioLaboral();

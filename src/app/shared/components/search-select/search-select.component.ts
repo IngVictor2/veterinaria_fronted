@@ -11,7 +11,13 @@ export interface SearchSelectOption {
   template: `
     <div class="relative">
       <!-- Display selected value -->
-      <div
+      <button
+        type="button"
+        [disabled]="disabled()"
+        [attr.aria-expanded]="isOpen()"
+        [attr.aria-label]="placeholder() || 'Seleccionar'"
+        aria-haspopup="listbox"
+        (keydown.escape)="isOpen.set(false)"
         class="flex items-center gap-2 input input-bordered input-sm w-full cursor-pointer pr-8 hover:border-[#9D343C] transition-colors"
         [class]="isOpen() ? 'border-[#9D343C]' : ''"
         (click)="toggleDropdown()"
@@ -25,13 +31,14 @@ export interface SearchSelectOption {
           <span class="text-xs text-base-content/50 truncate">{{ sublabel }}</span>
         }
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-base-content/40 flex-shrink-0 transition-transform" [class.rotate-180]="isOpen()" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-      </div>
+      </button>
 
       <!-- Dropdown -->
       @if (isOpen()) {
         <div
-          class="absolute z-50 mt-1 w-full rounded-lg shadow-xl border border-[#1F2937] overflow-hidden"
-          style="background: rgba(255, 255, 255, 0.97);"
+          class="absolute top-full left-0 z-50 mt-1 w-full rounded-lg shadow-xl border border-[#1F2937] overflow-hidden"
+          style="background: #FFFFFF;"
+          (keydown.escape)="isOpen.set(false)"
         >
           <!-- Search input -->
           <div class="p-2 border-b border-[#1F2937]">
@@ -46,7 +53,7 @@ export interface SearchSelectOption {
           </div>
 
           <!-- Options list -->
-          <div class="max-h-60 overflow-y-auto">
+          <div class="overflow-y-auto overscroll-contain" [style.max-height.px]="maxListHeight()" role="listbox">
             @if (filteredOptions().length === 0) {
               <div class="p-3 text-sm text-[#374151] text-center">
                 No se encontraron resultados
@@ -55,6 +62,8 @@ export interface SearchSelectOption {
             @for (option of filteredOptions(); track option.value) {
               <button
                 type="button"
+                role="option"
+                [attr.aria-selected]="option.value === value()"
                 class="w-full px-3 py-2.5 text-left text-sm flex items-center justify-between gap-2 transition-colors border-l-2"
                 [class]="option.value === value()
                   ? 'bg-[#9D343C]/20 text-[#374151] font-medium border-[#9D343C]'
@@ -87,6 +96,7 @@ export class SearchSelectComponent {
   readonly placeholder = input<string | undefined>(undefined);
   readonly required = input(false);
   readonly disabled = input(false);
+  readonly maxListHeight = input(240);
 
   readonly isOpen = signal(false);
   readonly searchText = signal('');
