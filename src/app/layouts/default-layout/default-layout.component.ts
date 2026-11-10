@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
@@ -379,7 +379,7 @@ import { AuthService } from '../../core/services/auth.service';
 
   `,
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit {
   readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
@@ -398,6 +398,10 @@ export class DefaultLayoutComponent {
     const nombre = this.auth.nombreCompleto();
     return nombre ? nombre.charAt(0).toUpperCase() : '';
   };
+
+  ngOnInit(): void {
+    void this.auth.fetchProfile();
+  }
 
   isActive(path: string, exact = false): boolean {
     const url = this.url();

@@ -60,7 +60,7 @@ export class AuthService {
     return MODULOS_POR_ROL[this.roles()[0]] || [];
   });
   readonly nombreUsuario = computed(() => this._usuario()?.nombreUsuario || '');
-  readonly nombreCompleto = computed(() => this._usuario()?.nombreCompleto || this._usuario()?.nombreUsuario || '');
+  readonly nombreCompleto = computed(() => this._usuario()?.nombreCompleto || 'Mi cuenta');
   readonly esProfesional = computed(() => this.hasAnyRole('VETERINARIO', 'ESTILISTA'));
 
   hasRole(role: string): boolean {
@@ -80,6 +80,10 @@ export class AuthService {
   }
 
   async fetchProfile(): Promise<void> {
+    if (!this.hasRole('CLIENTE')) {
+      await this.cargarEmpleadoActual();
+      return;
+    }
     try {
       const c = await firstValueFrom(this.clientesApi.getProfile());
       const fullName = [c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido]
@@ -98,15 +102,27 @@ export class AuthService {
 
   async cargarEmpleadoActual(): Promise<void> {
     if (this._idEmpleadoActual()) return;
-    const correo = this._usuario()?.correo;
-    if (!correo) return;
+    const usuario = this._usuario();
+    if (!usuario) return;
+    const correo = usuario.correo?.trim().toLowerCase();
     try {
       const empleados = await firstValueFrom(this.empleadosApi.getAll());
-      const emp = (empleados || []).find((e) => e.correo?.toLowerCase() === correo.toLowerCase());
-      if (emp) {
+      const emp = (empleados || []).find((e) => e.idUsuario === usuario.idUsuario)
+        ?? (correo ? (empleados || []).find((e) => e.correo?.trim().toLowerCase() === correo) : undefined);
+      if (emp && this._usuario()?.idUsuario === usuario.idUsuario) {
         this._idEmpleadoActual.set(emp.idEmpleado);
         this._cargoEmpleadoActual.set(emp.nombreCargo || '');
         this._rolesEmpleadoActual.set(emp.roles || []);
+        const nombreCompleto = [emp.primerNombre, emp.segundoNombre, emp.primerApellido, emp.segundoApellido]
+          .filter((parte) => parte?.trim())
+          .map((parte) => parte!.trim())
+          .join(' ');
+        const actual = this._usuario();
+        if (nombreCompleto && actual) {
+          const actualizado = { ...actual, nombreCompleto };
+          this._usuario.set(actualizado);
+          localStorage.setItem('usuario', JSON.stringify(actualizado));
+        }
       }
     } catch {
       // no se pudo identificar al empleado
@@ -122,6 +138,7 @@ export class AuthService {
   async login(data: LoginRequest): Promise<void> {
     const response = await firstValueFrom(this.authApi.login(data));
     const { token: newToken, ...userData } = response;
+    this.limpiarEmpleadoActual();
     this._token.set(newToken);
     this._usuario.set(userData as UsuarioSesion);
     localStorage.setItem('token', newToken);
