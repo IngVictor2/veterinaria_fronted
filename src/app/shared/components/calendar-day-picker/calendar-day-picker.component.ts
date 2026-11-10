@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, input, model, signal, untracked } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  model,
+  signal,
+  untracked,
+} from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { CitasApiService } from '../../../core/services/citas-api.service';
 import { Cita, formatHora, getDuracionServicio } from '../../../core/models/cita';
@@ -9,57 +18,53 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
   selector: 'app-calendar-day-picker',
   template: `
     <div class="calendar-container">
-      <!-- Información de la fecha seleccionada -->
-      @if (selectedDay(); as dia) {
-        <div
-          class="mb-4 bg-white border border-base-300 rounded-xl shadow-sm p-3"
-          aria-live="polite"
-        >
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-sm">
-              {{ selectedDateLabel(dia) }}
-            </span>
-            <span
-              class="badge badge-xs"
-              [class]="getDayStatus(dia) === 'free' ? 'badge-success' : getDayStatus(dia) === 'partial' ? 'badge-warning' : 'badge-error'"
-            >
-              {{ getDayStatus(dia) === 'free' ? 'Disponible' : getDayStatus(dia) === 'partial' ? 'Parcial' : 'Lleno' }}
-            </span>
-          </div>
-
-          @if (getHorasOcupadas(dia).length === 0) {
-            <div class="text-xs text-base-content/50">
-              No hay citas agendadas para este día
-            </div>
-          } @else {
-            <div class="space-y-1 max-h-40 overflow-y-auto">
-              <div class="text-xs font-semibold text-base-content/60 mb-1">Horas ocupadas:</div>
-              @for (hora of getHorasOcupadas(dia); track $index) {
-                <div class="text-xs bg-base-200 rounded px-2 py-1 flex items-center gap-1.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-base-content/40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{{ hora }}</span>
-                </div>
-              }
-            </div>
-          }
-        </div>
-      }
-
       <!-- Header del calendario -->
       <div class="flex items-center justify-between mb-3">
-        <button type="button" class="btn btn-ghost btn-sm btn-circle" aria-label="Mes anterior" (click)="prevMonth()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm btn-circle"
+          aria-label="Mes anterior"
+          (click)="prevMonth()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
         <div class="flex items-center">
-          <span class="font-bold text-sm">{{ monthNames[currentMonth()] }}</span>
+          <span class="font-bold text-sm"
+            >{{ monthNames[currentMonth()] }} {{ currentYear() }}</span
+          >
         </div>
-        <button type="button" class="btn btn-ghost btn-sm btn-circle" aria-label="Mes siguiente" (click)="nextMonth()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <button
+          type="button"
+          class="btn btn-ghost btn-sm btn-circle"
+          aria-label="Mes siguiente"
+          (click)="nextMonth()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
       </div>
@@ -101,12 +106,83 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
                   </div>
                 }
               </button>
+              <!-- Información encima del día seleccionado -->
+              @if (isSelected(day)) {
+                <div
+                  class="absolute bottom-full left-0 z-50 mb-3 w-full pointer-events-none"
+                  aria-live="polite"
+                >
+                  <div
+                    class="day-information relative bg-white border border-base-300 rounded-xl shadow-xl p-3"
+                    [class]="informationAlignment(day)"
+                  >
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="font-bold text-sm">
+                        {{ selectedDateLabel(day) }}
+                      </span>
+                      <span
+                        class="badge badge-xs"
+                        [class]="
+                          getDayStatus(day) === 'free'
+                            ? 'badge-success'
+                            : getDayStatus(day) === 'partial'
+                              ? 'badge-warning'
+                              : 'badge-error'
+                        "
+                      >
+                        {{
+                          getDayStatus(day) === 'free'
+                            ? 'Disponible'
+                            : getDayStatus(day) === 'partial'
+                              ? 'Parcial'
+                              : 'Lleno'
+                        }}
+                      </span>
+                    </div>
+
+                    @if (getHorasOcupadas(day).length === 0) {
+                      <div class="text-xs text-base-content/50">
+                        No hay citas agendadas para este día
+                      </div>
+                    } @else {
+                      <div class="space-y-1 max-h-40 overflow-y-auto">
+                        <div class="text-xs font-semibold text-base-content/60 mb-1">
+                          Horas ocupadas:
+                        </div>
+                        @for (hora of getHorasOcupadas(day); track $index) {
+                          <div
+                            class="text-xs bg-base-200 rounded px-2 py-1 flex items-center gap-1.5"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-3 w-3 text-base-content/40 shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            <span>{{ hora }}</span>
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <div
+                    class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r border-b border-base-300 rotate-45"
+                  ></div>
+                </div>
+              }
             } @else {
               <div class="w-full aspect-square"></div>
             }
           </div>
         }
-
       </div>
 
       <!-- Loading indicator -->
@@ -115,10 +191,6 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
           <span class="loading loading-spinner loading-xs text-primary"></span>
         </div>
       }
-
-      <div class="mt-3 text-left text-xs font-semibold text-base-content/60">
-        Año {{ currentYear() }}
-      </div>
 
       <!-- Leyenda -->
       <div class="flex items-center justify-center gap-4 mt-2 text-xs text-base-content/50">
@@ -137,6 +209,11 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
       </div>
     </div>
   `,
+  styles: `
+    .day-information {
+      width: min(280px, calc(100vw - 64px));
+    }
+  `,
 })
 export class CalendarDayPickerComponent {
   private readonly citasApi = inject(CitasApiService);
@@ -148,8 +225,18 @@ export class CalendarDayPickerComponent {
   readonly minDate = input<string | undefined>(undefined);
 
   readonly monthNames = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
   ];
 
   readonly dayNames = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
@@ -160,15 +247,6 @@ export class CalendarDayPickerComponent {
   readonly currentYear = signal(this.today.getFullYear());
   readonly citasPorDia = signal(new Map<string, Cita[]>());
   readonly loadingCitas = signal(false);
-
-  readonly selectedDay = computed<number | null>(() => {
-    const value = this.value();
-    if (!value) return null;
-    const date = new Date(value + 'T00:00:00');
-    return date.getFullYear() === this.currentYear() && date.getMonth() === this.currentMonth()
-      ? date.getDate()
-      : null;
-  });
 
   readonly daysInMonth = computed(() =>
     new Date(this.currentYear(), this.currentMonth() + 1, 0).getDate(),
@@ -196,7 +274,10 @@ export class CalendarDayPickerComponent {
       const val = this.value();
       if (val) {
         const d = new Date(val + 'T00:00:00');
-        if (d.getMonth() !== untracked(this.currentMonth) || d.getFullYear() !== untracked(this.currentYear)) {
+        if (
+          d.getMonth() !== untracked(this.currentMonth) ||
+          d.getFullYear() !== untracked(this.currentYear)
+        ) {
           this.currentMonth.set(d.getMonth());
           this.currentYear.set(d.getFullYear());
         }
@@ -236,7 +317,11 @@ export class CalendarDayPickerComponent {
 
   isPastDay(day: number): boolean {
     const date = new Date(this.currentYear(), this.currentMonth(), day);
-    const todayStart = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
+    const todayStart = new Date(
+      this.today.getFullYear(),
+      this.today.getMonth(),
+      this.today.getDate(),
+    );
     return date < todayStart;
   }
 
@@ -333,9 +418,16 @@ export class CalendarDayPickerComponent {
   clasesDia(day: number): string {
     const selected = this.isSelected(day);
     const disabled = this.isDisabled(day);
-    if (selected) return 'bg-primary text-primary-content font-bold shadow-md';
+    if (selected) return 'bg-primary text-primary-content font-bold shadow-md cursor-pointer';
     if (!disabled) return 'hover:bg-base-200 cursor-pointer text-base-content';
     return 'text-base-content/30 cursor-not-allowed';
+  }
+
+  informationAlignment(day: number): string {
+    const column = (this.firstDayOfWeek() + day - 1) % 7;
+    if (column < 2) return 'left-0';
+    if (column > 4) return 'left-full -translate-x-full';
+    return 'left-1/2 -translate-x-1/2';
   }
 
   selectedDateLabel(day: number): string {
@@ -385,7 +477,8 @@ export class CalendarDayPickerComponent {
       for (let dia = 1; dia <= diasEnMes; dia++) {
         const key = this.formatDateKey(anio, mes, dia);
         const date = new Date(anio, mes, dia);
-        if (date < new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate())) continue;
+        if (date < new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()))
+          continue;
 
         const promesa = firstValueFrom(this.citasApi.getDisponibilidad(key))
           .then((citas) => {
