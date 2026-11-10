@@ -27,6 +27,11 @@ import { AuthService } from '../../core/services/auth.service';
               <img src="/logo.svg" alt="VetClinic" class="w-8 h-8 rounded-full" />
               <span class="sidebar-label">VetClinic</span>
             </h1>
+              <button type="button" class="sidebar-toggle hidden lg:flex" aria-controls="sidebar-navigation" [attr.aria-expanded]="!sidebarCollapsed()" [attr.aria-label]="sidebarCollapsed() ? 'Expandir menú' : 'Contraer menú'" [title]="sidebarCollapsed() ? 'Expandir menú' : 'Contraer menú'" (click)="sidebarCollapsed.set(!sidebarCollapsed())">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" [class.rotate-180]="sidebarCollapsed()" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 7-5 5 5 5" />
+                </svg>
+              </button>
             <button type="button" aria-label="Cerrar menú" class="btn btn-ghost btn-sm btn-circle lg:hidden" (click)="closeSidebar()">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -226,11 +231,6 @@ import { AuthService } from '../../core/services/auth.service';
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <button type="button" class="sidebar-toggle hidden lg:flex" aria-controls="sidebar-navigation" [attr.aria-expanded]="!sidebarCollapsed()" [attr.aria-label]="sidebarCollapsed() ? 'Expandir menú' : 'Contraer menú'" [title]="sidebarCollapsed() ? 'Expandir menú' : 'Contraer menú'" (click)="sidebarCollapsed.set(!sidebarCollapsed())">
-                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" [class.rotate-180]="sidebarCollapsed()" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 7-5 5 5 5" />
-                </svg>
-              </button>
             </div>
             <div class="flex items-center gap-3">
               <span class="text-sm text-[#374151] hidden sm:inline">{{ auth.nombreCompleto() }}</span>
@@ -310,7 +310,14 @@ import { AuthService } from '../../core/services/auth.service';
     @media (min-width: 1024px) {
       .sidebar-collapsed { width: 72px; }
       .sidebar-collapsed .sidebar-label { display: none; }
-      .sidebar-collapsed .sidebar-brand { justify-content: center; }
+      .sidebar-collapsed .sidebar-brand {
+        height: auto;
+        min-height: 104px;
+        padding-block: 12px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+      }
       .sidebar-collapsed .nav-link { justify-content: center; padding-inline: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
