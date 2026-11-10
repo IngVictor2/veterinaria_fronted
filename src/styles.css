@@ -487,3 +487,17 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #BFC5CE;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 }
+
+/* Keep DaisyUI controls and semantic utilities on the clinic palette. */
+:root, [data-theme="light"] {
+  --color-primary: #9D343C;
+  --color-primary-content: #FFFFFF;
+  --color-accent: #9D343C;
+  --color-accent-content: #FFFFFF;
+  --color-info: #9D343C;
+  --color-info-content: #FFFFFF;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: #9D343C;
+}
