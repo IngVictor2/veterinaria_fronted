@@ -441,8 +441,8 @@ export class CalendarDayPickerComponent {
   clasesDia(day: number): string {
     const selected = this.isSelected(day);
     const disabled = this.isDisabled(day);
-    if (selected) return 'bg-primary hover:bg-[#7D2931] text-primary-content font-bold shadow-md cursor-pointer';
-    if (!disabled) return 'bg-transparent hover:bg-[#7D2931] hover:text-white cursor-pointer text-base-content';
+    if (selected) return 'bg-primary hover:bg-[#4B5563] text-primary-content font-bold shadow-md cursor-pointer';
+    if (!disabled) return 'bg-transparent hover:bg-[#D1D5DB] cursor-pointer text-base-content';
     return 'bg-transparent text-base-content/30 cursor-not-allowed';
   }
 
