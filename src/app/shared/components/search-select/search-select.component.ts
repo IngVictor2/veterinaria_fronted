@@ -12,8 +12,8 @@ export interface SearchSelectOption {
     <div class="relative">
       <!-- Display selected value -->
       <div
-        class="flex items-center gap-2 input input-bordered input-sm w-full cursor-pointer pr-8 hover:border-[#0D7377] transition-colors"
-        [class]="isOpen() ? 'border-[#0D7377]' : ''"
+        class="flex items-center gap-2 input input-bordered input-sm w-full cursor-pointer pr-8 hover:border-[#9D343C] transition-colors"
+        [class]="isOpen() ? 'border-[#9D343C]' : ''"
         (click)="toggleDropdown()"
       >
         @if (selectedOption(); as selected) {
@@ -30,11 +30,11 @@ export interface SearchSelectOption {
       <!-- Dropdown -->
       @if (isOpen()) {
         <div
-          class="absolute z-50 mt-1 w-full rounded-lg shadow-xl border border-[#4A4A4A] overflow-hidden"
-          style="background: rgba(30, 30, 30, 0.97);"
+          class="absolute z-50 mt-1 w-full rounded-lg shadow-xl border border-[#1F2937] overflow-hidden"
+          style="background: rgba(255, 255, 255, 0.97);"
         >
           <!-- Search input -->
-          <div class="p-2 border-b border-[#4A4A4A]">
+          <div class="p-2 border-b border-[#1F2937]">
             <input
               #searchInput
               type="text"
@@ -48,7 +48,7 @@ export interface SearchSelectOption {
           <!-- Options list -->
           <div class="max-h-60 overflow-y-auto">
             @if (filteredOptions().length === 0) {
-              <div class="p-3 text-sm text-[#CBCBCB]/60 text-center">
+              <div class="p-3 text-sm text-[#374151] text-center">
                 No se encontraron resultados
               </div>
             }
@@ -57,18 +57,18 @@ export interface SearchSelectOption {
                 type="button"
                 class="w-full px-3 py-2.5 text-left text-sm flex items-center justify-between gap-2 transition-colors border-l-2"
                 [class]="option.value === value()
-                  ? 'bg-[#0D7377]/20 text-[#FFFFE3] font-medium border-[#0D7377]'
-                  : 'text-[#CBCBCB] hover:bg-[#0D7377]/10 hover:text-[#FFFFE3] border-transparent'"
+                  ? 'bg-[#9D343C]/20 text-[#374151] font-medium border-[#9D343C]'
+                  : 'text-[#374151] hover:bg-[#9D343C]/10 hover:text-[#374151] border-transparent'"
                 (click)="select(option.value)"
               >
                 <div class="flex items-center gap-2 min-w-0">
                   @if (option.value === value()) {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#0D7377] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#9D343C] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                   }
                   <span class="truncate">{{ option.label }}</span>
                 </div>
                 @if (option.sublabel) {
-                  <span class="text-xs text-[#CBCBCB]/50 truncate flex-shrink-0">{{ option.sublabel }}</span>
+                  <span class="text-xs text-[#374151] truncate flex-shrink-0">{{ option.sublabel }}</span>
                 }
               </button>
             }

@@ -40,7 +40,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Citas</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Citas</h1>
         @if (!esEmpleado()) {
           <button class="btn btn-primary" (click)="router.navigate(['/citas/nueva'])">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -7,11 +7,11 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
   imports: [CurrencyPipe],
   template: `
     <article
-      class="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#7FE7E9]/30 hover:bg-white/[0.06]"
+      class="group flex h-full flex-col rounded-3xl border border-gray-200 bg-gray-50 p-6 transition duration-300 hover:-translate-y-1 hover:border-[#9D343C]/30 hover:bg-gray-50"
     >
       <div class="flex items-start justify-between gap-3">
         <span
-          class="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#7FE7E9]/20 bg-[#0D7377]/20 text-[#7FE7E9]"
+          class="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#9D343C]/20 bg-[#9D343C]/20 text-[#9D343C]"
           aria-hidden="true"
         >
           @switch (servicio().icono) {
@@ -66,21 +66,21 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
         </span>
       </div>
 
-      <h3 class="mt-5 text-lg font-bold text-[#FFFFE3]">{{ servicio().nombre }}</h3>
-      <p class="mt-2 flex-1 text-sm leading-relaxed text-[#CBCBCB]/65">{{ servicio().descripcion }}</p>
+      <h3 class="mt-5 text-lg font-bold text-[#374151]">{{ servicio().nombre }}</h3>
+      <p class="mt-2 flex-1 text-sm leading-relaxed text-[#374151]">{{ servicio().descripcion }}</p>
 
-      <div class="mt-5 flex items-end justify-between gap-3 border-t border-white/10 pt-4">
+      <div class="mt-5 flex items-end justify-between gap-3 border-t border-gray-200 pt-4">
         <div>
-          <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/40">Desde</p>
-          <p class="text-lg font-extrabold text-[#FFFFE3]">
+          <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">Desde</p>
+          <p class="text-lg font-extrabold text-[#374151]">
             {{ servicio().precioDesde | currency: 'COP' : 'symbol' : '1.0-0' : 'es-CO' }}
           </p>
-          <p class="text-[11px] text-[#CBCBCB]/45">{{ servicio().duracion }}</p>
+          <p class="text-[11px] text-[#374151]">{{ servicio().duracion }}</p>
         </div>
 
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-full border border-[#7FE7E9]/25 bg-[#0D7377]/15 px-3 py-2 text-xs font-bold text-[#7FE7E9] transition hover:bg-[#0D7377]/30"
+          class="inline-flex items-center gap-1.5 rounded-full border border-[#9D343C]/25 bg-[#9D343C]/15 px-3 py-2 text-xs font-bold text-[#9D343C] transition hover:bg-[#9D343C]/30"
           (click)="verDetalle.emit(servicio())"
         >
           Ver detalle
@@ -103,9 +103,9 @@ export class PortafolioCardComponent {
   etiquetaTipo(): string {
     switch (this.servicio().tipo) {
       case 'CONSULTA':
-        return 'border-[#7FE7E9]/25 bg-[#7FE7E9]/10 text-[#7FE7E9]';
+        return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
       default:
-        return 'border-[#E8650A]/25 bg-[#E8650A]/10 text-[#FFB27A]';
+        return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
     }
   }
 }

@@ -13,7 +13,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Citas</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Citas</h1>
         <div class="flex items-center gap-2">
           <select
             class="select select-bordered select-sm h-10 text-sm min-w-[140px]"

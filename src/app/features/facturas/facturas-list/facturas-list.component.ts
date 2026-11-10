@@ -23,7 +23,7 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Facturas</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Facturas</h1>
       </div>
 
       @if (error()) {

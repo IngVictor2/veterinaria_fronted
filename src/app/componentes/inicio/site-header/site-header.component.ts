@@ -6,19 +6,19 @@ import { BlogService } from '../../../servicios/blog.service';
   selector: 'app-site-header',
   imports: [RouterLink],
   template: `
-    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#071313]/85 backdrop-blur-xl">
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-[#FFFFFF]/85 backdrop-blur-xl">
       <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <a routerLink="/" class="flex items-center gap-3" (click)="cerrarMenu()">
           <img
             src="/logo.svg"
             alt="VetClinic"
-            class="h-11 w-11 rounded-full border border-[#7FE7E9]/30 bg-[#0D7377]/20 p-1"
+            class="h-11 w-11 rounded-full border border-[#9D343C]/30 bg-[#9D343C]/20 p-1"
           />
           <span class="min-w-0">
-            <span class="block text-lg font-extrabold leading-tight tracking-tight text-[#FFFFE3]">
+            <span class="block text-lg font-extrabold leading-tight tracking-tight text-[#374151]">
               VetClinic
             </span>
-            <span class="hidden text-[10px] font-semibold uppercase tracking-[0.26em] text-[#7FE7E9] sm:block">
+            <span class="hidden text-[10px] font-semibold uppercase tracking-[0.26em] text-[#9D343C] sm:block">
               Clínica veterinaria
             </span>
           </span>
@@ -28,7 +28,7 @@ import { BlogService } from '../../../servicios/blog.service';
           @for (enlace of enlaces; track enlace.href) {
             <a
               [href]="enlace.href"
-              class="rounded-full px-3 py-2 text-sm font-medium text-[#CBCBCB] transition hover:bg-white/5 hover:text-[#FFFFE3]"
+              class="rounded-full px-3 py-2 text-sm font-medium text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
             >
               {{ enlace.texto }}
             </a>
@@ -39,7 +39,7 @@ import { BlogService } from '../../../servicios/blog.service';
           @if (blog.totalGuardados() > 0) {
             <a
               href="#blog"
-              class="flex items-center gap-1.5 rounded-full border border-[#E8650A]/40 bg-[#E8650A]/10 px-3 py-1.5 text-xs font-semibold text-[#FFB27A] transition hover:bg-[#E8650A]/20"
+              class="flex items-center gap-1.5 rounded-full border border-[#9D343C]/40 bg-[#9D343C]/10 px-3 py-1.5 text-xs font-semibold text-[#9D343C] transition hover:bg-[#9D343C]/20"
               [attr.aria-label]="'Artículos guardados: ' + blog.totalGuardados()"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -58,7 +58,7 @@ import { BlogService } from '../../../servicios/blog.service';
 
           <button
             type="button"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-[#FFFFE3] transition hover:bg-white/5 lg:hidden"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-[#374151] transition hover:bg-gray-50 lg:hidden"
             [attr.aria-expanded]="menuAbierto()"
             aria-controls="menu-movil"
             aria-label="Abrir menú de navegación"
@@ -78,12 +78,12 @@ import { BlogService } from '../../../servicios/blog.service';
       </div>
 
       @if (menuAbierto()) {
-        <nav id="menu-movil" class="border-t border-white/10 bg-[#071313] px-4 py-3 lg:hidden" aria-label="Navegación móvil">
+        <nav id="menu-movil" class="border-t border-gray-200 bg-[#FFFFFF] px-4 py-3 lg:hidden" aria-label="Navegación móvil">
           <div class="flex flex-col gap-1">
             @for (enlace of enlaces; track enlace.href) {
               <a
                 [href]="enlace.href"
-                class="rounded-xl px-3 py-2.5 text-sm font-medium text-[#CBCBCB] transition hover:bg-white/5 hover:text-[#FFFFE3]"
+                class="rounded-xl px-3 py-2.5 text-sm font-medium text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
                 (click)="cerrarMenu()"
               >
                 {{ enlace.texto }}

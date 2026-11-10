@@ -21,12 +21,12 @@ import { AuthService } from '../../core/services/auth.service';
           [class]="sidebarOpen() ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
         >
           <div class="p-4 flex items-center justify-between">
-            <h1 class="text-xl font-bold text-[#FFFFE3] flex items-center gap-2">
+            <h1 class="text-xl font-bold text-[#374151] flex items-center gap-2">
               <img src="/logo.svg" alt="VetClinic" class="w-8 h-8 rounded-full" />
               VetClinic
             </h1>
             <button class="btn btn-ghost btn-sm btn-circle lg:hidden" (click)="closeSidebar()">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#CBCBCB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -199,8 +199,8 @@ import { AuthService } from '../../core/services/auth.service';
 
             <!-- ADMIN: Roles y Permisos -->
             @if (auth.hasModule('ROLES')) {
-              <div class="pt-2 mt-2 border-t border-white/10">
-                <p class="px-3 py-1 text-xs font-semibold text-[#CBCBCB]/50 uppercase tracking-wide">Admin</p>
+              <div class="pt-2 mt-2 border-t border-gray-200">
+                <p class="px-3 py-1 text-xs font-semibold text-[#374151] uppercase tracking-wide">Admin</p>
                 <a
                   (click)="navigateTo('/admin/roles')"
                   class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer"
@@ -239,21 +239,21 @@ import { AuthService } from '../../core/services/auth.service';
               </button>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-sm text-[#CBCBCB] hidden sm:inline">{{ auth.nombreCompleto() }}</span>
+              <span class="text-sm text-[#374151] hidden sm:inline">{{ auth.nombreCompleto() }}</span>
               <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                  <div class="w-10 rounded-full bg-gradient-to-br from-[#0D7377] to-[#4A4A4A] flex items-center justify-center shadow-md">
-                    <span class="text-[#FFFFE3] font-bold text-sm">
+                  <div class="w-10 rounded-full bg-gradient-to-br from-[#9D343C] to-[#7D2931] flex items-center justify-center shadow-md">
+                    <span class="text-white font-bold text-sm">
                       {{ inicialUsuario() }}
                     </span>
                   </div>
                 </div>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52">
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow-lg bg-[#FFFFFF] rounded-xl w-52">
                   <li class="sm:hidden">
-                    <span class="text-[#CBCBCB]">{{ auth.nombreCompleto() }}</span>
+                    <span class="text-[#374151]">{{ auth.nombreCompleto() }}</span>
                   </li>
                   <li>
-                    <a (click)="navigateTo('/mi-perfil')" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">
+                    <a (click)="navigateTo('/mi-perfil')" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
@@ -261,7 +261,7 @@ import { AuthService } from '../../core/services/auth.service';
                     </a>
                   </li>
                   <li>
-                    <a (click)="handleLogout()" class="text-[#CBCBCB] hover:bg-red-500/20 hover:text-red-400">
+                    <a (click)="handleLogout()" class="text-[#374151] hover:bg-red-500/20 hover:text-red-700">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
@@ -283,19 +283,17 @@ import { AuthService } from '../../core/services/auth.service';
   `,
   styles: `
     .bg-layout {
-      background: linear-gradient(-45deg, #0a1a1a, #0d2020, #0D7377, #0a1a1a);
-      background-size: 400% 400%;
-      animation: gradient-shift 15s ease infinite;
+      background: #FFFFFF;
       min-height: 100vh;
     }
 
     .sidebar-glass {
-      background: rgba(30, 30, 30, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
     }
 
     .header-glass {
-      background: rgba(30, 30, 30, 0.9);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
     }
 
@@ -306,40 +304,36 @@ import { AuthService } from '../../core/services/auth.service';
       align-items: center;
       justify-content: center;
       border-radius: 10px;
-      background: rgba(13, 115, 119, 0.2);
-      color: #FFFFE3;
-      border: 1px solid rgba(13, 115, 119, 0.3);
+      background: rgba(157, 52, 60, 0.2);
+      color: #1F2937;
+      border: 1px solid rgba(157, 52, 60, 0.3);
       transition: all 0.2s ease;
     }
 
     .hamburger-btn:hover {
-      background: rgba(13, 115, 119, 0.4);
+      background: rgba(157, 52, 60, 0.4);
     }
 
     .nav-link {
-      color: #CBCBCB;
+      color: #4B5563;
     }
 
     .nav-link:hover {
-      background: rgba(13, 115, 119, 0.15);
-      color: #FFFFE3;
+      background: rgba(157, 52, 60, 0.15);
+      color: #1F2937;
     }
 
     .nav-link-active {
-      background: rgba(13, 115, 119, 0.2);
-      color: #FFFFE3;
+      background: rgba(157, 52, 60, 0.2);
+      color: #1F2937;
       font-weight: 600;
     }
 
     .nav-link-inactive {
-      color: #CBCBCB;
+      color: #4B5563;
     }
 
-    @keyframes gradient-shift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+
   `,
 })
 export class DefaultLayoutComponent {

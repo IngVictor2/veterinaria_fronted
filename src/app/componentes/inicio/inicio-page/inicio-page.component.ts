@@ -21,12 +21,12 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
   template: `
     <a
       href="#contenido"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-[#FFFFE3] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#071313]"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-[#F3F4F6] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#1F2937]"
     >
       Saltar al contenido
     </a>
 
-    <div class="min-h-screen bg-[#071313]">
+    <div class="min-h-screen bg-[#FFFFFF]">
       <app-site-header />
 
       <main id="contenido">

@@ -41,7 +41,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </svg>
           </button>
           <div class="flex-1">
-            <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Factura #{{ factura.idFactura }}</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-[#374151]">Factura #{{ factura.idFactura }}</h1>
             <p class="text-sm text-base-content/50">Detalle de la factura</p>
           </div>
           @if (factura.estadoFactura === 'PENDIENTE') {
@@ -61,9 +61,9 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
                 </svg>
               </div>
-              <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
+              <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#FFFFFF] rounded-xl w-52 z-50">
                 <li>
-                  <a (click)="showAnulDialog.set(true)" class="text-red-400 hover:bg-red-500/20">Anular</a>
+                  <a (click)="showAnulDialog.set(true)" class="text-red-700 hover:bg-red-500/20">Anular</a>
                 </li>
               </ul>
             </div>
@@ -72,14 +72,14 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
         <!-- Info Card -->
         <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
+          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+            <div class="w-16 h-16 rounded-full bg-white from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
               </svg>
             </div>
             <div class="flex-1">
-              <h2 class="text-lg font-bold text-[#FFFFE3]">Factura #{{ factura.idFactura }}</h2>
+              <h2 class="text-lg font-bold text-[#374151]">Factura #{{ factura.idFactura }}</h2>
               <p class="text-sm text-base-content/50">{{ factura.nombreCliente }}</p>
             </div>
             <div class="text-right">
@@ -145,7 +145,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   </tr>
                 }
                 <tr class="border-t border-base-300">
-                  <td colspan="3" class="text-right font-bold text-[#FFFFE3]">Total</td>
+                  <td colspan="3" class="text-right font-bold text-[#374151]">Total</td>
                   <td class="text-right font-extrabold text-primary text-lg">{{ formatCurrency(factura.total) }}</td>
                 </tr>
               </tfoot>
@@ -157,11 +157,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
       <!-- Modal de pago -->
       @if (showPagoModal()) {
         <dialog class="modal modal-open">
-          <div class="modal-box bg-[#1a1a2e] max-w-sm p-0">
+          <div class="modal-box bg-[#FFFFFF] max-w-sm p-0">
             <div class="px-5 pt-5 pb-4">
               <div class="flex items-center justify-between mb-4">
-                <h3 class="font-bold text-lg text-[#FFFFE3]">Pagar factura #{{ factura()?.idFactura }}</h3>
-                <button class="btn btn-ghost btn-circle btn-xs text-base-content/40 hover:text-[#FFFFE3]" (click)="cerrarPago()">
+                <h3 class="font-bold text-lg text-[#374151]">Pagar factura #{{ factura()?.idFactura }}</h3>
+                <button class="btn btn-ghost btn-circle btn-xs text-base-content/40 hover:text-[#374151]" (click)="cerrarPago()">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -174,7 +174,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 </div>
               }
 
-              <div class="bg-white/5 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
+              <div class="bg-gray-50 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
                 <span class="text-xs text-base-content/50 uppercase tracking-wider">Total</span>
                 <span class="text-lg font-extrabold text-primary">{{ formatCurrency(factura()?.total ?? 0) }}</span>
               </div>
@@ -187,7 +187,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   @for (m of metodosPago(); track m.idMetodoPago) {
                     <label
                       class="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer transition-all"
-                      [class]="metodoPagoSeleccionado() === m.idMetodoPago ? 'bg-primary/10 border border-primary/30' : 'bg-white/5 border border-transparent hover:bg-white/10'"
+                      [class]="metodoPagoSeleccionado() === m.idMetodoPago ? 'bg-primary/10 border border-primary/30' : 'bg-gray-50 border border-transparent hover:bg-gray-50'"
                       (click)="metodoPagoSeleccionado.set(m.idMetodoPago)"
                     >
                       <input
@@ -198,7 +198,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                         [ngModel]="metodoPagoSeleccionado()"
                         (ngModelChange)="metodoPagoSeleccionado.set($event)"
                       />
-                      <span class="text-sm text-[#FFFFE3]">{{ m.descripcion || m.nombre }}</span>
+                      <span class="text-sm text-[#374151]">{{ m.descripcion || m.nombre }}</span>
                     </label>
                   }
                 </div>

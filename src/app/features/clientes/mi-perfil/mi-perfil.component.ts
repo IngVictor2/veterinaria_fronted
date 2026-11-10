@@ -21,7 +21,7 @@ import { Empleado } from '../../../core/models/empleado';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mi Perfil</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mi Perfil</h1>
       </div>
 
       @if (error()) {
@@ -48,7 +48,7 @@ import { Empleado } from '../../../core/models/empleado';
             <div class="card-body">
               <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="avatar placeholder">
-                  <div class="bg-gradient-to-br from-[#0D7377] to-[#4A4A4A] text-[#FFFFE3] rounded-full w-24 h-24 flex items-center justify-center shadow-lg">
+                  <div class="bg-white   text-[#374151] rounded-full w-24 h-24 flex items-center justify-center shadow-lg">
                     <span class="text-3xl font-bold">{{ initials() }}</span>
                   </div>
                 </div>
@@ -305,7 +305,7 @@ import { Empleado } from '../../../core/models/empleado';
                     />
                     @if (confirmPassword() && nuevaPassword() !== confirmPassword()) {
                       <label class="label">
-                        <span class="label-text-alt text-red-400 text-xs">Las contraseñas no coinciden</span>
+                        <span class="label-text-alt text-red-700 text-xs">Las contraseñas no coinciden</span>
                       </label>
                     }
                   </div>

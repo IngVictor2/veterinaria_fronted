@@ -12,7 +12,7 @@ const MAX_MASCOTAS = 5;
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Mascotas</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Mascotas</h1>
         <button class="btn btn-primary gap-2" (click)="handleNuevaMascota()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -90,8 +90,8 @@ const MAX_MASCOTAS = 5;
 
     @if (showLimitDialog()) {
       <dialog class="modal modal-open">
-        <div class="modal-box bg-[#1a1a2e] w-full max-w-sm sm:w-96">
-          <h3 class="font-bold text-lg text-[#FFFFE3] mb-3 flex items-center gap-2">
+        <div class="modal-box bg-[#FFFFFF] w-full max-w-sm sm:w-96">
+          <h3 class="font-bold text-lg text-[#374151] mb-3 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>

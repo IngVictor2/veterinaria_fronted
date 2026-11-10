@@ -34,7 +34,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </svg>
           </button>
           <div class="flex-1">
-            <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">{{ m.nombre }}</h1>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-[#374151]">{{ m.nombre }}</h1>
             <p class="text-sm text-base-content/50">Detalle de mascota</p>
           </div>
           <span class="badge badge-lg" [class]="m.estado ? 'badge-success' : 'badge-error'">
@@ -47,10 +47,10 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
               </svg>
             </div>
-            <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
-              <li><a (click)="router.navigate(['/mascotas', id, 'editar'])" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Editar</a></li>
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#FFFFFF] rounded-xl w-52 z-50">
+              <li><a (click)="router.navigate(['/mascotas', id, 'editar'])" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">Editar</a></li>
               @if (m.estado) {
-                <li><a (click)="showDeleteDialog.set(true)" class="text-red-400 hover:bg-red-500/20">Desactivar</a></li>
+                <li><a (click)="showDeleteDialog.set(true)" class="text-red-700 hover:bg-red-500/20">Desactivar</a></li>
               }
             </ul>
           </div>
@@ -58,12 +58,12 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
         <!-- Info Card -->
         <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
+          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+            <div class="w-16 h-16 rounded-full bg-white from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
               <span class="text-primary font-bold text-xl">{{ initials() }}</span>
             </div>
             <div class="flex-1">
-              <h2 class="text-lg font-bold text-[#FFFFE3]">{{ m.nombre }}</h2>
+              <h2 class="text-lg font-bold text-[#374151]">{{ m.nombre }}</h2>
               <p class="text-sm text-base-content/50">{{ m.especie }} · {{ m.raza }} · {{ m.sexo }}</p>
             </div>
             @if (citasPendientes().length > 0) {
@@ -104,7 +104,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         <!-- Historial de Citas -->
         <div class="bg-base-100 rounded-2xl overflow-hidden">
           <div class="px-6 py-4 border-b border-base-300">
-            <h3 class="font-bold text-[#FFFFE3]">Historial de Citas ({{ citas().length }})</h3>
+            <h3 class="font-bold text-[#374151]">Historial de Citas ({{ citas().length }})</h3>
           </div>
           @if (citas().length === 0) {
             <div class="px-6 py-12 text-center text-base-content/40">

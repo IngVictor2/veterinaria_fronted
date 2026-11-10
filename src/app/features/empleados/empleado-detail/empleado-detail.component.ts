@@ -42,7 +42,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               </svg>
             </button>
             <div class="flex-1">
-              <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3] flex items-center gap-2">
+              <h1 class="text-xl sm:text-2xl font-extrabold text-[#374151] flex items-center gap-2">
                 {{ fullName() }}
                 @if (tieneCuenta()) {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-primary inline-block shrink-0" title="Tiene cuenta de acceso">
@@ -62,14 +62,14 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
                 </svg>
               </div>
-              <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
-                <li><a (click)="router.navigate(['/empleados', id, 'editar'])" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Editar</a></li>
-                <li><a (click)="openPasswordDialog()" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">Restablecer contraseña</a></li>
+              <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#FFFFFF] rounded-xl w-52 z-50">
+                <li><a (click)="router.navigate(['/empleados', id, 'editar'])" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">Editar</a></li>
+                <li><a (click)="openPasswordDialog()" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">Restablecer contraseña</a></li>
                 @if (emp.estado) {
-                  <li><a (click)="showDeleteDialog.set(true)" class="text-red-400 hover:bg-red-500/20">Desactivar</a></li>
+                  <li><a (click)="showDeleteDialog.set(true)" class="text-red-700 hover:bg-red-500/20">Desactivar</a></li>
                 }
                 @if (!emp.estado) {
-                  <li><a (click)="showReactivateDialog.set(true)" class="text-green-400 hover:bg-green-500/20">Reactivar</a></li>
+                  <li><a (click)="showReactivateDialog.set(true)" class="text-green-700 hover:bg-green-500/20">Reactivar</a></li>
                 }
               </ul>
             </div>
@@ -77,12 +77,12 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
           <!-- Info Card -->
           <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-            <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
-              <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#0D7377] to-[#4A4A4A] flex items-center justify-center shadow-lg">
-                <span class="text-[#FFFFE3] font-bold text-xl">{{ initials() }}</span>
+            <div class="bg-white   px-6 py-5 flex items-center gap-5">
+              <div class="w-16 h-16 rounded-full bg-white   flex items-center justify-center shadow-lg">
+                <span class="text-[#374151] font-bold text-xl">{{ initials() }}</span>
               </div>
               <div class="flex-1">
-                <h2 class="text-lg font-bold text-[#FFFFE3] flex items-center gap-2">
+                <h2 class="text-lg font-bold text-[#374151] flex items-center gap-2">
                   {{ fullName() }}
                   @if (tieneCuenta()) {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-primary inline-block shrink-0" title="Tiene cuenta de acceso">
@@ -125,8 +125,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
       @if (showPasswordDialog()) {
         <dialog class="modal modal-open">
-          <div class="modal-box bg-[#1a1a2e] w-full max-w-sm sm:w-96">
-            <h3 class="font-bold text-lg text-[#FFFFE3] mb-1 flex items-center gap-2">
+          <div class="modal-box bg-[#FFFFFF] w-full max-w-sm sm:w-96">
+            <h3 class="font-bold text-lg text-[#374151] mb-1 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
@@ -160,7 +160,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   <input
                     name="nuevaPassword"
                     [type]="mostrarClave() ? 'text' : 'password'"
-                    class="input input-bordered w-full bg-[#2A2A2A] border-white/10 pr-10 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30"
+                    class="input input-bordered w-full bg-[#FFFFFF] border-gray-200 pr-10 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30"
                     placeholder="Mínimo 8 caracteres"
                     minlength="8"
                     required

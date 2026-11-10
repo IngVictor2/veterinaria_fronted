@@ -60,7 +60,7 @@ interface HistorialDetalle {
             </svg>
           </button>
           <div class="flex-1">
-            <h1 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">
+            <h1 class="text-xl sm:text-2xl font-extrabold text-[#374151]">
               Cita #{{ numeroCita() ?? cita.idCita }}
               @if (totalCitasCliente() !== null) {
                 <span class="text-sm font-medium text-base-content/40">de {{ totalCitasCliente() }}</span>
@@ -104,14 +104,14 @@ interface HistorialDetalle {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01" />
                   </svg>
                 </div>
-                <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#2A2A2A] rounded-xl w-52 z-50">
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-[#FFFFFF] rounded-xl w-52 z-50">
                   <li>
-                    <a (click)="router.navigate(['/citas', cita.idCita, 'editar'])" class="text-[#CBCBCB] hover:bg-white/10 hover:text-[#FFFFE3]">
+                    <a (click)="router.navigate(['/citas', cita.idCita, 'editar'])" class="text-[#374151] hover:bg-gray-50 hover:text-[#374151]">
                       Editar
                     </a>
                   </li>
                   <li>
-                    <a (click)="showCancelDialog.set(true)" class="text-red-400 hover:bg-red-500/20">Cancelar</a>
+                    <a (click)="showCancelDialog.set(true)" class="text-red-700 hover:bg-red-500/20">Cancelar</a>
                   </li>
                 </ul>
               </div>
@@ -121,12 +121,12 @@ interface HistorialDetalle {
 
         <!-- Info Card -->
         <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-gradient-to-r from-[#0D7377]/20 to-transparent px-6 py-5 flex items-center gap-5">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
+          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+            <div class="w-16 h-16 rounded-full bg-white from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
               <span class="text-primary font-bold text-xl">{{ initials() }}</span>
             </div>
             <div class="flex-1">
-              <h2 class="text-lg font-bold text-[#FFFFE3]">{{ cita.nombreMascota }}</h2>
+              <h2 class="text-lg font-bold text-[#374151]">{{ cita.nombreMascota }}</h2>
               <p class="text-sm text-base-content/50">{{ cita.nombreServicio }} · {{ cita.tipoServicio }}</p>
             </div>
           </div>
@@ -184,7 +184,7 @@ interface HistorialDetalle {
         @if (cita.motivo || cita.observaciones) {
           <div class="bg-base-100 rounded-2xl overflow-hidden">
             <div class="px-6 py-4 border-b border-base-300">
-              <h3 class="font-bold text-[#FFFFE3]">Detalles</h3>
+              <h3 class="font-bold text-[#374151]">Detalles</h3>
             </div>
             <div class="px-6 py-5 space-y-4">
               @if (cita.motivo) {
@@ -206,15 +206,15 @@ interface HistorialDetalle {
         <!-- Assign Modal -->
         @if (showAssignModal()) {
           <dialog class="modal modal-open">
-            <div class="modal-box bg-[#1a1a2e]">
-              <h3 class="font-bold text-lg text-[#FFFFE3] mb-4">
+            <div class="modal-box bg-[#FFFFFF]">
+              <h3 class="font-bold text-lg text-[#374151] mb-4">
                 {{ cita.estadoCita === 'PENDIENTE' ? 'Asignar Cita' : 'Reasignar Cita' }}
               </h3>
               <div class="space-y-4">
                 <div class="form-control">
                   <label class="label"><span class="label-text">Servicio</span></label>
                   <select
-                    class="select select-bordered bg-[#2A2A2A] border-white/10"
+                    class="select select-bordered bg-[#FFFFFF] border-gray-200"
                     name="formServicio"
                     [ngModel]="formServicio()"
                     (ngModelChange)="onServicioChange($event)"
@@ -229,7 +229,7 @@ interface HistorialDetalle {
                   <label class="label"><span class="label-text">Fecha</span></label>
                   <input
                     type="date"
-                    class="input input-bordered bg-[#2A2A2A] border-white/10"
+                    class="input input-bordered bg-[#FFFFFF] border-gray-200"
                     name="formFecha"
                     [ngModel]="formFecha()"
                     (ngModelChange)="formFecha.set($event)"
@@ -239,7 +239,7 @@ interface HistorialDetalle {
                   <label class="label"><span class="label-text">Hora</span></label>
                   <input
                     type="time"
-                    class="input input-bordered bg-[#2A2A2A] border-white/10"
+                    class="input input-bordered bg-[#FFFFFF] border-gray-200"
                     name="formHora"
                     [ngModel]="formHora()"
                     (ngModelChange)="formHora.set($event)"
@@ -288,8 +288,8 @@ interface HistorialDetalle {
         @if (showHistorialModal()) {
           @if (historialCita(); as historialCita) {
             <dialog class="modal modal-open">
-              <div class="modal-box bg-[#1a1a2e]">
-                <h3 class="font-bold text-lg text-[#FFFFE3] mb-4 flex items-center gap-2">
+              <div class="modal-box bg-[#FFFFFF]">
+                <h3 class="font-bold text-lg text-[#374151] mb-4 flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
@@ -297,10 +297,10 @@ interface HistorialDetalle {
                 </h3>
                 <div class="space-y-4">
                   <div class="bg-base-200/50 rounded-lg p-3 text-sm">
-                    <p><span class="font-medium text-base-content/60">Mascota:</span> <span class="text-[#FFFFE3]">{{ cita.nombreMascota }}</span></p>
-                    <p><span class="font-medium text-base-content/60">Cliente:</span> <span class="text-[#FFFFE3]">{{ cita.nombreCliente }}</span></p>
-                    <p><span class="font-medium text-base-content/60">Profesional:</span> <span class="text-[#FFFFE3]">{{ cita.nombreEmpleado || 'Sin asignar' }}</span></p>
-                    <p><span class="font-medium text-base-content/60">Registrado:</span> <span class="text-[#FFFFE3]">{{ formatFechaHora(historialCita.fechaRegistro) }}</span></p>
+                    <p><span class="font-medium text-base-content/60">Mascota:</span> <span class="text-[#374151]">{{ cita.nombreMascota }}</span></p>
+                    <p><span class="font-medium text-base-content/60">Cliente:</span> <span class="text-[#374151]">{{ cita.nombreCliente }}</span></p>
+                    <p><span class="font-medium text-base-content/60">Profesional:</span> <span class="text-[#374151]">{{ cita.nombreEmpleado || 'Sin asignar' }}</span></p>
+                    <p><span class="font-medium text-base-content/60">Registrado:</span> <span class="text-[#374151]">{{ formatFechaHora(historialCita.fechaRegistro) }}</span></p>
                   </div>
                   <div>
                     <p class="text-xs text-base-content/40 uppercase tracking-wider mb-1">Descripción completa</p>
@@ -322,8 +322,8 @@ interface HistorialDetalle {
         @if (showPagoModal()) {
           @if (facturaCita(); as facturaCita) {
             <dialog class="modal modal-open">
-              <div class="modal-box bg-[#1a1a2e]">
-                <h3 class="font-bold text-lg text-[#FFFFE3] mb-2 flex items-center gap-2">
+              <div class="modal-box bg-[#FFFFFF]">
+                <h3 class="font-bold text-lg text-[#374151] mb-2 flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h2m4 0h2m-9-5l2-4m9 4l-2-4M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
                   </svg>
@@ -347,8 +347,8 @@ interface HistorialDetalle {
                   <div class="grid grid-cols-1 gap-2">
                     @for (m of metodosPago(); track m.idMetodoPago) {
                       <label
-                        class="card bg-[#2A2A2A] border cursor-pointer transition-colors px-4 py-3 flex items-center gap-3"
-                        [class]="metodoPagoSeleccionado() === m.idMetodoPago ? 'border-primary shadow-lg shadow-primary/10' : 'border-white/10 hover:border-white/25'"
+                        class="card bg-[#FFFFFF] border cursor-pointer transition-colors px-4 py-3 flex items-center gap-3"
+                        [class]="metodoPagoSeleccionado() === m.idMetodoPago ? 'border-primary shadow-lg shadow-primary/10' : 'border-gray-200 hover:border-gray-200'"
                       >
                         <input
                           type="radio"
@@ -358,7 +358,7 @@ interface HistorialDetalle {
                           [ngModel]="metodoPagoSeleccionado()"
                           (ngModelChange)="metodoPagoSeleccionado.set($event)"
                         />
-                        <span class="text-sm font-medium text-[#FFFFE3]">{{ m.descripcion || m.nombre }}</span>
+                        <span class="text-sm font-medium text-[#374151]">{{ m.descripcion || m.nombre }}</span>
                       </label>
                     }
                   </div>

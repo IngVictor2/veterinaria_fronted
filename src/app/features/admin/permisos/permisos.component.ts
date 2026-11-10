@@ -10,7 +10,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
   template: `
     <div>
       <div class="mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Permisos por Rol</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Permisos por Rol</h1>
         <p class="text-sm text-base-content/60 mt-1">Asigna o revoca módulos de acceso para cada rol</p>
       </div>
 
@@ -31,14 +31,14 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 <button
                   class="w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200"
                   [class]="selectedRol() === rol.idRol
-                    ? 'bg-[#0D7377]/20 text-[#FFFFE3] border border-[#0D7377]/40 shadow-sm'
-                    : 'text-[#CBCBCB] hover:bg-white/5 border border-transparent'"
+                    ? 'bg-[#9D343C]/20 text-[#374151] border border-[#9D343C]/40 shadow-sm'
+                    : 'text-[#374151] hover:bg-gray-50 border border-transparent'"
                   (click)="selectRol(rol.idRol)"
                 >
                   <div class="flex items-center justify-between">
                     <span>{{ rol.nombre }}</span>
                     @if (selectedRol() === rol.idRol) {
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" /></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#9D343C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" /></svg>
                     }
                   </div>
                 </button>
@@ -63,11 +63,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 @if (permisosActivos().length > 0) {
                   <div class="flex flex-wrap gap-2">
                     @for (permiso of permisosActivos(); track permiso.idRolModulo) {
-                      <div class="group flex items-center gap-2 bg-[#0D7377]/15 border border-[#0D7377]/25 text-[#FFFFE3] rounded-lg px-3 py-2 text-sm font-medium">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#0D7377]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" /></svg>
+                      <div class="group flex items-center gap-2 bg-[#9D343C]/15 border border-[#9D343C]/25 text-[#374151] rounded-lg px-3 py-2 text-sm font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#9D343C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" /></svg>
                         {{ permiso.nombreModulo }}
                         <button
-                          class="ml-1 text-[#CBCBCB]/40 hover:text-[#c47070] transition-colors"
+                          class="ml-1 text-[#374151] hover:text-[#c47070] transition-colors"
                           (click)="confirmRevocar({ idModulo: permiso.idModulo, nombre: permiso.nombreModulo, descripcion: '', estado: true })"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -85,14 +85,14 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               <!-- Modulos disponibles -->
               <div>
                 <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2 mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#CBCBCB]/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                   Modulos disponibles ({{ modulosDisponibles().length }})
                 </h4>
                 @if (modulosDisponibles().length > 0) {
                   <div class="flex flex-wrap gap-2">
                     @for (modulo of modulosDisponibles(); track modulo.idModulo) {
                       <button
-                        class="flex items-center gap-1.5 bg-base-200/50 border border-base-300/60 text-[#CBCBCB] rounded-lg px-3 py-2 text-sm font-medium hover:bg-[#0D7377]/10 hover:border-[#0D7377]/30 hover:text-[#FFFFE3] transition-all duration-200"
+                        class="flex items-center gap-1.5 bg-base-200/50 border border-base-300/60 text-[#374151] rounded-lg px-3 py-2 text-sm font-medium hover:bg-[#9D343C]/10 hover:border-[#9D343C]/30 hover:text-[#374151] transition-all duration-200"
                         (click)="asignarPermiso(modulo)"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>

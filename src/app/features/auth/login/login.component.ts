@@ -10,8 +10,8 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
   template: `
     <div>
       <div class="text-center mb-8 form-field">
-        <h2 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Bienvenido de vuelta</h2>
-        <p class="text-sm text-[#CBCBCB] mt-2">Ingresa tus credenciales para continuar</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-[#374151]">Bienvenido de vuelta</h2>
+        <p class="text-sm text-[#374151] mt-2">Ingresa tus credenciales para continuar</p>
       </div>
 
       @if (error()) {
@@ -26,7 +26,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       <form (ngSubmit)="handleLogin()" class="space-y-5">
         <div class="form-field form-control">
           <label class="label">
-            <span class="label-text font-semibold text-sm text-[#CBCBCB]">Correo electrónico</span>
+            <span class="label-text font-semibold text-sm text-[#374151]">Correo electrónico</span>
           </label>
           <div class="relative">
             <input
@@ -42,7 +42,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
             />
             <div
               class="absolute left-3 top-1/2 -translate-y-1/2 transition-colors duration-300"
-              [class]="focusedField() === 'user' ? 'text-[#0D7377]' : 'text-[#9a9a9a]'"
+              [class]="focusedField() === 'user' ? 'text-[#9D343C]' : 'text-[#9a9a9a]'"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -53,7 +53,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
 
         <div class="form-field form-control">
           <label class="label">
-            <span class="label-text font-semibold text-sm text-[#CBCBCB]">Contraseña</span>
+            <span class="label-text font-semibold text-sm text-[#374151]">Contraseña</span>
           </label>
           <div class="relative">
             <input
@@ -69,7 +69,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
             />
             <div
               class="absolute left-3 top-1/2 -translate-y-1/2 transition-colors duration-300"
-              [class]="focusedField() === 'pass' ? 'text-[#0D7377]' : 'text-[#9a9a9a]'"
+              [class]="focusedField() === 'pass' ? 'text-[#9D343C]' : 'text-[#9a9a9a]'"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -77,7 +77,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
             </div>
             <button
               type="button"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#1A8A8E] transition-colors"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#7D2931] transition-colors"
               (click)="showPassword.set(!showPassword())"
             >
               @if (!showPassword()) {
@@ -97,7 +97,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
         <div class="form-field">
           <button
             type="submit"
-            class="btn btn-primary w-full h-12 text-sm font-bold tracking-wide btn-ripple rounded-xl bg-[#0D7377] hover:bg-[#1A8A8E] border-none text-white"
+            class="btn btn-primary w-full h-12 text-sm font-bold tracking-wide btn-ripple rounded-xl bg-[#9D343C] hover:bg-[#7D2931] border-none text-white"
             [disabled]="loading()"
           >
             @if (loading()) {
@@ -112,7 +112,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       <div class="mt-4 form-field">
         <a
           routerLink="/"
-          class="btn btn-outline w-full h-11 rounded-xl border-[#0D7377]/50 text-[#7FE7E9] hover:border-[#0D7377] hover:bg-[#0D7377]/15 hover:text-[#FFFFE3] font-semibold text-sm"
+          class="btn btn-outline w-full h-11 rounded-xl border-[#9D343C]/50 text-[#9D343C] hover:border-[#9D343C] hover:bg-[#9D343C]/15 hover:text-[#374151] font-semibold text-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -134,9 +134,9 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       </div>
 
       <div class="mt-6 text-center form-field">
-        <p class="text-sm text-[#CBCBCB]">
+        <p class="text-sm text-[#374151]">
           No tienes una cuenta?
-          <a routerLink="/register" class="font-bold text-[#0D7377] hover:text-[#1A8A8E] ml-1">
+          <a routerLink="/register" class="font-bold text-[#9D343C] hover:text-[#7D2931] ml-1">
             Regístrate aquí
           </a>
         </p>

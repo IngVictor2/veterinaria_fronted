@@ -23,7 +23,7 @@ const MAX_MASCOTAS = 5;
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
         </button>
         <div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">{{ isEdit ? 'Editar Mascota' : 'Nueva Mascota' }}</h1>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">{{ isEdit ? 'Editar Mascota' : 'Nueva Mascota' }}</h1>
           <p class="text-sm text-base-content/60">{{ isEdit ? 'Actualiza los datos de la mascota' : 'Registra una nueva mascota en el sistema' }}</p>
         </div>
       </div>
@@ -102,7 +102,7 @@ const MAX_MASCOTAS = 5;
                 type="date"
                 class="input input-bordered input-sm w-full"
                 [attr.max]="hoy()"
-                style="color-scheme: dark"
+                style="color-scheme: light"
                 [ngModel]="fechaNacimiento()"
                 (ngModelChange)="fechaNacimiento.set($event)"
               />

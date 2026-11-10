@@ -17,13 +17,13 @@ import { Factura } from '../../core/models/factura';
   imports: [RouterLink],
   template: `
     <div>
-      <h1 class="text-2xl sm:text-3xl font-extrabold mb-6 text-[#FFFFE3]">
+      <h1 class="text-2xl sm:text-3xl font-extrabold mb-6 text-[#374151]">
         Bienvenido, {{ auth.nombreCompleto() }}
       </h1>
 
       @if (loading()) {
         <div class="flex justify-center py-12">
-          <span class="loading loading-spinner loading-lg text-[#0D7377]"></span>
+          <span class="loading loading-spinner loading-lg text-[#9D343C]"></span>
         </div>
       } @else if (error()) {
         <div class="dashboard-card rounded-2xl">
@@ -31,8 +31,8 @@ import { Factura } from '../../core/models/factura';
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-[#c47070]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
-            <h3 class="text-lg font-medium mt-4 text-[#FFFFE3]">Algo salio mal</h3>
-            <p class="text-[#CBCBCB]/60 mt-2">{{ error() }}</p>
+            <h3 class="text-lg font-medium mt-4 text-[#374151]">Algo salio mal</h3>
+            <p class="text-[#374151] mt-2">{{ error() }}</p>
           </div>
         </div>
       } @else {
@@ -42,15 +42,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('CLIENTES')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0D7377] to-[#4A4A4A] flex items-center justify-center shadow-lg shadow-[#0D7377]/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#9D343C]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Clientes</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().clientes }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Total registrados</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Clientes</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().clientes }}</div>
+                    <div class="text-xs text-[#374151]">Total registrados</div>
                   </div>
                 </div>
               </div>
@@ -59,15 +59,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('MASCOTAS')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A8A8E] to-[#0D7377] flex items-center justify-center shadow-lg shadow-[#1A8A8E]/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#7D2931]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Mascotas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().mascotas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Total registradas</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Mascotas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().mascotas }}</div>
+                    <div class="text-xs text-[#374151]">Total registradas</div>
                   </div>
                 </div>
               </div>
@@ -76,15 +76,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('CITAS')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FFFFE3]/20 to-[#FFFFE3]/5 flex items-center justify-center shadow-lg shadow-[#FFFFE3]/10 border border-[#FFFFE3]/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#374151]/10 border border-[#D1D5DB]/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Citas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().citas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Total programadas</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Citas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().citas }}</div>
+                    <div class="text-xs text-[#374151]">Total programadas</div>
                   </div>
                 </div>
               </div>
@@ -93,15 +93,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('FACTURACION')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7a9e7e] to-[#5a7e5e] flex items-center justify-center shadow-lg shadow-[#7a9e7e]/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#7a9e7e]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Facturas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().facturas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Total emitidas</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Facturas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().facturas }}</div>
+                    <div class="text-xs text-[#374151]">Total emitidas</div>
                   </div>
                 </div>
               </div>
@@ -110,7 +110,7 @@ import { Factura } from '../../core/models/factura';
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="dashboard-card rounded-2xl p-6">
-              <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Accesos rapidos</h2>
+              <h2 class="text-lg font-bold text-[#374151] mb-4">Accesos rapidos</h2>
               <div class="grid grid-cols-2 gap-3">
                 @if (auth.hasModule('CITAS')) {
                   <a routerLink="/citas/nueva" class="dashboard-btn">
@@ -148,14 +148,14 @@ import { Factura } from '../../core/models/factura';
             </div>
 
             <div class="dashboard-card rounded-2xl p-6 flex flex-col">
-              <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Proximas Citas</h2>
+              <h2 class="text-lg font-bold text-[#374151] mb-4">Proximas Citas</h2>
               @if (proximasCitas().length === 0) {
                 <div class="flex-1 flex items-center justify-center">
                   <div class="text-center py-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#CBCBCB]/20 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#374151] mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p class="text-[#CBCBCB]/40 text-sm">No hay citas pendientes</p>
+                    <p class="text-[#374151] text-sm">No hay citas pendientes</p>
                   </div>
                 </div>
               } @else {
@@ -164,19 +164,19 @@ import { Factura } from '../../core/models/factura';
                     <a [routerLink]="['/citas', cita.idCita]" class="cita-item rounded-xl p-4 flex items-center gap-3 cursor-pointer">
                       <div
                         class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                        [class]="cita.estadoCita === 'PENDIENTE' ? 'bg-[#E8650A]/20 text-[#E8650A]' : 'bg-[#1A8A8E]/20 text-[#1A8A8E]'"
+                        [class]="cita.estadoCita === 'PENDIENTE' ? 'bg-[#9D343C]/20 text-[#9D343C]' : 'bg-[#7D2931]/20 text-[#7D2931]'"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
                       <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-[#FFFFE3] truncate">{{ cita.nombreMascota }}</p>
-                        <p class="text-xs text-[#CBCBCB]/60 truncate">{{ cita.nombreServicio }}</p>
+                        <p class="text-sm font-semibold text-[#374151] truncate">{{ cita.nombreMascota }}</p>
+                        <p class="text-xs text-[#374151] truncate">{{ cita.nombreServicio }}</p>
                       </div>
                       <div class="text-right shrink-0">
-                        <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
-                        <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita || '') }}</p>
+                        <p class="text-xs font-medium text-[#374151]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
+                        <p class="text-xs text-[#374151]">{{ formatHora(cita.horaCita || '') }}</p>
                       </div>
                     </a>
                   }
@@ -192,15 +192,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('MASCOTAS')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1A8A8E] to-[#0D7377] flex items-center justify-center shadow-lg shadow-[#1A8A8E]/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#7D2931]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Mis Mascotas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().mascotas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Mascotas registradas</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Mis Mascotas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().mascotas }}</div>
+                    <div class="text-xs text-[#374151]">Mascotas registradas</div>
                   </div>
                 </div>
               </div>
@@ -208,15 +208,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('CITAS')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FFFFE3]/20 to-[#FFFFE3]/5 flex items-center justify-center shadow-lg shadow-[#FFFFE3]/10 border border-[#FFFFE3]/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#374151]/10 border border-[#D1D5DB]/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Mis Citas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().citas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Citas programadas</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Mis Citas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().citas }}</div>
+                    <div class="text-xs text-[#374151]">Citas programadas</div>
                   </div>
                 </div>
               </div>
@@ -224,15 +224,15 @@ import { Factura } from '../../core/models/factura';
             @if (auth.hasModule('FACTURACION')) {
               <div class="stat-card rounded-2xl p-6 group hover:scale-[1.02] transition-transform duration-300">
                 <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#7a9e7e] to-[#5a7e5e] flex items-center justify-center shadow-lg shadow-[#7a9e7e]/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FFFFE3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div class="w-12 h-12 rounded-xl bg-white   flex items-center justify-center shadow-lg shadow-[#7a9e7e]/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#374151]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
                     </svg>
                   </div>
                   <div>
-                    <div class="text-xs font-medium text-[#CBCBCB]/60 uppercase tracking-wide">Mis Facturas</div>
-                    <div class="text-3xl font-extrabold text-[#FFFFE3]">{{ stats().facturas }}</div>
-                    <div class="text-xs text-[#CBCBCB]/50">Facturas totales</div>
+                    <div class="text-xs font-medium text-[#374151] uppercase tracking-wide">Mis Facturas</div>
+                    <div class="text-3xl font-extrabold text-[#374151]">{{ stats().facturas }}</div>
+                    <div class="text-xs text-[#374151]">Facturas totales</div>
                   </div>
                 </div>
               </div>
@@ -241,7 +241,7 @@ import { Factura } from '../../core/models/factura';
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="dashboard-card rounded-2xl p-6">
-              <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Accesos rapidos</h2>
+              <h2 class="text-lg font-bold text-[#374151] mb-4">Accesos rapidos</h2>
               <div class="grid grid-cols-2 gap-3">
                 @if (auth.hasModule('MASCOTAS')) {
                   <a routerLink="/mis-mascotas" class="dashboard-btn">
@@ -271,14 +271,14 @@ import { Factura } from '../../core/models/factura';
             </div>
 
             <div class="dashboard-card rounded-2xl p-6 flex flex-col">
-              <h2 class="text-lg font-bold text-[#FFFFE3] mb-4">Proximas Citas</h2>
+              <h2 class="text-lg font-bold text-[#374151] mb-4">Proximas Citas</h2>
               @if (proximasCitas().length === 0) {
                 <div class="flex-1 flex items-center justify-center">
                   <div class="text-center py-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#CBCBCB]/20 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[#374151] mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p class="text-[#CBCBCB]/40 text-sm">No hay citas pendientes</p>
+                    <p class="text-[#374151] text-sm">No hay citas pendientes</p>
                   </div>
                 </div>
               } @else {
@@ -287,19 +287,19 @@ import { Factura } from '../../core/models/factura';
                     <a [routerLink]="['/citas', cita.idCita]" class="cita-item rounded-xl p-4 flex items-center gap-3 cursor-pointer">
                       <div
                         class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                        [class]="cita.estadoCita === 'PENDIENTE' ? 'bg-[#E8650A]/20 text-[#E8650A]' : 'bg-[#1A8A8E]/20 text-[#1A8A8E]'"
+                        [class]="cita.estadoCita === 'PENDIENTE' ? 'bg-[#9D343C]/20 text-[#9D343C]' : 'bg-[#7D2931]/20 text-[#7D2931]'"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
                       <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-[#FFFFE3] truncate">{{ cita.nombreMascota }}</p>
-                        <p class="text-xs text-[#CBCBCB]/60 truncate">{{ cita.nombreServicio }}</p>
+                        <p class="text-sm font-semibold text-[#374151] truncate">{{ cita.nombreMascota }}</p>
+                        <p class="text-xs text-[#374151] truncate">{{ cita.nombreServicio }}</p>
                       </div>
                       <div class="text-right shrink-0">
-                        <p class="text-xs font-medium text-[#FFFFE3]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
-                        <p class="text-xs text-[#CBCBCB]/60">{{ formatHora(cita.horaCita || '') }}</p>
+                        <p class="text-xs font-medium text-[#374151]">{{ formatCitaFecha(cita.fechaCita || '') }}</p>
+                        <p class="text-xs text-[#374151]">{{ formatHora(cita.horaCita || '') }}</p>
                       </div>
                     </a>
                   }
@@ -313,7 +313,7 @@ import { Factura } from '../../core/models/factura';
   `,
   styles: `
     .stat-card {
-      background: rgba(42, 42, 42, 0.7);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
     }
@@ -323,7 +323,7 @@ import { Factura } from '../../core/models/factura';
     }
 
     .dashboard-card {
-      background: rgba(42, 42, 42, 0.6);
+      background: rgba(255, 255, 255, 0.6);
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
     }
@@ -336,13 +336,13 @@ import { Factura } from '../../core/models/factura';
       border-radius: 0.75rem;
       font-size: 0.875rem;
       font-weight: 600;
-      color: #FFFFE3;
-      background: rgba(13, 115, 119, 0.15);
+      color: #1F2937;
+      background: rgba(157, 52, 60, 0.15);
       transition: all 0.2s ease;
     }
 
     .dashboard-btn:hover {
-      background: rgba(13, 115, 119, 0.3);
+      background: rgba(157, 52, 60, 0.3);
       transform: translateY(-1px);
     }
 
@@ -352,7 +352,7 @@ import { Factura } from '../../core/models/factura';
     }
 
     .cita-item:hover {
-      background: rgba(13, 115, 119, 0.15);
+      background: rgba(157, 52, 60, 0.15);
       transform: translateX(2px);
     }
   `,

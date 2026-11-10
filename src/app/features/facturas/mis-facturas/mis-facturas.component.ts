@@ -14,7 +14,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Mis Facturas</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Facturas</h1>
       </div>
 
       @if (loading()) {
@@ -111,21 +111,21 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
       <!-- Modal de Pago -->
       @if (showPayModal()) {
         <dialog class="modal modal-open">
-          <div class="modal-box bg-[#1a1a2e] max-w-sm p-0">
+          <div class="modal-box bg-[#FFFFFF] max-w-sm p-0">
             <!-- Exito -->
             @if (exitoPago()) {
               <div class="px-5 py-8 text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 class="text-base font-bold mt-3 text-[#FFFFE3]">Pago exitoso</h3>
+                <h3 class="text-base font-bold mt-3 text-[#374151]">Pago exitoso</h3>
                 <p class="text-xs text-base-content/50 mt-1">Tu pago ha sido registrado correctamente</p>
               </div>
             } @else {
               <div class="px-5 pt-5 pb-4">
                 <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-bold text-lg text-[#FFFFE3]">Pagar Factura</h3>
-                  <button class="btn btn-ghost btn-circle btn-xs text-base-content/40 hover:text-[#FFFFE3]" (click)="closePayModal()">
+                  <h3 class="font-bold text-lg text-[#374151]">Pagar Factura</h3>
+                  <button class="btn btn-ghost btn-circle btn-xs text-base-content/40 hover:text-[#374151]" (click)="closePayModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -139,7 +139,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
                 }
 
                 @if (facturaSeleccionada(); as facturaSel) {
-                  <div class="bg-white/5 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
+                  <div class="bg-gray-50 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
                     <span class="text-xs text-base-content/50 uppercase tracking-wider">Total</span>
                     <span class="text-lg font-extrabold text-primary">{{ formatPrecio(facturaSel.total) }}</span>
                   </div>
@@ -154,7 +154,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
                       @for (metodo of metodosPago(); track metodo.idMetodoPago) {
                         <label
                           class="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer transition-all"
-                          [class]="idMetodoPago() === metodo.idMetodoPago ? 'bg-primary/10 border border-primary/30' : 'bg-white/5 border border-transparent hover:bg-white/10'"
+                          [class]="idMetodoPago() === metodo.idMetodoPago ? 'bg-primary/10 border border-primary/30' : 'bg-gray-50 border border-transparent hover:bg-gray-50'"
                           (click)="seleccionarMetodo(metodo)"
                         >
                           <input
@@ -164,7 +164,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
                             [value]="metodo.idMetodoPago"
                             [checked]="idMetodoPago() === metodo.idMetodoPago"
                           />
-                          <span class="text-sm text-[#FFFFE3]">{{ metodo.descripcion || metodo.nombre }}</span>
+                          <span class="text-sm text-[#374151]">{{ metodo.descripcion || metodo.nombre }}</span>
                         </label>
                       }
                     </div>

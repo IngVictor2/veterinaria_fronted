@@ -96,7 +96,7 @@ export interface DataTableColumn {
         </div>
       } @else {
         @for (item of data(); track $index) {
-          <div class="bg-white/5 rounded-xl p-4 space-y-2">
+          <div class="bg-gray-50 rounded-xl p-4 space-y-2">
             @for (col of columns(); track col.key) {
               <div class="flex justify-between items-start gap-2" [class]="dimInactive() && isInactive(item) ? 'opacity-50 line-through' : ''">
                 <span class="text-xs text-base-content/50 uppercase shrink-0">{{ col.label }}</span>

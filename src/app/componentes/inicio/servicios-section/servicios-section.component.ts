@@ -15,17 +15,17 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
   selector: 'app-servicios-section',
   imports: [PortafolioCardComponent, CurrencyPipe, RouterLink],
   template: `
-    <section id="servicios" class="scroll-mt-24 border-b border-white/5 px-4 py-20 sm:px-6 lg:px-8">
+    <section id="servicios" class="scroll-mt-24 border-b border-gray-200 px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-7xl">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-2xl">
-            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#7FE7E9]">
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#9D343C]">
               Portafolio de servicios
             </p>
-            <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-[#FFFFE3] sm:text-4xl">
+            <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-[#374151] sm:text-4xl">
               Todo lo que tu mascota necesita, en un mismo lugar
             </h2>
-            <p class="mt-4 text-sm leading-relaxed text-[#CBCBCB]/65 sm:text-base">
+            <p class="mt-4 text-sm leading-relaxed text-[#374151] sm:text-base">
               Consulta y estética para perros y gatos. Estos son los servicios que forman parte del
               alcance del proyecto VetClinic.
             </p>
@@ -38,8 +38,8 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
                 class="rounded-full border px-3.5 py-2 text-xs font-semibold transition"
                 [class]="
                   filtro() === tipo.valor
-                    ? 'border-[#0D7377] bg-[#0D7377] text-[#FFFFE3]'
-                    : 'border-white/10 bg-white/[0.03] text-[#CBCBCB] hover:border-[#7FE7E9]/30 hover:text-[#FFFFE3]'
+                    ? 'border-[#9D343C] bg-[#9D343C] text-white'
+                    : 'border-gray-200 bg-gray-50 text-[#374151] hover:border-[#9D343C]/30 hover:text-[#374151]'
                 "
                 (click)="filtro.set(tipo.valor)"
               >
@@ -53,16 +53,16 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
           @for (servicio of serviciosFiltrados(); track servicio.id) {
             <app-portafolio-card [servicio]="servicio" (verDetalle)="abrirDetalle($event)" />
           } @empty {
-            <div class="col-span-full rounded-3xl border border-dashed border-white/15 p-12 text-center">
-              <p class="text-lg font-bold text-[#FFFFE3]">No hay servicios en esta categoría</p>
-              <p class="mt-1 text-sm text-[#CBCBCB]/55">
+            <div class="col-span-full rounded-3xl border border-dashed border-gray-200 p-12 text-center">
+              <p class="text-lg font-bold text-[#374151]">No hay servicios en esta categoría</p>
+              <p class="mt-1 text-sm text-[#374151]">
                 Selecciona otro filtro para ver el portafolio completo.
               </p>
             </div>
           }
         </div>
 
-        <p class="mt-6 text-xs text-[#CBCBCB]/40">
+        <p class="mt-6 text-xs text-[#374151]">
           Los valores son tarifas base de demostración y pueden variar según la valoración clínica.
         </p>
       </div>
@@ -73,7 +73,7 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
           (click)="cerrarDetalle()"
         >
           <div
-            class="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-white/10 bg-[#0c2020] p-6 shadow-2xl sm:rounded-3xl sm:p-8"
+            class="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-gray-200 bg-[#FFFFFF] p-6 shadow-2xl sm:rounded-3xl sm:p-8"
             role="dialog"
             aria-modal="true"
             [attr.aria-label]="'Detalle de ' + servicio.nombre"
@@ -81,14 +81,14 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
           >
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#7FE7E9]">
+                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">
                   Servicio VetClinic
                 </p>
-                <h3 class="mt-2 text-2xl font-extrabold text-[#FFFFE3]">{{ servicio.nombre }}</h3>
+                <h3 class="mt-2 text-2xl font-extrabold text-[#374151]">{{ servicio.nombre }}</h3>
               </div>
               <button
                 type="button"
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-[#CBCBCB] transition hover:bg-white/10 hover:text-[#FFFFE3]"
+                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gray-200 text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
                 aria-label="Cerrar detalle"
                 (click)="cerrarDetalle()"
               >
@@ -98,26 +98,26 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
               </button>
             </div>
 
-            <p class="mt-4 text-sm leading-relaxed text-[#CBCBCB]/70">{{ servicio.descripcion }}</p>
+            <p class="mt-4 text-sm leading-relaxed text-[#374151]">{{ servicio.descripcion }}</p>
 
             <div class="mt-6 grid grid-cols-2 gap-3">
-              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/45">Tarifa base</p>
-                <p class="mt-1 text-lg font-extrabold text-[#FFFFE3]">
+              <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">Tarifa base</p>
+                <p class="mt-1 text-lg font-extrabold text-[#374151]">
                   {{ servicio.precioDesde | currency: 'COP' : 'symbol' : '1.0-0' : 'es-CO' }}
                 </p>
               </div>
-              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#CBCBCB]/45">Duración</p>
-                <p class="mt-1 text-sm font-bold text-[#FFFFE3]">{{ servicio.duracion }}</p>
+              <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">Duración</p>
+                <p class="mt-1 text-sm font-bold text-[#374151]">{{ servicio.duracion }}</p>
               </div>
             </div>
 
-            <h4 class="mt-6 text-sm font-bold text-[#FFFFE3]">Qué incluye</h4>
+            <h4 class="mt-6 text-sm font-bold text-[#374151]">Qué incluye</h4>
             <ul class="mt-3 space-y-2">
               @for (item of servicio.incluye; track $index) {
-                <li class="flex items-start gap-2 text-sm text-[#CBCBCB]/70">
-                  <span class="mt-0.5 text-[#7FE7E9]" aria-hidden="true">✓</span>
+                <li class="flex items-start gap-2 text-sm text-[#374151]">
+                  <span class="mt-0.5 text-[#9D343C]" aria-hidden="true">✓</span>
                   {{ item }}
                 </li>
               }

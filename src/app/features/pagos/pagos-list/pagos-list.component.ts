@@ -14,7 +14,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#FFFFE3]">Pagos</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Pagos</h1>
       </div>
 
       @if (error()) {

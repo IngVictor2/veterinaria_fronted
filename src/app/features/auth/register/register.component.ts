@@ -12,8 +12,8 @@ import { RegisterRequest } from '../../../core/models/auth';
     <div>
       <!-- Title -->
       <div class="text-center mb-6 form-field">
-        <h2 class="text-xl sm:text-2xl font-extrabold text-[#FFFFE3]">Crear tu cuenta</h2>
-        <p class="text-sm text-[#CBCBCB] mt-2">Únete a nuestra comunidad de mascotas</p>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-[#374151]">Crear tu cuenta</h2>
+        <p class="text-sm text-[#374151] mt-2">Únete a nuestra comunidad de mascotas</p>
       </div>
 
       <!-- Step indicator -->
@@ -21,14 +21,14 @@ import { RegisterRequest } from '../../../core/models/auth';
         @for (s of [1, 2, 3]; track s) {
           <div
             class="step-dot h-2 rounded-full transition-all duration-500"
-            [class]="s <= step() ? 'bg-[#1A8A8E] w-8' : 'bg-[#4A4A4A] w-2'"
+            [class]="s <= step() ? 'bg-[#7D2931] w-8' : 'bg-[#FFFFFF] w-2'"
           ></div>
         }
       </div>
 
       @if (stepErrors()[step()]) {
         <div class="text-center mb-2">
-          <span class="text-xs text-red-400">{{ stepErrors()[step()] }}</span>
+          <span class="text-xs text-red-700">{{ stepErrors()[step()] }}</span>
         </div>
       }
 
@@ -47,7 +47,7 @@ import { RegisterRequest } from '../../../core/models/auth';
           <!-- Step 1: Personal Info -->
           <div class="step-content" [class.active]="step() === 1">
             <div class="text-center mb-4">
-              <span class="badge badge-outline gap-1 border-[#4A4A4A] bg-[#353535]/50 text-[#CBCBCB]">
+              <span class="badge badge-outline gap-1 border-[#1F2937] bg-[#FFFFFF]/50 text-[#374151]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
@@ -57,38 +57,38 @@ import { RegisterRequest } from '../../../core/models/auth';
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Primer nombre *</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Primer nombre *</span></label>
                 <input name="primerNombre" type="text" placeholder="Primer nombre" class="input input-bordered input-sm w-full input-animated" required [ngModel]="primerNombre()" (ngModelChange)="primerNombre.set($event)" />
               </div>
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Segundo nombre</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Segundo nombre</span></label>
                 <input name="segundoNombre" type="text" placeholder="Segundo nombre" class="input input-bordered input-sm w-full input-animated" [ngModel]="segundoNombre()" (ngModelChange)="segundoNombre.set($event)" />
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Primer apellido *</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Primer apellido *</span></label>
                 <input name="primerApellido" type="text" placeholder="Primer apellido" class="input input-bordered input-sm w-full input-animated" required [ngModel]="primerApellido()" (ngModelChange)="primerApellido.set($event)" />
               </div>
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Segundo apellido</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Segundo apellido</span></label>
                 <input name="segundoApellido" type="text" placeholder="Segundo apellido" class="input input-bordered input-sm w-full input-animated" [ngModel]="segundoApellido()" (ngModelChange)="segundoApellido.set($event)" />
               </div>
             </div>
 
             <div class="form-control">
-              <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Teléfono *</span></label>
+              <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Teléfono *</span></label>
               <input name="telefono" type="tel" placeholder="Número de telefono" class="input input-bordered input-sm w-full input-animated" required [ngModel]="telefono()" (ngModelChange)="telefono.set($event)" />
             </div>
 
             <div class="form-control">
-              <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Dirección</span></label>
+              <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Dirección</span></label>
               <input name="direccion" type="text" placeholder="Dirección de residencia" class="input input-bordered input-sm w-full input-animated" [ngModel]="direccion()" (ngModelChange)="direccion.set($event)" />
             </div>
 
             <div class="step-buttons">
-              <button type="button" class="btn w-full h-11 btn-ripple rounded-xl font-bold text-sm bg-[#0D7377] hover:bg-[#1A8A8E] border-none text-white" (click)="nextStep()">
+              <button type="button" class="btn w-full h-11 btn-ripple rounded-xl font-bold text-sm bg-[#9D343C] hover:bg-[#7D2931] border-none text-white" (click)="nextStep()">
                 Siguiente
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -100,7 +100,7 @@ import { RegisterRequest } from '../../../core/models/auth';
           <!-- Step 2: Document & Email -->
           <div class="step-content" [class.active]="step() === 2">
             <div class="text-center mb-4">
-              <span class="badge badge-outline gap-1 border-[#4A4A4A] bg-[#353535]/50 text-[#CBCBCB]">
+              <span class="badge badge-outline gap-1 border-[#1F2937] bg-[#FFFFFF]/50 text-[#374151]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
@@ -110,7 +110,7 @@ import { RegisterRequest } from '../../../core/models/auth';
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Tipo documento *</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Tipo documento *</span></label>
                 <select name="tipoDocumento" class="select select-bordered select-sm w-full input-animated" [ngModel]="tipoDocumento()" (ngModelChange)="tipoDocumento.set($event)">
                   <option value="CC">Cédula de Ciudadanía</option>
                   <option value="CE">Cédula de Extranjería</option>
@@ -118,13 +118,13 @@ import { RegisterRequest } from '../../../core/models/auth';
                 </select>
               </div>
               <div class="form-control">
-                <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Número *</span></label>
+                <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Número *</span></label>
                 <input name="numeroDocumento" type="text" placeholder="Número de documento" class="input input-bordered input-sm w-full input-animated" required [ngModel]="numeroDocumento()" (ngModelChange)="numeroDocumento.set($event)" />
               </div>
             </div>
 
             <div class="form-control">
-              <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Correo electrónico *</span></label>
+              <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Correo electrónico *</span></label>
               <div class="relative">
                 <input name="email" type="email" placeholder="Correo electrónico" class="input input-bordered input-sm w-full pl-11 input-animated" required [ngModel]="email()" (ngModelChange)="email.set($event)" (blur)="normalizeEmail()" />
                 <div class="absolute left-3 top-1/2 -translate-y-1/2 text-[#9a9a9a]">
@@ -136,13 +136,13 @@ import { RegisterRequest } from '../../../core/models/auth';
             </div>
 
             <div class="step-buttons flex gap-3">
-              <button type="button" class="btn btn-outline flex-1 h-11 rounded-xl font-bold text-sm border-[#4A4A4A] text-[#CBCBCB] hover:bg-[#3a3a3a] hover:border-[#5a5a5a]" (click)="prevStep()">
+              <button type="button" class="btn btn-outline flex-1 h-11 rounded-xl font-bold text-sm border-[#1F2937] text-[#374151] hover:bg-[#FFFFFF] hover:border-[#5a5a5a]" (click)="prevStep()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
                 Atrás
               </button>
-              <button type="button" class="btn flex-1 h-11 btn-ripple rounded-xl font-bold text-sm bg-[#0D7377] hover:bg-[#1A8A8E] border-none text-white" (click)="nextStep()">
+              <button type="button" class="btn flex-1 h-11 btn-ripple rounded-xl font-bold text-sm bg-[#9D343C] hover:bg-[#7D2931] border-none text-white" (click)="nextStep()">
                 Siguiente
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -154,7 +154,7 @@ import { RegisterRequest } from '../../../core/models/auth';
           <!-- Step 3: Password -->
           <div class="step-content" [class.active]="step() === 3">
             <div class="text-center mb-4">
-              <span class="badge badge-outline gap-1 border-[#4A4A4A] bg-[#353535]/50 text-[#CBCBCB]">
+              <span class="badge badge-outline gap-1 border-[#1F2937] bg-[#FFFFFF]/50 text-[#374151]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
@@ -163,7 +163,7 @@ import { RegisterRequest } from '../../../core/models/auth';
             </div>
 
             <div class="form-control">
-              <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Contraseña *</span></label>
+              <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Contraseña *</span></label>
               <div class="relative">
                 <input
                   name="password"
@@ -180,7 +180,7 @@ import { RegisterRequest } from '../../../core/models/auth';
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#1A8A8E] transition-colors" (click)="showPassword.set(!showPassword())">
+                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#7D2931] transition-colors" (click)="showPassword.set(!showPassword())">
                   @if (!showPassword()) {
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -196,7 +196,7 @@ import { RegisterRequest } from '../../../core/models/auth';
             </div>
 
             <div class="form-control">
-              <label class="label"><span class="label-text font-semibold text-xs text-[#CBCBCB]">Confirmar contraseña *</span></label>
+              <label class="label"><span class="label-text font-semibold text-xs text-[#374151]">Confirmar contraseña *</span></label>
               <div class="relative">
                 <input
                   name="confirmPassword"
@@ -212,7 +212,7 @@ import { RegisterRequest } from '../../../core/models/auth';
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#1A8A8E] transition-colors" (click)="showPassword.set(!showPassword())">
+                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a9a9a] hover:text-[#7D2931] transition-colors" (click)="showPassword.set(!showPassword())">
                   @if (!showPassword()) {
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -227,13 +227,13 @@ import { RegisterRequest } from '../../../core/models/auth';
               </div>
               @if (confirmPassword() && password() !== confirmPassword()) {
                 <label class="label">
-                  <span class="label-text-alt text-red-400 text-xs">Las contraseñas no coinciden</span>
+                  <span class="label-text-alt text-red-700 text-xs">Las contraseñas no coinciden</span>
                 </label>
               }
             </div>
 
             <div class="step-buttons flex gap-3">
-              <button type="button" class="btn btn-outline flex-1 h-11 rounded-xl font-bold text-sm border-[#4A4A4A] text-[#CBCBCB] hover:bg-[#3a3a3a] hover:border-[#5a5a5a]" (click)="prevStep()">
+              <button type="button" class="btn btn-outline flex-1 h-11 rounded-xl font-bold text-sm border-[#1F2937] text-[#374151] hover:bg-[#FFFFFF] hover:border-[#5a5a5a]" (click)="prevStep()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -241,7 +241,7 @@ import { RegisterRequest } from '../../../core/models/auth';
               </button>
               <button
                 type="submit"
-                class="btn flex-1 h-11 btn-ripple rounded-xl font-bold text-sm bg-[#0D7377] hover:bg-[#1A8A8E] border-none text-white"
+                class="btn flex-1 h-11 btn-ripple rounded-xl font-bold text-sm bg-[#9D343C] hover:bg-[#7D2931] border-none text-white"
                 [disabled]="loading() || (password() !== confirmPassword())"
               >
                 @if (loading()) {
@@ -257,9 +257,9 @@ import { RegisterRequest } from '../../../core/models/auth';
 
       <!-- Login link -->
       <div class="text-center mt-6 form-field">
-        <p class="text-sm text-[#CBCBCB]">
+        <p class="text-sm text-[#374151]">
           Ya tienes una cuenta?
-          <a routerLink="/login" class="font-bold text-[#0D7377] hover:text-[#1A8A8E] ml-1">
+          <a routerLink="/login" class="font-bold text-[#9D343C] hover:text-[#7D2931] ml-1">
             Inicia sesión
           </a>
         </p>
