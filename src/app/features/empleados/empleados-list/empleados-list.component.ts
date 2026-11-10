@@ -74,9 +74,12 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               {{ formatFecha(value) }}
             </ng-template>
             <ng-template appActions let-item>
-              <button class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/empleados', item.idEmpleado])">
-                Ver
-              </button>
+              <button type="button" title="Ver detalle" aria-label="Ver detalle" class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/empleados', item.idEmpleado])">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
             </ng-template>
           </app-data-table>
         </div>
