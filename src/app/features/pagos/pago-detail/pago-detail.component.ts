@@ -67,10 +67,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
             </div>
             <div>
               <p class="text-xs text-base-content/40 uppercase tracking-wider mb-1">Factura #</p>
-              <p
-                class="text-sm font-medium text-primary cursor-pointer hover:underline"
-                (click)="router.navigate(['/facturas', pago.idFactura])"
-              >
+              <p class="text-sm font-medium">
                 {{ pago.idFactura }}
               </p>
             </div>

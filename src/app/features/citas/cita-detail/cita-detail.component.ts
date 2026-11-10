@@ -145,19 +145,13 @@ interface HistorialDetalle {
             </div>
             <div>
               <p class="text-xs text-base-content/40 uppercase tracking-wider mb-1">Mascota</p>
-              <p
-                class="text-sm font-medium text-primary cursor-pointer hover:underline"
-                (click)="router.navigate(['/mascotas', cita.idMascota])"
-              >
+              <p class="text-sm font-medium">
                 {{ cita.nombreMascota }}
               </p>
             </div>
             <div>
               <p class="text-xs text-base-content/40 uppercase tracking-wider mb-1">Cliente</p>
-              <p
-                class="text-sm font-medium text-primary cursor-pointer hover:underline"
-                (click)="router.navigate(['/clientes', cita.idCliente])"
-              >
+              <p class="text-sm font-medium">
                 {{ cita.nombreCliente }}
               </p>
             </div>

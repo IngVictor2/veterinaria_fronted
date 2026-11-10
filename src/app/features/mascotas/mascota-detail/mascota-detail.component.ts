@@ -91,10 +91,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </div>
             <div>
               <p class="text-xs text-base-content/40 uppercase tracking-wider mb-1">Dueño</p>
-              <p
-                class="text-sm font-medium text-primary cursor-pointer hover:underline"
-                (click)="router.navigate(['/clientes', m.idCliente])"
-              >
+              <p class="text-sm font-medium">
                 {{ m.nombreCliente }}
               </p>
             </div>
