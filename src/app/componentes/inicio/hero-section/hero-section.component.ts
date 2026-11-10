@@ -9,7 +9,7 @@ import { BlogService } from '../../../servicios/blog.service';
   template: `
     <section
       id="inicio"
-      class="hero-section top-fade relative overflow-hidden border-b border-gray-200 px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8"
+      class="hero-section relative overflow-hidden border-b border-gray-200 px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8"
     >
 
       <div class="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">

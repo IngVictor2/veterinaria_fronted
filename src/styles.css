@@ -480,9 +480,3 @@ h1, h2, h3, h4, h5, h6 {
 .surface-card:hover {
   background: #DEE1E6;
 }
-
-/* Sidebar gray that fades into the white page. */
-.top-fade {
-  background-image: radial-gradient(ellipse 100% 320px at 50% 0, #CDD2DA, rgba(205, 210, 218, 0.35) 55%, transparent 100%);
-  background-repeat: no-repeat;
-}
