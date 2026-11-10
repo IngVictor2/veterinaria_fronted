@@ -219,14 +219,14 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
     .day-selecting { animation: select-day 300ms ease-out; }
     .day-deselecting { animation: deselect-day 300ms ease-out; }
     @keyframes select-day {
-      0% { transform: scale(1); background-color: #4B5563; color: #FFFFFF; }
+      0% { transform: scale(1); background-color: #FFFFFF; }
       45% { transform: scale(0.94); }
       100% { transform: scale(1); background-color: #9D343C; }
     }
     @keyframes deselect-day {
       0% { transform: scale(1); background-color: #9D343C; color: #FFFFFF; }
-      45% { transform: scale(0.96); }
-      100% { transform: scale(1); }
+      45% { transform: scale(0.96); background-color: #7D2931; color: #FFFFFF; }
+      100% { transform: scale(1); background-color: #FFFFFF; color: #1F2937; }
     }
     @media (prefers-reduced-motion: reduce) {
       .calendar-day { transition: none; animation: none; }
@@ -441,9 +441,9 @@ export class CalendarDayPickerComponent {
   clasesDia(day: number): string {
     const selected = this.isSelected(day);
     const disabled = this.isDisabled(day);
-    if (selected) return 'bg-primary hover:bg-[#4B5563] text-primary-content font-bold shadow-md cursor-pointer';
-    if (!disabled) return 'bg-transparent hover:bg-[#4B5563] hover:text-white cursor-pointer text-base-content';
-    return 'text-base-content/30 cursor-not-allowed';
+    if (selected) return 'bg-primary text-primary-content font-bold shadow-md cursor-pointer';
+    if (!disabled) return 'bg-white cursor-pointer text-base-content';
+    return 'bg-white text-base-content/30 cursor-not-allowed';
   }
 
   informationAlignment(day: number): string {
