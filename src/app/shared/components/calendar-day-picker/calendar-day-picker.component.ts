@@ -85,8 +85,11 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
             @if (day !== 0) {
               <button
                 type="button"
-                class="w-full aspect-square flex flex-col items-center justify-center rounded-lg text-sm transition-colors duration-300 ease-out motion-reduce:transition-none relative"
+                class="calendar-day w-full aspect-square flex flex-col items-center justify-center rounded-lg text-sm transition-colors duration-300 ease-out motion-reduce:transition-none relative"
                 [class]="clasesDia(day)"
+                [class.day-selecting]="animatedDay() === day && selectionAnimation() === 'select'"
+                [class.day-deselecting]="animatedDay() === day && selectionAnimation() === 'deselect'"
+                (animationend)="clearDayAnimation(day)"
                 [disabled]="isDisabled(day) && !isSelected(day)"
                 [attr.aria-pressed]="isSelected(day)"
                 [attr.aria-label]="selectedDateLabel(day)"
@@ -210,6 +213,24 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
     </div>
   `,
   styles: `
+    .calendar-day {
+      transition: background-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
+    }
+    .day-selecting { animation: select-day 300ms ease-out; }
+    .day-deselecting { animation: deselect-day 300ms ease-out; }
+    @keyframes select-day {
+      0% { transform: scale(1); background-color: rgba(157, 52, 60, 0.1); }
+      45% { transform: scale(0.94); }
+      100% { transform: scale(1); background-color: #9D343C; }
+    }
+    @keyframes deselect-day {
+      0% { transform: scale(1); background-color: #9D343C; color: #FFFFFF; }
+      45% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .calendar-day { transition: none; animation: none; }
+    }
     .day-information {
       width: min(280px, calc(100vw - 64px));
     }
@@ -247,6 +268,8 @@ export class CalendarDayPickerComponent {
   readonly currentYear = signal(this.today.getFullYear());
   readonly citasPorDia = signal(new Map<string, Cita[]>());
   readonly loadingCitas = signal(false);
+  readonly animatedDay = signal<number | null>(null);
+  readonly selectionAnimation = signal<'select' | 'deselect' | null>(null);
 
   readonly daysInMonth = computed(() =>
     new Date(this.currentYear(), this.currentMonth() + 1, 0).getDate(),
@@ -440,15 +463,27 @@ export class CalendarDayPickerComponent {
 
   selectDay(day: number): void {
     if (this.isSelected(day)) {
+      this.animatedDay.set(day);
+      this.selectionAnimation.set('deselect');
       this.value.set('');
       return;
     }
     if (this.isDisabled(day)) return;
+    this.animatedDay.set(day);
+    this.selectionAnimation.set('select');
     const dateStr = this.formatDateKey(this.currentYear(), this.currentMonth(), day);
     this.value.set(dateStr);
   }
 
+  clearDayAnimation(day: number): void {
+    if (this.animatedDay() !== day) return;
+    this.animatedDay.set(null);
+    this.selectionAnimation.set(null);
+  }
+
   prevMonth(): void {
+    this.animatedDay.set(null);
+    this.selectionAnimation.set(null);
     this.value.set('');
     if (this.currentMonth() === 0) {
       this.currentMonth.set(11);
@@ -459,6 +494,8 @@ export class CalendarDayPickerComponent {
   }
 
   nextMonth(): void {
+    this.animatedDay.set(null);
+    this.selectionAnimation.set(null);
     this.value.set('');
     if (this.currentMonth() === 11) {
       this.currentMonth.set(0);
