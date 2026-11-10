@@ -38,7 +38,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       @if (!success()) {
         <form (ngSubmit)="handleSubmit()" class="space-y-3">
           <!-- Detalles del servicio -->
-          <div class="bg-base-100 rounded-xl p-5 space-y-3">
+          <div class="management-card rounded-xl p-5 space-y-3">
             <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
               Detalles del servicio
@@ -57,7 +57,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
           </div>
 
           <!-- Observaciones -->
-          <div class="bg-base-100 rounded-xl p-5 space-y-3">
+          <div class="management-card rounded-xl p-5 space-y-3">
             <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
               Observaciones

@@ -41,7 +41,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
           <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
       } @else if (error()) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-error/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -51,7 +51,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
           </div>
         </div>
       } @else if (citas().length === 0) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-base-content/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -70,7 +70,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
         <div class="space-y-4">
           @for (cita of paginatedCitas(); track cita.idCita) {
             <div
-              class="card bg-base-100 shadow-md cursor-pointer hover:bg-base-200/50 transition-colors"
+              class="management-card card  shadow-md cursor-pointer hover:bg-[#DEE1E6] transition-colors"
               (click)="router.navigate(['/citas', cita.idCita])"
             >
               <div class="card-body">

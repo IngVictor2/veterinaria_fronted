@@ -22,7 +22,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
           <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
       } @else if (error()) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-error/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -32,7 +32,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
           </div>
         </div>
       } @else if (facturas().length === 0) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-base-content/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
@@ -44,7 +44,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
       } @else {
         <div class="space-y-4">
           @for (factura of paginatedFacturas(); track factura.idFactura) {
-            <div class="card bg-base-100 shadow-md">
+            <div class="management-card card  shadow-md">
               <div class="card-body">
                 <div class="flex items-center justify-between">
                   <div>

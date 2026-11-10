@@ -23,7 +23,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
         </div>
       }
 
-      <div class="card bg-base-100 shadow-md">
+      <div class="management-card card  shadow-md">
         <div class="card-body">
           <app-data-table
             [columns]="columns"

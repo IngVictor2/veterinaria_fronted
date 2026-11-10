@@ -47,7 +47,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
 
       <form (ngSubmit)="handleSubmit()" class="space-y-3">
         <!-- Mascota -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>
             Mascota
@@ -69,7 +69,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
         </div>
 
         <!-- Empleado y Servicio -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
             Profesional y servicio
@@ -141,7 +141,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
         </div>
 
         <!-- Fecha y Hora -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             Fecha y hora
@@ -201,7 +201,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
         </div>
 
         <!-- Detalles -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
             Detalles

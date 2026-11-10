@@ -83,8 +83,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         </div>
 
         <!-- Info Card -->
-        <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+        <div class="management-card rounded-2xl overflow-hidden mb-6">
+          <div class="bg-transparent   px-6 py-5 flex items-center gap-5">
             <div class="w-16 h-16 rounded-full bg-white   flex items-center justify-center shadow-lg">
               <span class="text-[#374151] font-bold text-xl">{{ initials() }}</span>
             </div>
@@ -121,7 +121,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         </div>
 
         <!-- Mascotas -->
-        <div class="bg-base-100 rounded-2xl overflow-hidden">
+        <div class="management-card rounded-2xl overflow-hidden">
           <div class="px-6 py-4 border-b border-base-300">
             <h3 class="font-bold text-[#374151]">Mascotas ({{ mascotas().length }})</h3>
           </div>

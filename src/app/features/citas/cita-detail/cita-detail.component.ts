@@ -120,8 +120,8 @@ interface HistorialDetalle {
         </div>
 
         <!-- Info Card -->
-        <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+        <div class="management-card rounded-2xl overflow-hidden mb-6">
+          <div class="bg-transparent   px-6 py-5 flex items-center gap-5">
             <div class="w-16 h-16 rounded-full bg-white from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
               <span class="text-primary font-bold text-xl">{{ initials() }}</span>
             </div>
@@ -182,7 +182,7 @@ interface HistorialDetalle {
 
         <!-- Detalles adicionales -->
         @if (cita.motivo || cita.observaciones) {
-          <div class="bg-base-100 rounded-2xl overflow-hidden">
+          <div class="management-card rounded-2xl overflow-hidden">
             <div class="px-6 py-4 border-b border-base-300">
               <h3 class="font-bold text-[#374151]">Detalles</h3>
             </div>

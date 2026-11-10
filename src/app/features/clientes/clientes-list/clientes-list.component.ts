@@ -47,7 +47,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         </div>
       }
 
-      <div class="card bg-base-100 shadow-md">
+      <div class="management-card card  shadow-md">
         <div class="card-body">
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-4">
             <div class="flex-1 w-full">

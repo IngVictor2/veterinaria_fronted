@@ -71,8 +71,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         </div>
 
         <!-- Info Card -->
-        <div class="bg-base-100 rounded-2xl overflow-hidden mb-6">
-          <div class="bg-white   px-6 py-5 flex items-center gap-5">
+        <div class="management-card rounded-2xl overflow-hidden mb-6">
+          <div class="bg-transparent   px-6 py-5 flex items-center gap-5">
             <div class="w-16 h-16 rounded-full bg-white from-primary/30 to-primary/10 flex items-center justify-center shadow-lg">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
@@ -108,7 +108,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         </div>
 
         <!-- Items -->
-        <div class="bg-base-100 rounded-2xl overflow-hidden">
+        <div class="management-card rounded-2xl overflow-hidden">
           @if (!factura.items || factura.items.length === 0) {
             <div class="px-6 py-12 text-center text-base-content/40">
               No hay items en esta factura

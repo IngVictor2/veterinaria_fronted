@@ -26,7 +26,7 @@ const MAX_MASCOTAS = 5;
           <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
       } @else if (error()) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-error/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -36,7 +36,7 @@ const MAX_MASCOTAS = 5;
           </div>
         </div>
       } @else if (mascotasActivas().length === 0) {
-        <div class="card bg-base-100 shadow-md">
+        <div class="management-card card  shadow-md">
           <div class="card-body text-center py-12">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-base-content/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
@@ -55,7 +55,7 @@ const MAX_MASCOTAS = 5;
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (mascota of mascotasActivas(); track mascota.idMascota) {
             <div
-              class="card bg-base-100 shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+              class="management-card card  shadow-md cursor-pointer hover:shadow-lg transition-shadow"
               (click)="router.navigate(['/mascotas', mascota.idMascota])"
             >
               <div class="card-body">

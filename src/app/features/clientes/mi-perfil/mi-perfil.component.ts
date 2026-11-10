@@ -44,7 +44,7 @@ import { Empleado } from '../../../core/models/empleado';
       } @else {
         <div class="space-y-6">
           <!-- Card principal con avatar y nombre -->
-          <div class="card bg-base-100 shadow-md">
+          <div class="management-card card  shadow-md">
             <div class="card-body">
               <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="avatar placeholder">
@@ -77,7 +77,7 @@ import { Empleado } from '../../../core/models/empleado';
 
           <!-- Datos personales (clientes y empleados) -->
           @if (perfil(); as p) {
-            <div class="card bg-base-100 shadow-md">
+            <div class="management-card card  shadow-md">
               <div class="card-body">
                 <h3 class="card-title text-lg mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -115,7 +115,7 @@ import { Empleado } from '../../../core/models/empleado';
             </div>
 
             <!-- Datos de contacto (clientes y empleados) -->
-            <div class="card bg-base-100 shadow-md">
+            <div class="management-card card  shadow-md">
               <div class="card-body">
                 <h3 class="card-title text-lg mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,7 +158,7 @@ import { Empleado } from '../../../core/models/empleado';
           }
 
           <!-- Datos de cuenta (todos los roles) -->
-          <div class="card bg-base-100 shadow-md">
+          <div class="management-card card  shadow-md">
             <div class="card-body">
               <h3 class="card-title text-lg mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

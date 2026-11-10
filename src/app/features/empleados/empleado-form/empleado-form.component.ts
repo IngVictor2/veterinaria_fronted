@@ -53,7 +53,7 @@ interface EmpleadoPayload {
 
       <form (ngSubmit)="handleSubmit()" class="space-y-3">
         <!-- Documento -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" /></svg>
             Documento
@@ -92,7 +92,7 @@ interface EmpleadoPayload {
         </div>
 
         <!-- Datos personales -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
             Datos personales
@@ -158,7 +158,7 @@ interface EmpleadoPayload {
         </div>
 
         <!-- Contacto -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             Contacto
@@ -213,7 +213,7 @@ interface EmpleadoPayload {
         </div>
 
         <!-- Cargo e ingreso -->
-        <div class="bg-base-100 rounded-xl p-5 space-y-3">
+        <div class="management-card rounded-xl p-5 space-y-3">
           <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             Cargo e ingreso
@@ -264,7 +264,7 @@ interface EmpleadoPayload {
 
         <!-- Credenciales (solo al crear) -->
         @if (!isEdit()) {
-          <div class="bg-base-100 rounded-xl p-5 space-y-3">
+          <div class="management-card rounded-xl p-5 space-y-3">
             <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
               Credenciales de acceso
