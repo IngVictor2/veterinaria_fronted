@@ -85,7 +85,7 @@ type EstadoDia = 'free' | 'partial' | 'full' | 'past';
             @if (day !== 0) {
               <button
                 type="button"
-                class="w-full aspect-square flex flex-col items-center justify-center rounded-lg text-sm transition-all duration-150 relative"
+                class="w-full aspect-square flex flex-col items-center justify-center rounded-lg text-sm transition-colors duration-300 ease-out motion-reduce:transition-none relative"
                 [class]="clasesDia(day)"
                 [disabled]="isDisabled(day) && !isSelected(day)"
                 [attr.aria-pressed]="isSelected(day)"
@@ -418,8 +418,8 @@ export class CalendarDayPickerComponent {
   clasesDia(day: number): string {
     const selected = this.isSelected(day);
     const disabled = this.isDisabled(day);
-    if (selected) return 'bg-primary text-primary-content font-bold shadow-md cursor-pointer';
-    if (!disabled) return 'hover:bg-base-200 cursor-pointer text-base-content';
+    if (selected) return 'bg-primary hover:bg-primary/80 text-primary-content font-bold shadow-md cursor-pointer';
+    if (!disabled) return 'bg-transparent hover:bg-primary/10 cursor-pointer text-base-content';
     return 'text-base-content/30 cursor-not-allowed';
   }
 
