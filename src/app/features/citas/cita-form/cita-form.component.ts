@@ -55,6 +55,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
           <div class="form-control">
             <label class="label py-0"><span class="label-text font-medium text-sm">Mascota *</span></label>
             <app-search-select
+              [searchable]="true"
               [(value)]="idMascota"
               [options]="mascotaOptions()"
               placeholder="Buscar mascota por nombre o dueño..."
@@ -95,7 +96,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
               <app-search-select
                 [(value)]="idServicio"
                 [options]="servicioOptions()"
-                [placeholder]="tipoServicio() ? 'Buscar servicio...' : 'Selecciona un tipo primero'"
+                [placeholder]="tipoServicio() ? 'Seleccionar servicio' : 'Selecciona un tipo primero'"
                 [disabled]="!tipoServicio()"
                 [required]="true"
               />
@@ -375,7 +376,7 @@ export class CitaFormComponent implements OnInit {
   );
 
   readonly placeholderEmpleado = computed(() =>
-    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA' ? 'Buscar estilista...' : 'Buscar veterinario...',
+    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA' ? 'Seleccionar estilista' : 'Seleccionar veterinario',
   );
 
   readonly horarioLaboral = computed<{ inicio: number; fin: number }>(() => {

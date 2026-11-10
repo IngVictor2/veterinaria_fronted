@@ -66,7 +66,8 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
               <div class="form-control">
                 <label class="label py-0"><span class="label-text font-medium text-sm">Mascota *</span></label>
                 <app-search-select
-                  [(value)]="idMascota"
+                  [searchable]="true"
+              [(value)]="idMascota"
                   [options]="mascotaOptions()"
                   placeholder="Seleccionar mascota..."
                   [required]="true"
@@ -105,7 +106,7 @@ import { CalendarDayPickerComponent } from '../../../shared/components/calendar-
                 <app-search-select
                   [(value)]="idServicio"
                   [options]="servicioOptions()"
-                  [placeholder]="tipoServicio() ? 'Buscar servicio...' : 'Selecciona un tipo primero'"
+                  [placeholder]="tipoServicio() ? 'Seleccionar servicio' : 'Selecciona un tipo primero'"
                   [disabled]="!tipoServicio()"
                   [required]="true"
                 />

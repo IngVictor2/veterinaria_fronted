@@ -131,7 +131,7 @@ const MAX_MASCOTAS = 5;
               <app-search-select
                 [(value)]="idCliente"
                 [options]="clienteOptions()"
-                placeholder="Buscar por nombre o documento..."
+                placeholder="Seleccionar cliente"
                 [required]="true"
               />
               @if (submitted() && !idCliente()) {

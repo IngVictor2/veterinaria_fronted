@@ -475,7 +475,7 @@ export class CitaDetailComponent implements OnInit {
 
   readonly placeholderEmpleado = computed(() => {
     const servicio = this.servicios().find((s) => s.idServicio === this.formServicio());
-    return servicio?.tipoServicio === 'ESTETICA' ? 'Buscar estilista...' : 'Buscar veterinario...';
+    return servicio?.tipoServicio === 'ESTETICA' ? 'Seleccionar estilista' : 'Seleccionar veterinario';
   });
 
   readonly puedeAtender = computed(() => {

@@ -153,7 +153,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                     <app-search-select
                       [(value)]="confirmIdServicio"
                       [options]="servicioOptions()"
-                      placeholder="Buscar servicio..."
+                      placeholder="Seleccionar servicio"
                       [required]="true"
                     />
                   </div>
@@ -385,7 +385,7 @@ export class CitasListComponent implements OnInit {
   );
 
   readonly placeholderEmpleado = computed(() =>
-    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA' ? 'Buscar estilista...' : 'Buscar veterinario...',
+    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA' ? 'Seleccionar estilista' : 'Seleccionar veterinario',
   );
 
   readonly horarioLaboral = computed<{ inicio: number; fin: number }>(() => {

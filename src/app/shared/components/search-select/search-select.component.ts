@@ -18,14 +18,14 @@ export interface SearchSelectOption {
         [attr.aria-label]="placeholder() || 'Seleccionar'"
         aria-haspopup="listbox"
         (keydown.escape)="isOpen.set(false)"
-        class="flex items-center gap-2 input input-bordered input-sm w-full cursor-pointer pr-8 hover:border-[#9D343C] transition-colors"
+        class="flex items-center justify-start text-left gap-2 input input-bordered input-sm w-full cursor-pointer pr-8 hover:border-[#9D343C] transition-colors"
         [class]="isOpen() ? 'border-[#9D343C]' : ''"
         (click)="toggleDropdown()"
       >
         @if (selectedOption(); as selected) {
-          <span class="truncate flex-1 text-sm">{{ selected.label }}</span>
+          <span class="truncate flex-1 text-left text-sm">{{ selected.label }}</span>
         } @else {
-          <span class="truncate flex-1 text-sm text-base-content/40">{{ placeholder() || 'Seleccionar...' }}</span>
+          <span class="truncate flex-1 text-left text-sm text-base-content/40">{{ placeholder() || 'Seleccionar...' }}</span>
         }
         @if (selectedOption()?.sublabel; as sublabel) {
           <span class="text-xs text-base-content/50 truncate">{{ sublabel }}</span>
@@ -41,6 +41,7 @@ export interface SearchSelectOption {
           (keydown.escape)="isOpen.set(false)"
         >
           <!-- Search input -->
+          @if (searchable()) {
           <div class="p-2 border-b border-[#1F2937]">
             <input
               #searchInput
@@ -52,10 +53,12 @@ export interface SearchSelectOption {
             />
           </div>
 
+          }
+
           <!-- Options list -->
           <div class="overflow-y-auto overscroll-contain" [style.max-height.px]="maxListHeight()" role="listbox">
             @if (filteredOptions().length === 0) {
-              <div class="p-3 text-sm text-[#374151] text-center">
+              <div class="p-3 text-sm text-[#374151] text-left">
                 No se encontraron resultados
               </div>
             }
@@ -97,6 +100,7 @@ export class SearchSelectComponent {
   readonly required = input(false);
   readonly disabled = input(false);
   readonly maxListHeight = input(240);
+  readonly searchable = input(false);
 
   readonly isOpen = signal(false);
   readonly searchText = signal('');
@@ -107,7 +111,7 @@ export class SearchSelectComponent {
 
   readonly filteredOptions = computed(() => {
     const text = this.searchText();
-    if (!text) return this.options();
+    if (!this.searchable() || !text) return this.options();
     const q = text.toLowerCase();
     return this.options().filter(
       (o) => o.label.toLowerCase().includes(q) || o.sublabel?.toLowerCase().includes(q),
@@ -119,7 +123,7 @@ export class SearchSelectComponent {
     const abriendo = !this.isOpen();
     this.isOpen.set(abriendo);
     this.searchText.set('');
-    if (abriendo) {
+    if (abriendo && this.searchable()) {
       setTimeout(() => this.searchInput()?.nativeElement.focus(), 0);
     }
   }
