@@ -35,11 +35,8 @@
           </div>
         </div>
         <div class="direct-contact">
-          <a href="tel:+573042818284"
-            ><span>LLÁMANOS</span><strong>304 281 8284 <span aria-hidden="true">↗</span></strong></a
-          ><a class="email" href="mailto:fjgarrido@unibarranquilla.edu.co"
-            >fjgarrido@unibarranquilla.edu.co</a
-          >
+          <div><span>LLÁMANOS</span><strong>304 281 8284</strong></div>
+          <p class="email">fjgarrido@unibarranquilla.edu.co</p>
         </div>
         <a class="appointment-link" routerLink="/login"
           >Ingresar para agendar una cita <span aria-hidden="true">→</span></a
@@ -95,7 +92,7 @@
           </div>
           @if (error()) {
             <div class="chat-error" role="alert">
-              {{ error() }} <a href="tel:+573042818284">Llamar a recepción</a>
+              {{ error() }}
             </div>
           }
           <form (submit)="submit($event)" class="composer">
@@ -110,7 +107,6 @@
               [value]="draft()"
               (input)="draft.set($any($event.target).value)"
               [readOnly]="sending()"
-              aria-describedby="chat-privacy"
             /><button
               type="submit"
               [disabled]="sending() || !draft().trim()"
@@ -128,10 +124,6 @@
               </svg>
             </button>
           </form>
-          <p id="chat-privacy" class="privacy">
-            Asistente con IA. Puede cometer errores y no sustituye una consulta veterinaria. Tus
-            preguntas se procesan con Groq; evita compartir datos sensibles.
-          </p>
         </div>
       </div>
     </div>

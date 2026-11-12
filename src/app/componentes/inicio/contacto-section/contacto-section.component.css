@@ -101,7 +101,7 @@
   flex-direction: column;
   gap: 9px;
 }
-.direct-contact > a > span {
+.direct-contact > div > span {
   display: block;
   font-size: 9px;
   letter-spacing: 0.16em;
@@ -111,10 +111,6 @@
 .direct-contact strong {
   font-size: 23px;
   letter-spacing: -0.025em;
-}
-.direct-contact strong span {
-  color: #9d343c;
-  font-size: 18px;
 }
 .email {
   font-size: 12px;
@@ -310,12 +306,6 @@ button {
 button:disabled {
   cursor: default;
   opacity: 0.45;
-}
-.privacy {
-  font-size: 9px;
-  line-height: 1.65;
-  color: #76727a;
-  margin-top: 12px;
 }
 .chat-error {
   font-size: 11px;

@@ -1,7 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PORTAFOLIO_SERVICIOS } from '../../../datos/servicios-portafolio';
 import { BlogService } from '../../../servicios/blog.service';
+import { estaAbierta } from './horario-atencion';
 
 @Component({
   selector: 'app-hero-section',
@@ -11,7 +12,6 @@ import { BlogService } from '../../../servicios/blog.service';
       id="inicio"
       class="hero-section relative overflow-hidden border-b border-gray-200 px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8"
     >
-
       <div class="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
         <div class="animate-slide-up">
           <p
@@ -21,9 +21,13 @@ import { BlogService } from '../../../servicios/blog.service';
             Clínica veterinaria · Barranquilla
           </p>
 
-          <h1 class="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#374151] sm:text-5xl lg:text-6xl">
+          <h1
+            class="mt-6 max-w-2xl text-4xl font-extrabold leading-[1.05] tracking-tight text-[#374151] sm:text-5xl lg:text-6xl"
+          >
             Cuidamos a quienes
-            <span class="block bg-gradient-to-r from-[#9D343C] via-[#374151] to-[#9D343C] bg-clip-text text-transparent">
+            <span
+              class="block bg-gradient-to-r from-[#9D343C] via-[#374151] to-[#9D343C] bg-clip-text text-transparent"
+            >
               te acompañan.
             </span>
           </h1>
@@ -35,8 +39,20 @@ import { BlogService } from '../../../servicios/blog.service';
 
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <a routerLink="/login" class="btn btn-primary h-12 rounded-full px-6 text-sm font-bold">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z"
+                />
               </svg>
               Agendar una cita
             </a>
@@ -51,17 +67,25 @@ import { BlogService } from '../../../servicios/blog.service';
 
           <dl class="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-gray-200 pt-6">
             <div>
-              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">Servicios</dt>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">
+                Servicios
+              </dt>
               <dd class="mt-1 text-2xl font-extrabold text-[#374151]">{{ totalServicios() }}</dd>
               <p class="text-[11px] text-[#374151]">consulta y estética</p>
             </div>
             <div>
-              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">Blog</dt>
-              <dd class="mt-1 text-2xl font-extrabold text-[#374151]">{{ blog.totalArticulos() }}</dd>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">
+                Blog
+              </dt>
+              <dd class="mt-1 text-2xl font-extrabold text-[#374151]">
+                {{ blog.totalArticulos() }}
+              </dd>
               <p class="text-[11px] text-[#374151]">artículos de cuidado</p>
             </div>
             <div>
-              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">Horario</dt>
+              <dt class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#374151]">
+                Horario
+              </dt>
               <dd class="mt-1 text-2xl font-extrabold text-[#374151]">7–18</dd>
               <p class="text-[11px] text-[#374151]">lunes a sábado</p>
             </div>
@@ -76,32 +100,49 @@ import { BlogService } from '../../../servicios/blog.service';
           >
             <div class="flex items-center justify-between gap-3">
               <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">Nuestros servicios</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">
+                  Nuestros servicios
+                </p>
                 <p class="mt-1 text-sm font-semibold text-[#374151]">Consulta y estética</p>
               </div>
-              <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-700">
-                <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>
-                Abierto
+              <span
+                class="estado-atencion inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold"
+                [class.abierto]="abierta()"
+                [class.cerrado]="!abierta()"
+                role="status"
+              >
+                <span class="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
+                {{ abierta() ? 'Abierto' : 'Cerrado' }}
               </span>
             </div>
 
             <div class="mt-6 grid grid-cols-2 gap-3">
               <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">Consulta</p>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">
+                  Consulta
+                </p>
                 <p class="mt-1 text-2xl font-extrabold text-[#374151]">{{ totalConsultas() }}</p>
                 <p class="text-[11px] text-[#374151]">servicios</p>
               </div>
               <div class="rounded-2xl border border-gray-200 bg-gray-50 p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">Estética</p>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-[#374151]">
+                  Estética
+                </p>
                 <p class="mt-1 text-2xl font-extrabold text-[#9D343C]">{{ totalEstetica() }}</p>
                 <p class="text-[11px] text-[#374151]">servicios</p>
               </div>
             </div>
 
-            <div class="mt-3 flex items-center justify-between gap-4 rounded-2xl border border-[#9D343C]/20 bg-[#9D343C]/5 p-4">
+            <div
+              class="mt-3 flex items-center justify-between gap-4 rounded-2xl border border-[#9D343C]/20 bg-[#9D343C]/5 p-4"
+            >
               <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9D343C]">Horario de atención</p>
-                <p class="mt-1 text-xs font-semibold text-[#374151]">Lunes a sábado · 7:00 a 18:00</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9D343C]">
+                  Horario de atención
+                </p>
+                <p class="mt-1 text-xs font-semibold text-[#374151]">
+                  Lunes a sábado · 7:00 a 18:00
+                </p>
               </div>
               <p class="shrink-0 text-right text-[11px] text-[#9D343C]">
                 Domingos
@@ -115,12 +156,26 @@ import { BlogService } from '../../../servicios/blog.service';
   `,
   styles: `
     .hero-section {
-      background-color: #FFFFFF;
+      background-color: #ffffff;
+    }
+    .estado-atencion.abierto {
+      background: #d1fae5;
+      color: #047857;
+    }
+    .estado-atencion.cerrado {
+      background: #f5e6e7;
+      color: #9d343c;
     }
   `,
 })
 export class HeroSectionComponent {
   readonly blog = inject(BlogService);
+  readonly abierta = signal(estaAbierta(new Date()));
+
+  constructor() {
+    const reloj = setInterval(() => this.abierta.set(estaAbierta(new Date())), 1000);
+    inject(DestroyRef).onDestroy(() => clearInterval(reloj));
+  }
 
   readonly totalServicios = computed(() => PORTAFOLIO_SERVICIOS.length);
   readonly totalConsultas = computed(

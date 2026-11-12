@@ -80,6 +80,14 @@ export class ContactoSectionComponent {
       });
       const data = await response.json();
       if (!response.ok || typeof data.answer !== 'string' || !data.answer.trim()) {
+        if (response.status === 429) {
+          this.error.set(
+            data.error?.code === 'PROVIDER_LIMIT'
+              ? 'La IA alcanzó temporalmente su cuota gratuita. Puedes consultar las preguntas frecuentes y volver a intentarlo más tarde.'
+              : 'Hemos recibido varias preguntas. Espera un minuto y vuelve a intentarlo.',
+          );
+          throw new Error('CHAT_RATE_LIMIT');
+        }
         throw new Error(
           response.status === 429
             ? 'Hemos recibido varias preguntas. Espera un minuto y vuelve a intentarlo.'
@@ -93,8 +101,8 @@ export class ContactoSectionComponent {
     } catch (error) {
       if (!this.destroyRef.destroyed) {
         this.error.set(
-          error instanceof Error && error.message.startsWith('Hemos')
-            ? error.message
+          error instanceof Error && error.message === 'CHAT_RATE_LIMIT'
+            ? this.error()
             : 'El asistente no pudo responder en este momento. Consulta las preguntas frecuentes o llámanos al 3042818284.',
         );
         // No enviar turnos fallidos como contexto en la siguiente consulta.
