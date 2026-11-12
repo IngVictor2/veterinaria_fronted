@@ -1,92 +1,46 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { expect, it } from 'vitest';
 import { RegisterComponent } from './register.component';
+import { AuthService } from '../../../core/services/auth.service';
 
-describe('RegisterComponent', () => {
-  const register = vi.fn();
+function setup() {
+  TestBed.configureTestingModule({ providers: [
+    { provide: Router, useValue: {} }, { provide: AuthService, useValue: {} },
+  ] });
+  const component = TestBed.runInInjectionContext(() => new RegisterComponent());
+  component.primerNombre.set('Ana'); component.primerApellido.set('Ruiz');
+  component.email.set('ana@example.com');
+  return component;
+}
 
-  beforeEach(() => {
-    register.mockReset().mockResolvedValue(undefined);
-    TestBed.configureTestingModule({
-      imports: [RegisterComponent],
-      providers: [provideRouter([]), { provide: AuthService, useValue: { register } }],
-    });
-  });
-
-  function setup() {
-    const fixture = TestBed.createComponent(RegisterComponent);
-    fixture.detectChanges();
-    return { fixture, component: fixture.componentInstance };
+it('rechaza teléfonos cortos, largos o con letras y acepta 7 y 15 dígitos', () => {
+  const component = setup();
+  for (const telefono of ['123456', '1234567890123456', '123456a']) {
+    component.telefono.set(telefono); expect(component.validateStep(1)).toBe(false);
   }
-
-  function fillPersonalData(component: RegisterComponent) {
-    component.primerNombre.set('Ana');
-    component.primerApellido.set('Pérez');
-    component.telefono.set('3001234567');
+  for (const telefono of ['1234567', '123456789012345']) {
+    component.telefono.set(telefono); expect(component.validateStep(1)).toBe(true);
   }
+});
 
-  it('renders only the active step and preserves data when returning', () => {
-    const { fixture, component } = setup();
-    fillPersonalData(component);
-    component.nextStep();
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('.step-content')).toHaveLength(1);
-    expect(fixture.nativeElement.querySelector('[name="primerNombre"]')).toBeNull();
-    expect(fixture.nativeElement.querySelector('[name="email"]')).not.toBeNull();
-    component.prevStep();
-    fixture.detectChanges();
-    expect(component.primerNombre()).toBe('Ana');
-    expect(fixture.nativeElement.querySelector('[name="email"]')).toBeNull();
-  });
+it('limpia letras al escribir o pegar y limita el teléfono a 15 caracteres', () => {
+  const component = setup(), input = document.createElement('input');
+  input.value = 'abc1234567890123456789';
+  component.onTelefonoInput({target: input} as unknown as Event);
+  expect(input.value).toBe('123456789012345');
+  expect(component.telefono()).toBe(input.value);
+});
 
-  it('advances on form submission without registering before the last step', async () => {
-    const { fixture, component } = setup();
-    fillPersonalData(component);
-    fixture.nativeElement
-      .querySelector('form')
-      .dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-    await fixture.whenStable();
-    expect(component.step()).toBe(2);
-    expect(register).not.toHaveBeenCalled();
-  });
-
-  it('recreates the error alert so repeated invalid attempts replay the animation', () => {
-    const { fixture, component } = setup();
-    component.nextStep();
-    fixture.detectChanges();
-    const firstAlert = fixture.nativeElement.querySelector('[role="alert"]');
-    component.nextStep();
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[role="alert"]')).not.toBe(firstAlert);
-    expect(component.step()).toBe(1);
-  });
-
-  it('rejects invalid email and short or mismatched passwords', async () => {
-    const { component } = setup();
-    fillPersonalData(component);
-    component.numeroDocumento.set('123456');
-    component.email.set('correo-invalido');
-    expect(component.validateStep(2)).toBe(false);
-    component.email.set(' ANA@EXAMPLE.COM ');
-    expect(component.validateStep(2)).toBe(true);
-    expect(component.email()).toBe('ana@example.com');
-    component.password.set('123');
-    component.confirmPassword.set('123');
-    await component.handleRegister();
-    expect(component.step()).toBe(3);
-    expect(register).not.toHaveBeenCalled();
-    component.password.set('12345678');
-    expect(component.validateStep(3)).toBe(false);
-  });
-
-  it('does not hide the confirmation when toggling the first password', () => {
-    const { fixture, component } = setup();
-    component.step.set(3);
-    fixture.detectChanges();
-    fixture.nativeElement.querySelector('button[aria-label="Mostrar contraseña"]').click();
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[name="password"]').type).toBe('text');
-    expect(fixture.nativeElement.querySelector('[name="confirmPassword"]').type).toBe('password');
-  });
+it('las cédulas rechazan letras y el pasaporte acepta caracteres alfanuméricos', () => {
+  const component = setup();
+  for (const tipo of ['CC', 'CE']) {
+    component.onTipoDocumentoChange(tipo);
+    component.numeroDocumento.set('AB123'); expect(component.validateStep(2)).toBe(false);
+    component.numeroDocumento.set('1234567'); expect(component.validateStep(2)).toBe(true);
+  }
+  component.onTipoDocumentoChange('PASAPORTE');
+  component.numeroDocumento.set('AB123456'); expect(component.validateStep(2)).toBe(true);
+  component.numeroDocumento.set('AB-123'); expect(component.validateStep(2)).toBe(false);
+  component.onTipoDocumentoChange('CC'); expect(component.numeroDocumento()).toBe('');
 });

@@ -152,11 +152,16 @@ import { RegisterRequest } from '../../../core/models/auth';
                 <input
                   name="telefono"
                   type="tel"
-                  placeholder="Número de telefono"
+                  placeholder="Entre 7 y 15 dígitos"
+                  inputmode="numeric"
+                  minlength="7"
+                  maxlength="15"
+                  pattern="[0-9]{7,15}"
+                  autocomplete="tel"
                   class="input input-bordered input-sm w-full input-animated"
                   required
                   [ngModel]="telefono()"
-                  (ngModelChange)="telefono.set($event)"
+                  (input)="onTelefonoInput($event)"
                 />
               </div>
 
@@ -237,7 +242,7 @@ import { RegisterRequest } from '../../../core/models/auth';
                     name="tipoDocumento"
                     class="select select-bordered select-sm w-full input-animated"
                     [ngModel]="tipoDocumento()"
-                    (ngModelChange)="tipoDocumento.set($event)"
+                    (ngModelChange)="onTipoDocumentoChange($event)"
                   >
                     <option value="CC">Cédula de Ciudadanía</option>
                     <option value="CE">Cédula de Extranjería</option>
@@ -253,11 +258,13 @@ import { RegisterRequest } from '../../../core/models/auth';
                   <input
                     name="numeroDocumento"
                     type="text"
-                    placeholder="Número de documento"
+                    [placeholder]="tipoDocumento() === 'PASAPORTE' ? 'Letras y números, sin espacios' : 'Solo números, sin puntos ni espacios'"
+                    [attr.inputmode]="tipoDocumento() === 'PASAPORTE' ? 'text' : 'numeric'"
+                    [maxlength]="documentMaxLength()"
                     class="input input-bordered input-sm w-full input-animated"
                     required
                     [ngModel]="numeroDocumento()"
-                    (ngModelChange)="numeroDocumento.set($event)"
+                    (input)="onDocumentoInput($event)"
                   />
                 </div>
               </div>
@@ -678,6 +685,25 @@ export class RegisterComponent {
   readonly showConfirmPassword = signal(false);
   readonly errorAttempt = signal(0);
 
+  documentMaxLength(): number { return this.tipoDocumento() === 'CC' ? 10 : this.tipoDocumento() === 'CE' ? 7 : 30; }
+
+  onTelefonoInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 15);
+    this.telefono.set(input.value);
+  }
+
+  onDocumentoInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(this.tipoDocumento() === 'PASAPORTE' ? /[^a-zA-Z0-9]/g : /[^0-9]/g, '').slice(0, this.documentMaxLength());
+    this.numeroDocumento.set(input.value);
+  }
+
+  onTipoDocumentoChange(value: string): void {
+    this.tipoDocumento.set(value);
+    this.numeroDocumento.set('');
+  }
+
   normalizeEmail(): void {
     this.email.set(this.email().trim().toLowerCase());
   }
@@ -692,11 +718,13 @@ export class RegisterComponent {
     if (stepNum === 1) {
       if (!this.primerNombre().trim()) return this.showError('El primer nombre es obligatorio');
       if (!this.primerApellido().trim()) return this.showError('El primer apellido es obligatorio');
-      if (!this.telefono().trim()) return this.showError('El teléfono es obligatorio');
+      if (!/^[0-9]{7,15}$/.test(this.telefono())) return this.showError('El teléfono debe contener entre 7 y 15 dígitos, sin letras, espacios ni símbolos.');
     } else if (stepNum === 2) {
       this.normalizeEmail();
       if (!this.numeroDocumento().trim())
         return this.showError('El número de documento es obligatorio');
+      const documentPattern = this.tipoDocumento() === 'CC' ? /^[0-9]{1,10}$/ : this.tipoDocumento() === 'CE' ? /^[0-9]{1,7}$/ : /^[a-zA-Z0-9]{1,30}$/;
+      if (!['CC', 'CE', 'PASAPORTE'].includes(this.tipoDocumento()) || !documentPattern.test(this.numeroDocumento())) return this.showError(this.tipoDocumento() === 'PASAPORTE' ? 'El pasaporte solo puede contener letras y números, sin espacios ni símbolos (máximo 30 caracteres).' : 'El documento debe contener solo números, sin puntos ni espacios (máximo ' + this.documentMaxLength() + ' dígitos).');
       if (!this.email()) return this.showError('El correo electrónico es obligatorio');
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email())) {
         return this.showError('Ingresa un correo electrónico válido');
