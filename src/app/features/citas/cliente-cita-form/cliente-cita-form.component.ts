@@ -239,6 +239,7 @@ export class ClienteCitaFormComponent implements OnInit {
   readonly tipoServicioOptions: SearchSelectOption[] = [
     { value: 'CONSULTA', label: 'Consulta' },
     { value: 'ESTETICA', label: 'Estética' },
+    { value: 'OTRO', label: 'Otro' },
   ];
   readonly idServicio = signal(0);
 

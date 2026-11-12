@@ -269,6 +269,7 @@ export class CitaFormComponent implements OnInit {
   readonly tipoServicioOptions: SearchSelectOption[] = [
     { value: 'CONSULTA', label: 'Consulta' },
     { value: 'ESTETICA', label: 'Estética' },
+    { value: 'OTRO', label: 'Otro' },
   ];
   readonly idEmpleado = signal(0);
   readonly idServicio = signal(0);
