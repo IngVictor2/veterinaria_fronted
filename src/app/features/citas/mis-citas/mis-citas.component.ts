@@ -12,16 +12,16 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   imports: [FormsModule, PaginationBarComponent],
   template: `
     <div>
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Citas</h1>
-        <label class="input input-bordered flex items-center gap-2 bg-white flex-1 min-w-[220px] h-10">
+      <div class="flex flex-wrap md:flex-nowrap items-center gap-3 mb-6">
+        <h1 class="shrink-0 whitespace-nowrap text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Citas</h1>
+        <label class="input input-bordered flex items-center gap-2 bg-white flex-1 min-w-0 basis-full md:basis-0 h-10">
           <svg aria-hidden="true" class="h-4 w-4 text-[#9D343C] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
           <span class="sr-only">Buscar citas por nombre de mascota</span>
           <input type="search" name="buscarMascota" class="grow min-w-0 text-sm" placeholder="Buscar citas por nombre de mascota…" [ngModel]="busquedaMascota()" (ngModelChange)="onBusquedaMascotaChange($event)" />
         </label>
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-nowrap shrink-0 items-center gap-2">
           <select
-            class="select select-bordered select-sm h-10 text-sm min-w-[140px]"
+            class="select select-bordered select-sm h-10 text-sm !w-[140px] min-w-0 shrink-0"
             name="filtroEstado"
             aria-label="Filtrar citas por estado"
             [ngModel]="filtroEstado()"
@@ -33,7 +33,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
             <option value="ATENDIDA">Atendidas</option>
             <option value="CANCELADA">Canceladas</option>
           </select>
-          <button class="btn btn-primary gap-2" (click)="router.navigate(['/mis-citas/nueva'])">
+          <button class="btn btn-primary h-10 min-h-10 shrink-0 whitespace-nowrap gap-2" (click)="router.navigate(['/mis-citas/nueva'])">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
