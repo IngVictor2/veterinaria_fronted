@@ -89,17 +89,6 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 placeholder="Buscar por mascota, profesional..."
               />
             </div>
-            <select
-              class="select select-bordered"
-              name="filtroEstado"
-              [ngModel]="filtroEstado()"
-              (ngModelChange)="onFiltroEstadoChange($event)"
-            >
-              <option value="">Todos los estados</option>
-              @for (e of estados; track e) {
-                <option [value]="e">{{ e }}</option>
-              }
-            </select>
             <app-table-order
               [columns]="columns"
               [value]="tableSort()"
@@ -342,7 +331,6 @@ export class CitasListComponent implements OnInit {
   readonly page = signal(0);
   readonly size = signal(10);
   readonly search = signal('');
-  readonly filtroEstado = signal('');
   readonly showCancelDialog = signal(false);
   readonly selectedCita = signal<Cita | null>(null);
 
@@ -360,8 +348,6 @@ export class CitasListComponent implements OnInit {
   readonly confirmLoading = signal(false);
   readonly confirmError = signal('');
   readonly citasDelDia = signal<Cita[]>([]);
-
-  readonly estados = ['PENDIENTE', 'CONFIRMADA', 'ATENDIDA', 'CANCELADA'];
 
   readonly columns: DataTableColumn[] = [
     { key: 'fechaCita', label: 'Fecha', sortable: true },
@@ -381,9 +367,6 @@ export class CitasListComponent implements OnInit {
     sortRows(
       (() => {
         let result = this.allData();
-        if (this.filtroEstado()) {
-          result = result.filter((c) => c.estadoCita === this.filtroEstado());
-        }
         const search = this.search();
         if (search) {
           const q = search.toLowerCase();
@@ -733,11 +716,6 @@ export class CitasListComponent implements OnInit {
   }
 
   handleSearch(): void {
-    this.page.set(0);
-  }
-
-  onFiltroEstadoChange(value: string): void {
-    this.filtroEstado.set(value);
     this.page.set(0);
   }
 }
