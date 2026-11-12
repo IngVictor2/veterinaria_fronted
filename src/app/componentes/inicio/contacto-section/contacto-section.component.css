@@ -4,7 +4,7 @@
 }
 .contact-section {
   padding: 80px 24px;
-  background: #faf9f8;
+  background: var(--landing-background);
 }
 .contact-wrap {
   max-width: 1180px;

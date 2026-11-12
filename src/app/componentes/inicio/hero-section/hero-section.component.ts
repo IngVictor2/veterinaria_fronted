@@ -93,7 +93,7 @@ import { estaAbierta } from './horario-atencion';
         </div>
 
         <div class="relative mx-auto w-full max-w-lg animate-fade-in">
-          <div class="absolute -inset-4 rounded-[3rem] bg-white    blur-2xl"></div>
+          <div class="absolute -inset-4 rounded-[3rem] bg-[var(--landing-background)]    blur-2xl"></div>
 
           <div
             class="surface-card relative overflow-hidden rounded-[2.5rem] border border-gray-200     p-6 shadow-2xl sm:p-8"
@@ -156,7 +156,7 @@ import { estaAbierta } from './horario-atencion';
   `,
   styles: `
     .hero-section {
-      background-color: #ffffff;
+      background-color: var(--landing-background);
     }
     .estado-atencion.abierto {
       background: #d1fae5;

@@ -18,6 +18,13 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
     ContactoSectionComponent,
     SiteFooterComponent,
   ],
+  styles: `
+    :host {
+      --landing-background: #faf9f8;
+      display: block;
+      background-color: var(--landing-background);
+    }
+  `,
   template: `
     <a
       href="#contenido"
@@ -26,7 +33,7 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
       Saltar al contenido
     </a>
 
-    <div class="min-h-screen bg-[#FFFFFF]">
+    <div class="min-h-screen bg-[var(--landing-background)]">
       <app-site-header />
 
       <main id="contenido">

@@ -6,7 +6,7 @@ import { BlogService } from '../../../servicios/blog.service';
   selector: 'app-site-header',
   imports: [RouterLink],
   template: `
-    <header class="sticky top-0 z-50 border-b border-gray-200 bg-[#FFFFFF]/85 backdrop-blur-xl">
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-[var(--landing-background)]/95 backdrop-blur-xl">
       <div
         class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
       >
@@ -111,7 +111,7 @@ import { BlogService } from '../../../servicios/blog.service';
       @if (menuAbierto()) {
         <nav
           id="menu-movil"
-          class="border-t border-gray-200 bg-[#FFFFFF] px-4 py-3 lg:hidden"
+          class="border-t border-gray-200 bg-[var(--landing-background)] px-4 py-3 lg:hidden"
           aria-label="Navegación móvil"
         >
           <div class="flex flex-col gap-1">

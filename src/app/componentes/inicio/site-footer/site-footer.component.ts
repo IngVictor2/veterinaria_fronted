@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-site-footer',
   imports: [RouterLink],
   template: `
-    <footer class="border-t border-gray-200 bg-[#FFFFFF]">
+    <footer class="border-t border-gray-200 bg-[var(--landing-background)]">
       <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
           <a routerLink="/" class="flex items-center gap-3">
