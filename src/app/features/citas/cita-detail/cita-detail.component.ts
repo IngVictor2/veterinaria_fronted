@@ -87,6 +87,18 @@ interface HistorialDetalle {
                 </svg>
                 Atender
               </button>
+            } @else if (puedeAtenderPorRol() && !esDiaDeLaCita()) {
+              <button
+                class="btn btn-success btn-sm gap-1"
+                disabled
+                [title]="'Solo disponible el día de la cita (' + formatFecha(cita.fechaCita) + ')'"
+                [attr.aria-label]="'Atender solo disponible el día de la cita, ' + formatFecha(cita.fechaCita)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Atender
+              </button>
             }
             @if (puedeVerHistorial()) {
               <button class="btn btn-primary btn-sm gap-1" (click)="showHistorialModal.set(true)">
@@ -478,15 +490,22 @@ export class CitaDetailComponent implements OnInit {
     return servicio?.tipoServicio === 'ESTETICA' ? 'Seleccionar estilista' : 'Seleccionar veterinario';
   });
 
-  readonly puedeAtender = computed(() => {
+  readonly puedeAtenderPorRol = computed(() => {
     const cita = this.cita();
-    if (!cita) return false;
-    if (this.auth.hasAnyRole('ADMIN')) return cita.estadoCita === 'CONFIRMADA';
+    if (!cita || cita.estadoCita !== 'CONFIRMADA') return false;
+    if (this.auth.hasAnyRole('ADMIN')) return true;
     if (this.auth.esProfesional()) {
-      return cita.estadoCita === 'CONFIRMADA' && this.auth.idEmpleadoActual() === cita.idEmpleado;
+      return this.auth.idEmpleadoActual() === cita.idEmpleado;
     }
     return false;
   });
+
+  readonly esDiaDeLaCita = computed(() => {
+    const cita = this.cita();
+    return !!cita && cita.fechaCita === this.fechaHoyLocal();
+  });
+
+  readonly puedeAtender = computed(() => this.puedeAtenderPorRol() && this.esDiaDeLaCita());
 
   readonly citaAtendida = computed(() => {
     const cita = this.cita();
@@ -622,6 +641,14 @@ export class CitaDetailComponent implements OnInit {
       CANCELADA: 'badge-error',
     };
     return colors[estado] || 'badge-ghost';
+  }
+
+  private fechaHoyLocal(): string {
+    const hoy = new Date();
+    const year = hoy.getFullYear();
+    const month = String(hoy.getMonth() + 1).padStart(2, '0');
+    const day = String(hoy.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   formatFecha(fecha: string | null): string {
