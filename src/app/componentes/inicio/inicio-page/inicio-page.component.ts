@@ -20,7 +20,7 @@ import { SiteHeaderComponent } from '../site-header/site-header.component';
   ],
   styles: `
     :host {
-      --landing-background: #e7e1d8;
+      --landing-background: var(--page-background);
       display: block;
       background-color: var(--landing-background);
     }

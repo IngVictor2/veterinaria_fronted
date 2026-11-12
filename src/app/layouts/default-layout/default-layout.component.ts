@@ -277,7 +277,7 @@ import { AuthService } from '../../core/services/auth.service';
   `,
   styles: `
     .bg-layout {
-      background-color: #FFFFFF;
+      background-color: var(--page-background);
       min-height: 100vh;
     }
 

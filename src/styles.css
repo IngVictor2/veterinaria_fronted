@@ -3,6 +3,10 @@
   themes: light --default;
 }
 
+:root {
+  --page-background: #E7E1D8;
+}
+
 @theme {
   --color-primary: #9D343C;
   --color-primary-content: #FFFFFF;
@@ -148,7 +152,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   @apply text-base-content;
-  background: #FFFFFF;
+  background: var(--page-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -156,7 +160,7 @@ body {
 
 html {
   color-scheme: light;
-  background: #FFFFFF;
+  background: var(--page-background);
 }
 
 button, input, select, textarea {
@@ -320,9 +324,9 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Static white page background */
+/* Shared page background */
 .bg-animated {
-  background-color: #FFFFFF;
+  background-color: var(--page-background);
   min-height: 100vh;
 }
 
