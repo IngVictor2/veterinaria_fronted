@@ -83,7 +83,7 @@ export class ContactoSectionComponent {
         if (response.status === 429) {
           this.error.set(
             data.error?.code === 'PROVIDER_LIMIT'
-              ? 'La IA alcanzó temporalmente su cuota gratuita. Puedes consultar las preguntas frecuentes y volver a intentarlo más tarde.'
+              ? 'En este momento no puedo responder esa pregunta. Puedes consultar las preguntas frecuentes o intentarlo más tarde.'
               : 'Hemos recibido varias preguntas. Espera un minuto y vuelve a intentarlo.',
           );
           throw new Error('CHAT_RATE_LIMIT');
