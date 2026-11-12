@@ -6,7 +6,7 @@ import { MascotasApiService } from '../../../core/services/mascotas-api.service'
 import { CitasApiService } from '../../../core/services/citas-api.service';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
 import { Mascota } from '../../../core/models/mascota';
-import { Cita } from '../../../core/models/cita';
+import { Cita, mapaNumerosCitasPorMascota } from '../../../core/models/cita';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
@@ -174,14 +174,7 @@ export class MascotaDetailComponent implements OnInit {
   readonly page = signal(0);
   readonly size = signal(5);
 
-  readonly numerosCitas = computed(() => {
-    const mapa: Record<number, number> = {};
-    const ordenadas = [...this.citas()].sort((a, b) => a.idCita - b.idCita);
-    ordenadas.forEach((c, i) => {
-      mapa[c.idCita] = i + 1;
-    });
-    return mapa;
-  });
+  readonly numerosCitas = computed(() => mapaNumerosCitasPorMascota(this.citas()));
 
   readonly initials = computed(() => {
     const m = this.mascota();

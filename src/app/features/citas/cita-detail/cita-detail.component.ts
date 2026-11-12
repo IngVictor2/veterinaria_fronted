@@ -12,7 +12,7 @@ import { FacturasApiService } from '../../../core/services/facturas-api.service'
 import { PagosApiService } from '../../../core/services/pagos-api.service';
 import { MetodoPago, MetodosPagoApiService } from '../../../core/services/metodos-pago-api.service';
 import { FacturaCitaService } from '../../../core/services/factura-cita.service';
-import { Cita, mapaNumerosCitasPorCliente } from '../../../core/models/cita';
+import { Cita, mapaNumerosCitasPorMascota } from '../../../core/models/cita';
 import { Empleado } from '../../../core/models/empleado';
 import { Factura } from '../../../core/models/factura';
 import { Servicio } from '../../../core/models/servicio';
@@ -61,9 +61,9 @@ interface HistorialDetalle {
           </button>
           <div class="flex-1">
             <h1 class="text-xl sm:text-2xl font-extrabold text-[#374151]">
-              Cita #{{ numeroCita() ?? cita.idCita }}
-              @if (totalCitasCliente() !== null) {
-                <span class="text-sm font-medium text-base-content/40">de {{ totalCitasCliente() }}</span>
+              Cita #{{ numeroCita() ?? '—' }} de {{ cita.nombreMascota }}
+              @if (totalCitasMascota() !== null) {
+                <span class="text-sm font-medium text-base-content/40">({{ totalCitasMascota() }} citas en su historial)</span>
               }
             </h1>
             <p class="text-sm text-base-content/50">Detalle de la cita</p>
@@ -299,7 +299,7 @@ interface HistorialDetalle {
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  {{ historialCita.tipoHistorial === 'MEDICO' ? 'Consulta Médica' : 'Servicio Estético' }} - Cita #{{ numeroCita() ?? cita.idCita }}
+                  {{ historialCita.tipoHistorial === 'MEDICO' ? 'Consulta Médica' : 'Servicio Estético' }} - Cita #{{ numeroCita() ?? '—' }}
                 </h3>
                 <div class="space-y-4">
                   <div class="bg-base-200/50 rounded-lg p-3 text-sm">
@@ -421,7 +421,7 @@ export class CitaDetailComponent implements OnInit {
   readonly error = signal('');
   readonly success = signal('');
   readonly numeroCita = signal<number | null>(null);
-  readonly totalCitasCliente = signal<number | null>(null);
+  readonly totalCitasMascota = signal<number | null>(null);
 
   // 3-dot menu actions
   readonly showAssignModal = signal(false);
@@ -546,15 +546,16 @@ export class CitaDetailComponent implements OnInit {
   }
 
   async cargarNumeroCita(c: Cita): Promise<void> {
-    if (!c.idCliente) return;
+    if (!c.idMascota) return;
     try {
-      const citas = (await firstValueFrom(this.citasApi.getByCliente(c.idCliente))) || [];
-      const mapa = mapaNumerosCitasPorCliente(citas);
+      const citas = ((await firstValueFrom(this.citasApi.getByMascota(c.idMascota))) || [])
+        .filter(cita => cita.idMascota === c.idMascota);
+      const mapa = mapaNumerosCitasPorMascota(citas);
       this.numeroCita.set(mapa[c.idCita] ?? null);
-      this.totalCitasCliente.set(citas.length);
+      this.totalCitasMascota.set(citas.length);
     } catch {
       this.numeroCita.set(null);
-      this.totalCitasCliente.set(null);
+      this.totalCitasMascota.set(null);
     }
   }
 

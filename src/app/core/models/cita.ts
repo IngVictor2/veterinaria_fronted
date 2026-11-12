@@ -66,10 +66,19 @@ export function citasOrdenadasCronologicamente(citas: Cita[]): Cita[] {
   });
 }
 
-export function mapaNumerosCitasPorCliente(citas: Cita[]): Record<number, number> {
+// El número visible pertenece al historial de la mascota. El ID sigue siendo
+// la identidad técnica utilizada para abrir y actualizar la cita.
+// El orden de registro evita renumeraciones al cambiar fecha, hora o estado.
+export function mapaNumerosCitasPorMascota(citas: Cita[]): Record<number, number> {
   const mapa: Record<number, number> = {};
-  citasOrdenadasCronologicamente(citas).forEach((c, i) => {
-    mapa[c.idCita] = i + 1;
-  });
+  const contadores = new Map<number, number>();
+  const vistas = new Set<number>();
+  for (const cita of [...citas].sort((a, b) => a.idCita - b.idCita)) {
+    if (vistas.has(cita.idCita)) continue;
+    vistas.add(cita.idCita);
+    const numero = (contadores.get(cita.idMascota) ?? 0) + 1;
+    contadores.set(cita.idMascota, numero);
+    mapa[cita.idCita] = numero;
+  }
   return mapa;
 }

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CitasApiService } from '../../../core/services/citas-api.service';
-import { Cita, formatHora as formatHoraFn } from '../../../core/models/cita';
+import { Cita, mapaNumerosCitasPorMascota, formatHora as formatHoraFn } from '../../../core/models/cita';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 
@@ -133,7 +133,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
                     </div>
                     <div>
                       <h3 class="font-bold">
-                        Cita #{{ numerosCitas()[cita.idCita] ?? cita.idCita }}
+                        Cita #{{ numerosCitas()[cita.idCita] ?? '—' }} de {{ cita.nombreMascota }}
                       </h3>
                       <p class="text-sm text-base-content/60">{{ cita.nombreServicio }}</p>
                       <p class="text-sm text-base-content/60">
@@ -184,14 +184,7 @@ export class MisCitasComponent implements OnInit {
   readonly size = signal(3);
   readonly filtroEstado = signal('');
 
-  readonly numerosCitas = computed(() => {
-    const mapa: Record<number, number> = {};
-    const ordenadas = [...this.citas()].sort((a, b) => a.idCita - b.idCita);
-    ordenadas.forEach((c, i) => {
-      mapa[c.idCita] = i + 1;
-    });
-    return mapa;
-  });
+  readonly numerosCitas = computed(() => mapaNumerosCitasPorMascota(this.citas()));
 
   readonly sortedCitas = computed(() => {
     let result = [...this.citas()];
