@@ -1,5 +1,3 @@
-import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
-import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +9,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
 
 @Component({
   selector: 'app-mis-citas',
-  imports: [TableOrderComponent, FormsModule, PaginationBarComponent],
+  imports: [FormsModule, PaginationBarComponent],
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
@@ -117,11 +115,6 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
         </div>
       } @else {
         <div class="space-y-4">
-          <app-table-order
-            [columns]="sortColumns"
-            [value]="tableSort()"
-            (change)="setTableSort($event)"
-          />
           @for (cita of paginatedCitas(); track cita.idCita) {
             <div
               class="management-card card  shadow-md cursor-pointer hover:bg-[#DEE1E6] transition-colors"
@@ -179,18 +172,6 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   `,
 })
 export class MisCitasComponent implements OnInit {
-  readonly tableSort = signal<TableSort | null>(null);
-  readonly sortColumns = [
-    { key: 'nombreMascota', label: 'Mascota' },
-    { key: 'fechaCita', label: 'Fecha' },
-    { key: 'estadoCita', label: 'Estado' },
-    { key: 'nombreServicio', label: 'Servicio' },
-  ];
-  setTableSort(sort: TableSort | null): void {
-    this.tableSort.set(sort);
-    this.page.set(0);
-  }
-
   readonly router = inject(Router);
   private readonly citasApi = inject(CitasApiService);
 
@@ -212,18 +193,13 @@ export class MisCitasComponent implements OnInit {
     return mapa;
   });
 
-  readonly sortedCitas = computed(() =>
-    sortRows(
-      (() => {
-        let result = [...this.citas()];
-        if (this.filtroEstado()) {
-          result = result.filter((c) => c.estadoCita === this.filtroEstado());
-        }
-        return result.sort((a, b) => b.idCita - a.idCita);
-      })(),
-      this.tableSort(),
-    ),
-  );
+  readonly sortedCitas = computed(() => {
+    let result = [...this.citas()];
+    if (this.filtroEstado()) {
+      result = result.filter((c) => c.estadoCita === this.filtroEstado());
+    }
+    return result.sort((a, b) => b.idCita - a.idCita);
+  });
 
   readonly totalPages = computed(() =>
     Math.max(1, Math.ceil(this.sortedCitas().length / this.size())),
