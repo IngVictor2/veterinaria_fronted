@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { getApiErrorMessage } from '../../../core/utils/api-error';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ import { getApiErrorMessage } from '../../../core/utils/api-error';
       </div>
 
       @if (error()) {
-        <div class="alert alert-error mb-6 animate-shake">
+        <div class="alert alert-error mb-6 animate-shake" role="alert">
           <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -171,14 +171,40 @@ export class LoginComponent {
   }
 
   async handleLogin(): Promise<void> {
+    if (this.loading()) return;
     this.normalizeCorreo();
-    this.loading.set(true);
     this.error.set('');
+    if (!this.correo() && !this.password().trim()) {
+      this.error.set('Escribe tu correo electrónico y tu contraseña para iniciar sesión.');
+      return;
+    }
+    if (!this.correo()) {
+      this.error.set('Escribe tu correo electrónico para continuar.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.correo())) {
+      this.error.set('Revisa tu correo electrónico. Debe tener un formato como nombre@correo.com.');
+      return;
+    }
+    if (!this.password().trim()) {
+      this.error.set('Escribe tu contraseña para continuar.');
+      return;
+    }
+    this.loading.set(true);
     try {
       await this.auth.login({ correo: this.correo(), password: this.password() });
       this.router.navigateByUrl('/dashboard');
     } catch (e: unknown) {
-      this.error.set(getApiErrorMessage(e, 'Credenciales inválidas'));
+      const status = e instanceof HttpErrorResponse ? e.status : null;
+      this.error.set(
+        status === 400 || status === 401
+          ? 'El correo o la contraseña no son correctos. Revisa tus datos e inténtalo de nuevo.'
+          : status === 403
+            ? 'No pudimos acceder a tu cuenta. Comunícate con recepción para recibir ayuda.'
+            : status === 429
+              ? 'Has realizado varios intentos. Espera unos minutos antes de volver a iniciar sesión.'
+              : 'No pudimos conectar con el servicio. Inténtalo de nuevo en unos momentos.',
+      );
     } finally {
       this.loading.set(false);
     }
