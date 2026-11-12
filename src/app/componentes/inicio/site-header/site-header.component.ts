@@ -7,7 +7,9 @@ import { BlogService } from '../../../servicios/blog.service';
   imports: [RouterLink],
   template: `
     <header class="sticky top-0 z-50 border-b border-gray-200 bg-[#FFFFFF]/85 backdrop-blur-xl">
-      <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div
+        class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+      >
         <a routerLink="/" class="flex items-center gap-3" (click)="cerrarMenu()">
           <img
             src="/logo.svg"
@@ -18,7 +20,9 @@ import { BlogService } from '../../../servicios/blog.service';
             <span class="block text-lg font-extrabold leading-tight tracking-tight text-[#374151]">
               VetClinic
             </span>
-            <span class="hidden text-[10px] font-semibold uppercase tracking-[0.26em] text-[#9D343C] sm:block">
+            <span
+              class="hidden text-[10px] font-semibold uppercase tracking-[0.26em] text-[#9D343C] sm:block"
+            >
               Clínica veterinaria
             </span>
           </span>
@@ -26,10 +30,7 @@ import { BlogService } from '../../../servicios/blog.service';
 
         <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
           @for (enlace of enlaces; track enlace.href) {
-            <a
-              [href]="enlace.href"
-              class="rounded-full px-3 py-2 text-sm font-medium text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
-            >
+            <a [href]="enlace.href" class="nav-link rounded-full px-3 py-2 text-sm font-medium">
               {{ enlace.texto }}
             </a>
           }
@@ -42,7 +43,13 @@ import { BlogService } from '../../../servicios/blog.service';
               class="flex items-center gap-1.5 rounded-full border border-[#9D343C]/40 bg-[#9D343C]/10 px-3 py-1.5 text-xs font-semibold text-[#9D343C] transition hover:bg-[#9D343C]/20"
               [attr.aria-label]="'Artículos guardados: ' + blog.totalGuardados()"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3.5 w-3.5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <path d="M6 2h12a1 1 0 0 1 1 1v18l-7-4-7 4V3a1 1 0 0 1 1-1Z" />
               </svg>
               {{ blog.totalGuardados() }}
@@ -65,12 +72,36 @@ import { BlogService } from '../../../servicios/blog.service';
             (click)="alternarMenu()"
           >
             @if (menuAbierto()) {
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18 18 6M6 6l12 12"
+                />
               </svg>
             } @else {
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             }
           </button>
@@ -78,12 +109,16 @@ import { BlogService } from '../../../servicios/blog.service';
       </div>
 
       @if (menuAbierto()) {
-        <nav id="menu-movil" class="border-t border-gray-200 bg-[#FFFFFF] px-4 py-3 lg:hidden" aria-label="Navegación móvil">
+        <nav
+          id="menu-movil"
+          class="border-t border-gray-200 bg-[#FFFFFF] px-4 py-3 lg:hidden"
+          aria-label="Navegación móvil"
+        >
           <div class="flex flex-col gap-1">
             @for (enlace of enlaces; track enlace.href) {
               <a
                 [href]="enlace.href"
-                class="rounded-xl px-3 py-2.5 text-sm font-medium text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
+                class="nav-link rounded-xl px-3 py-2.5 text-sm font-medium"
                 (click)="cerrarMenu()"
               >
                 {{ enlace.texto }}
@@ -93,6 +128,33 @@ import { BlogService } from '../../../servicios/blog.service';
         </nav>
       }
     </header>
+  `,
+  styles: `
+    .nav-link {
+      color: #374151;
+      transition:
+        background-color 160ms ease,
+        color 160ms ease,
+        box-shadow 160ms ease;
+    }
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background-color: #9d343c;
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgb(157 52 60 / 22%);
+    }
+    .nav-link:focus-visible {
+      outline: 2px solid #9d343c;
+      outline-offset: 3px;
+    }
+    .nav-link:active {
+      background-color: #7d2931;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav-link {
+        transition: none;
+      }
+    }
   `,
 })
 export class SiteHeaderComponent {
