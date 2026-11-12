@@ -12,12 +12,18 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   imports: [FormsModule, PaginationBarComponent],
   template: `
     <div>
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
+      <div class="flex flex-wrap items-center gap-3 mb-6">
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mis Citas</h1>
-        <div class="flex items-center gap-2">
+        <label class="input input-bordered flex items-center gap-2 bg-white flex-1 min-w-[220px] h-10">
+          <svg aria-hidden="true" class="h-4 w-4 text-[#9D343C] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <span class="sr-only">Buscar citas por nombre de mascota</span>
+          <input type="search" name="buscarMascota" class="grow min-w-0 text-sm" placeholder="Buscar citas por nombre de mascota…" [ngModel]="busquedaMascota()" (ngModelChange)="onBusquedaMascotaChange($event)" />
+        </label>
+        <div class="flex flex-wrap items-center gap-2">
           <select
             class="select select-bordered select-sm h-10 text-sm min-w-[140px]"
             name="filtroEstado"
+            aria-label="Filtrar citas por estado"
             [ngModel]="filtroEstado()"
             (ngModelChange)="onFiltroEstadoChange($event)"
           >
@@ -113,6 +119,14 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
             </button>
           </div>
         </div>
+      } @else if (sortedCitas().length === 0) {
+        <div class="management-card card shadow-md" role="status">
+          <div class="card-body items-center text-center py-12">
+            <h3 class="text-lg font-semibold text-[#374151]">No encontramos citas con esos filtros</h3>
+            <p class="text-sm text-[#545d6c]">Prueba con otro nombre de mascota o cambia el estado seleccionado.</p>
+            <button type="button" class="btn btn-outline btn-sm mt-3" (click)="limpiarFiltros()">Limpiar filtros</button>
+          </div>
+        </div>
       } @else {
         <div class="space-y-4">
           @for (cita of paginatedCitas(); track cita.idCita) {
@@ -183,11 +197,15 @@ export class MisCitasComponent implements OnInit {
   readonly page = signal(0);
   readonly size = signal(3);
   readonly filtroEstado = signal('');
+  readonly busquedaMascota = signal('');
 
   readonly numerosCitas = computed(() => mapaNumerosCitasPorMascota(this.citas()));
 
   readonly sortedCitas = computed(() => {
     let result = [...this.citas()];
+    const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('es-CO').trim();
+    const busqueda = normalize(this.busquedaMascota());
+    if (busqueda) result = result.filter(c => normalize(c.nombreMascota || '').includes(busqueda));
     if (this.filtroEstado()) {
       result = result.filter((c) => c.estadoCita === this.filtroEstado());
     }
@@ -259,6 +277,17 @@ export class MisCitasComponent implements OnInit {
 
   onFiltroEstadoChange(value: string): void {
     this.filtroEstado.set(value);
+    this.page.set(0);
+  }
+
+  onBusquedaMascotaChange(value: string): void {
+    this.busquedaMascota.set(value);
+    this.page.set(0);
+  }
+
+  limpiarFiltros(): void {
+    this.busquedaMascota.set('');
+    this.filtroEstado.set('');
     this.page.set(0);
   }
 }
