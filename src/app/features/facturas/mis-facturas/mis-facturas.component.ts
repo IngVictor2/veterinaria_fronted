@@ -1,16 +1,15 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { FacturasApiService } from '../../../core/services/facturas-api.service';
-import { PagosApiService } from '../../../core/services/pagos-api.service';
-import { MetodosPagoApiService, MetodoPago } from '../../../core/services/metodos-pago-api.service';
+import { WompiWidgetService } from '../../../core/services/wompi-widget.service';
 import { Factura } from '../../../core/models/factura';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
+import { WompiPaymentModalComponent } from '../../../shared/components/wompi-payment-modal/wompi-payment-modal.component';
 
 @Component({
   selector: 'app-mis-facturas',
-  imports: [FormsModule, PaginationBarComponent],
+  imports: [PaginationBarComponent, WompiPaymentModalComponent],
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
@@ -108,101 +107,19 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
         </div>
       }
 
-      <!-- Modal de Pago -->
-      @if (showPayModal()) {
-        <dialog class="modal modal-open">
-          <div class="modal-box bg-[#FFFFFF] max-w-sm p-0">
-            <!-- Exito -->
-            @if (exitoPago()) {
-              <div class="px-5 py-8 text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 class="text-base font-bold mt-3 text-[#374151]">Pago exitoso</h3>
-                <p class="text-xs text-base-content/50 mt-1">Tu pago ha sido registrado correctamente</p>
-              </div>
-            } @else {
-              <div class="px-5 pt-5 pb-4">
-                <div class="flex items-center justify-between mb-4">
-                  <h3 class="font-bold text-lg text-[#374151]">Pagar Factura</h3>
-                  <button class="btn btn-ghost btn-circle btn-xs text-base-content/40 hover:text-[#374151]" (click)="closePayModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                @if (errorPago()) {
-                  <div class="alert alert-error mb-3 py-2 text-sm">
-                    <span>{{ errorPago() }}</span>
-                  </div>
-                }
-
-                @if (facturaSeleccionada(); as facturaSel) {
-                  <div class="bg-gray-50 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
-                    <span class="text-xs text-base-content/50 uppercase tracking-wider">Total</span>
-                    <span class="text-lg font-extrabold text-primary">{{ formatPrecio(facturaSel.total) }}</span>
-                  </div>
-                }
-
-                <form (ngSubmit)="handlePago()">
-                  <div class="form-control mb-4">
-                    <label class="label pb-1">
-                      <span class="label-text text-xs uppercase tracking-wider text-base-content/50">Método de pago</span>
-                    </label>
-                    <div class="grid grid-cols-1 gap-1.5">
-                      @for (metodo of metodosPago(); track metodo.idMetodoPago) {
-                        <label
-                          class="flex items-center gap-2.5 px-3 py-2 rounded-lg cursor-pointer transition-all"
-                          [class]="idMetodoPago() === metodo.idMetodoPago ? 'bg-primary/10 border border-primary/30' : 'bg-gray-50 border border-transparent hover:bg-gray-50'"
-                          (click)="seleccionarMetodo(metodo)"
-                        >
-                          <input
-                            type="radio"
-                            name="metodoPagoCliente"
-                            class="radio radio-xs radio-primary"
-                            [value]="metodo.idMetodoPago"
-                            [checked]="idMetodoPago() === metodo.idMetodoPago"
-                          />
-                          <span class="text-sm text-[#374151]">{{ metodo.descripcion || metodo.nombre }}</span>
-                        </label>
-                      }
-                    </div>
-                  </div>
-
-                  <div class="px-0 py-3 flex justify-end gap-2">
-                    <button type="button" class="btn btn-ghost btn-sm" (click)="closePayModal()">Cancelar</button>
-                    <button
-                      type="submit"
-                      class="btn btn-success btn-sm gap-1"
-                      [disabled]="saving() || idMetodoPago() === 0 || monto() <= 0"
-                    >
-                      @if (saving()) {
-                        <span class="loading loading-spinner loading-xs"></span>
-                      } @else {
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                      }
-                      Confirmar Pago
-                    </button>
-                  </div>
-                </form>
-              </div>
-            }
-          </div>
-          <form method="dialog" class="modal-backdrop" (click)="closePayModal()">
-            <button>close</button>
-          </form>
-        </dialog>
-      }
+      <app-wompi-payment-modal
+        [show]="showPayModal()"
+        [factura]="facturaSeleccionada()"
+        [permitirPagoManual]="false"
+        (cerrado)="closePayModal()"
+        (pagado)="onPagoRegistrado()"
+      />
     </div>
   `,
 })
 export class MisFacturasComponent implements OnInit {
   private readonly facturasApi = inject(FacturasApiService);
-  private readonly pagosApi = inject(PagosApiService);
-  private readonly metodosPagoApi = inject(MetodosPagoApiService);
+  private readonly wompi = inject(WompiWidgetService);
 
   readonly facturas = signal<Factura[]>([]);
   readonly loading = signal(true);
@@ -212,19 +129,6 @@ export class MisFacturasComponent implements OnInit {
 
   readonly showPayModal = signal(false);
   readonly facturaSeleccionada = signal<Factura | null>(null);
-  readonly metodosPago = signal<MetodoPago[]>([]);
-  readonly saving = signal(false);
-  readonly errorPago = signal('');
-  readonly exitoPago = signal(false);
-
-  readonly idMetodoPago = signal(0);
-  readonly monto = signal(0);
-  readonly referenciaPago = signal('');
-
-  readonly metodoPagoLabel = computed(() => {
-    const m = this.metodosPago().find((x) => x.idMetodoPago === this.idMetodoPago());
-    return m ? m.descripcion || m.nombre : 'Seleccionar método de pago';
-  });
 
   readonly facturasOrdenadas = computed(() => {
     return [...this.facturas()].sort((a, b) => b.idFactura - a.idFactura);
@@ -254,16 +158,18 @@ export class MisFacturasComponent implements OnInit {
     } finally {
       this.loading.set(false);
     }
+    void this.verificarPendientesWompi();
   }
 
-  esPagoConTarjeta(metodo: MetodoPago): boolean {
-    return ['TARJETA_DEBITO', 'TARJETA_CREDITO'].includes(metodo.nombre);
-  }
+  private async verificarPendientesWompi(): Promise<void> {
+    const actualizada = await this.wompi.verificarPendientes();
+    if (!actualizada) return;
 
-  seleccionarMetodo(metodo: MetodoPago): void {
-    this.idMetodoPago.set(metodo.idMetodoPago);
-    const el = document.activeElement as HTMLElement | null;
-    el?.blur();
+    try {
+      this.facturas.set(await firstValueFrom(this.facturasApi.getMisFacturas()));
+    } catch {
+      // El próximo inicio de sesión volverá a intentar la verificación.
+    }
   }
 
   estadoColor(estado: string): string {
@@ -294,58 +200,21 @@ export class MisFacturasComponent implements OnInit {
     return '$' + (valor?.toLocaleString() ?? '');
   }
 
-  async openPayModal(factura: Factura): Promise<void> {
+  openPayModal(factura: Factura): void {
     this.facturaSeleccionada.set(factura);
-    this.idMetodoPago.set(0);
-    this.monto.set(factura.total || 0);
-    this.referenciaPago.set('');
-    this.errorPago.set('');
-    this.exitoPago.set(false);
     this.showPayModal.set(true);
-
-    if (this.metodosPago().length === 0) {
-      try {
-        const res = await firstValueFrom(this.metodosPagoApi.getAll());
-        this.metodosPago.set((res || []).filter((m) => m.estado === true && this.esPagoConTarjeta(m)));
-      } catch (e: unknown) {
-        console.error('Error loading metodos de pago', e);
-      }
-    }
   }
 
   closePayModal(): void {
     this.showPayModal.set(false);
     this.facturaSeleccionada.set(null);
-    this.errorPago.set('');
-    this.exitoPago.set(false);
   }
 
-  async handlePago(): Promise<void> {
-    const factura = this.facturaSeleccionada();
-    if (!factura) return;
-    this.saving.set(true);
-    this.errorPago.set('');
+  async onPagoRegistrado(): Promise<void> {
     try {
-      await firstValueFrom(
-        this.pagosApi.create({
-          idFactura: factura.idFactura,
-          idMetodoPago: this.idMetodoPago(),
-          monto: this.monto(),
-          referenciaPago: this.referenciaPago() || undefined,
-        }),
-      );
-
-      this.exitoPago.set(true);
-
       this.facturas.set(await firstValueFrom(this.facturasApi.getMisFacturas()));
-
-      setTimeout(() => {
-        this.closePayModal();
-      }, 2000);
-    } catch (e: unknown) {
-      this.errorPago.set(getApiErrorMessage(e, 'Error al procesar el pago'));
-    } finally {
-      this.saving.set(false);
+    } catch {
+      // La factura se actualizará en el próximo intento de carga.
     }
   }
 }

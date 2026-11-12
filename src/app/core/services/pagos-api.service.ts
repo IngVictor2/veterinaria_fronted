@@ -2,7 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CrearPagoRequest, Pago } from '../models/pago';
+import {
+  CrearPagoRequest,
+  Pago,
+  WompiCheckoutRequest,
+  WompiCheckoutResponse,
+  WompiVerificacionResponse,
+  WompiVerificarRequest,
+} from '../models/pago';
 
 @Injectable({ providedIn: 'root' })
 export class PagosApiService {
@@ -19,5 +26,13 @@ export class PagosApiService {
 
   create(data: CrearPagoRequest): Observable<Pago> {
     return this.http.post<Pago>(this.baseUrl, data);
+  }
+
+  crearCheckoutWompi(data: WompiCheckoutRequest): Observable<WompiCheckoutResponse> {
+    return this.http.post<WompiCheckoutResponse>(`${this.baseUrl}/checkout`, data);
+  }
+
+  verificarPagoWompi(data: WompiVerificarRequest): Observable<WompiVerificacionResponse> {
+    return this.http.post<WompiVerificacionResponse>(`${this.baseUrl}/wompi/verificar`, data);
   }
 }
