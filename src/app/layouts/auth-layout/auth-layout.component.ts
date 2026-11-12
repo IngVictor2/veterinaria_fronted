@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
   imports: [RouterOutlet],
   template: `
-    <div class="min-h-screen bg-animated flex items-center justify-center p-4 relative overflow-hidden">
+    <div class="min-h-screen bg-animated flex items-center justify-center p-4 relative overflow-hidden"
+      [style.background-color]="esLogin() ? '#E7E1D8' : null">
 
       <div class="w-full max-w-md relative z-10">
         <div class="text-center mb-8 animate-slide-up">
@@ -15,7 +16,7 @@ import { RouterOutlet } from '@angular/router';
           <h1 class="text-3xl font-extrabold gradient-text">VetClinic</h1>
         </div>
 
-        <div class="auth-card rounded-3xl animate-scale-in">
+        <div class="auth-card rounded-3xl animate-scale-in" [style.background-color]="esLogin() ? '#FFFFFF' : null">
           <div class="card-body p-8">
             <router-outlet />
           </div>
@@ -24,4 +25,10 @@ import { RouterOutlet } from '@angular/router';
     </div>
   `,
 })
-export class AuthLayoutComponent {}
+export class AuthLayoutComponent {
+  private readonly router = inject(Router);
+
+  esLogin(): boolean {
+    return this.router.url.split(/[?#]/)[0] === '/login';
+  }
+}
