@@ -1,3 +1,4 @@
+import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
 import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +18,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 @Component({
   selector: 'app-roles',
   imports: [
+    TableOrderComponent,
     FormsModule,
     DataTableComponent,
     CellTemplateDirective,
@@ -48,7 +50,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
       <div class="card bg-base-100 shadow-md">
         <div class="card-body">
-          <div class="flex items-center gap-4 mb-4">
+          <div class="flex flex-wrap items-center gap-4 mb-4">
             <div class="flex items-center gap-2">
               <label class="label cursor-pointer gap-2">
                 <input
@@ -60,6 +62,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 <span class="label-text text-sm">Mostrar inactivos</span>
               </label>
             </div>
+            <app-table-order
+              [columns]="columns"
+              [value]="tableSort()"
+              (change)="setTableSort($event)"
+            />
           </div>
           <app-data-table
             [sortState]="tableSort()"

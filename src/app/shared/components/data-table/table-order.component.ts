@@ -3,8 +3,9 @@ import { TableSort } from './table-sort';
 
 @Component({
   selector: 'app-table-order',
+  styles: ':host { display: block; flex-shrink: 0; }',
   template: `
-    <div class="flex flex-wrap items-center gap-2 py-3 text-xs text-[#545d6c]">
+    <div class="flex flex-wrap items-center gap-2 text-xs text-[#545d6c]">
       <label class="flex items-center gap-2"
         >Ordenar por
         <select
@@ -25,23 +26,6 @@ import { TableSort } from './table-sort';
           }
         </select>
       </label>
-      @if (value(); as current) {
-        <button
-          type="button"
-          class="btn btn-sm btn-ghost text-[#9d343c]"
-          (click)="
-            change.emit({
-              key: current.key,
-              direction: current.direction === 'asc' ? 'desc' : 'asc',
-            })
-          "
-        >
-          {{ current.direction === 'asc' ? '↑ Ascendente' : '↓ Descendente' }}
-        </button>
-        <button type="button" class="btn btn-sm btn-ghost" (click)="change.emit(null)">
-          Restablecer
-        </button>
-      }
     </div>
   `,
 })

@@ -18,43 +18,6 @@ export interface DataTableColumn {
   imports: [NgTemplateOutlet],
   styleUrl: './data-table.component.css',
   template: `
-    <div class="table-toolbar">
-      <span class="table-count">{{
-        loading() ? 'Cargando registros…' : data().length + ' registros en esta vista'
-      }}</span>
-      <div class="sort-controls">
-        <label
-          >Ordenar por
-          <select
-            aria-label="Ordenar registros por"
-            [value]="sortState()?.key || ''"
-            (change)="selectSort($any($event.target).value)"
-          >
-            <option value="">Orden predeterminado</option>
-            @for (col of columns(); track col.key) {
-              @if (col.sortable) {
-                <option [value]="col.key">{{ col.label }}</option>
-              }
-            }
-          </select></label
-        >
-        @if (sortState()) {
-          <button
-            type="button"
-            class="direction-button"
-            (click)="reverseSort()"
-            [attr.aria-label]="
-              sortState()?.direction === 'asc' ? 'Cambiar a descendente' : 'Cambiar a ascendente'
-            "
-          >
-            {{ sortState()?.direction === 'asc' ? '↑ Ascendente' : '↓ Descendente' }}
-          </button>
-          <button type="button" class="reset-sort" (click)="sortChange.emit(null)">
-            Restablecer
-          </button>
-        }
-      </div>
-    </div>
     <!-- Desktop table -->
     <div class="table-frame overflow-x-auto hidden sm:block">
       <table class="table professional-table w-full">

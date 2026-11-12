@@ -1,3 +1,4 @@
+import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
 import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,7 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
 @Component({
   selector: 'app-facturas-list',
   imports: [
+    TableOrderComponent,
     FormsModule,
     DataTableComponent,
     CellTemplateDirective,
@@ -41,7 +43,7 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
 
       <div class="management-card card  shadow-md">
         <div class="card-body">
-          <div class="flex items-center gap-4 mb-4">
+          <div class="flex flex-wrap items-center gap-4 mb-4">
             <div class="flex-1">
               <app-search-filter
                 [(value)]="search"
@@ -60,6 +62,11 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
               <option value="PAGADA">Pagada</option>
               <option value="ANULADA">Anulada</option>
             </select>
+            <app-table-order
+              [columns]="columns"
+              [value]="tableSort()"
+              (change)="setTableSort($event)"
+            />
           </div>
 
           <app-data-table
