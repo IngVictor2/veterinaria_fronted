@@ -1,170 +1,125 @@
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, ViewChild, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  local?: boolean;
+}
 
 @Component({
   selector: 'app-contacto-section',
   imports: [RouterLink],
-  template: `
-    <section id="contacto" class="scroll-mt-24 px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-gray-200 bg-gray-50">
-        <div class="grid lg:grid-cols-[0.9fr_1.1fr]">
-          <div class="relative overflow-hidden bg-white    p-7 sm:p-10">
-            <div class="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-[#9D343C]/15"></div>
-            <div class="pointer-events-none absolute -bottom-8 -right-8 h-40 w-40 rounded-full border border-[#9D343C]/10"></div>
-
-            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-[#9D343C]">Contacto</p>
-            <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-[#374151]">
-              Hablemos del cuidado de tu mascota
-            </h2>
-            <p class="mt-4 max-w-md text-sm leading-relaxed text-[#374151]">
-              Agenda una cita o escríbenos para resolver dudas sobre consulta y estética. Este
-              formulario es una demostración local del proyecto.
-            </p>
-
-            <ul class="mt-8 space-y-4 text-sm text-[#374151]">
-              <li class="flex items-start gap-3">
-                <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-[#9D343C]" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s7-5.1 7-11a7 7 0 1 0-14 0c0 5.9 7 11 7 11Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="block font-semibold text-[#374151]">Ubicación</span>
-                  <span class="text-[#374151]">Barranquilla, Atlántico · Colombia</span>
-                </span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-[#9D343C]" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="block font-semibold text-[#374151]">Horario de atención</span>
-                  <span class="text-[#374151]">Lunes a sábado 7:00–18:00 · domingos 7:00–13:00</span>
-                </span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gray-50 text-[#9D343C]" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16v12H4zM4 7l8 6 8-6" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="block font-semibold text-[#374151]">Atención con cita</span>
-                  <span class="text-[#374151]">Consulta y estética se programan desde el sistema</span>
-                </span>
-              </li>
-            </ul>
-
-            <a
-              routerLink="/login"
-              class="mt-8 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] px-5 py-3 text-xs font-bold text-[#1F2937] transition hover:bg-white"
-            >
-              Ingresar al sistema
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-
-          <div class="bg-[#FFFFFF] p-7 sm:p-10">
-            <h3 class="text-xl font-extrabold text-[#374151]">Déjanos un mensaje</h3>
-            <p class="mt-1 text-sm text-[#374151]">
-              Cuéntanos qué necesita tu mascota y qué servicio te interesa.
-            </p>
-
-            <form class="mt-6 space-y-4" (submit)="enviar($event)">
-              <div class="grid gap-4 sm:grid-cols-2">
-                <label class="block">
-                  <span class="mb-1.5 block text-xs font-semibold text-[#374151]">Nombre</span>
-                  <input
-                    name="nombre"
-                    type="text"
-                    required
-                    placeholder="Tu nombre"
-                    class="input input-bordered h-11 w-full rounded-xl text-sm"
-                    [value]="nombre()"
-                    (input)="nombre.set($any($event.target).value)"
-                  />
-                </label>
-
-                <label class="block">
-                  <span class="mb-1.5 block text-xs font-semibold text-[#374151]">Correo</span>
-                  <input
-                    name="correo"
-                    type="email"
-                    required
-                    placeholder="tu@correo.com"
-                    class="input input-bordered h-11 w-full rounded-xl text-sm"
-                    [value]="correo()"
-                    (input)="correo.set($any($event.target).value)"
-                  />
-                </label>
-              </div>
-
-              <label class="block">
-                <span class="mb-1.5 block text-xs font-semibold text-[#374151]">Mensaje</span>
-                <textarea
-                  name="mensaje"
-                  required
-                  rows="4"
-                  placeholder="Ejemplo: quiero agendar una consulta general para mi perro."
-                  class="textarea textarea-bordered w-full rounded-xl text-sm"
-                  [value]="mensaje()"
-                  (input)="mensaje.set($any($event.target).value)"
-                ></textarea>
-              </label>
-
-              @if (error()) {
-                <p class="rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-3 text-xs text-red-300" role="alert">
-                  {{ error() }}
-                </p>
-              }
-
-              @if (enviado()) {
-                <div class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 text-xs text-emerald-200" role="status">
-                  <p class="font-semibold">Mensaje registrado en esta demostración</p>
-                  <p class="mt-0.5 text-emerald-200/70">
-                    No se envía a un servidor. En producción se conectará con el módulo de contacto.
-                  </p>
-                </div>
-              }
-
-              <button type="submit" class="btn btn-primary h-11 w-full rounded-xl text-sm font-bold">
-                Enviar mensaje
-              </button>
-
-              <p class="text-[11px] leading-relaxed text-[#374151]">
-                Los datos se usan únicamente para responder a tu solicitud. No se almacenan en esta
-                versión de demostración.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  `,
+  templateUrl: './contacto-section.component.html',
+  styleUrl: './contacto-section.component.css',
 })
 export class ContactoSectionComponent {
-  readonly nombre = signal('');
-  readonly correo = signal('');
-  readonly mensaje = signal('');
-  readonly enviado = signal(false);
+  @ViewChild('conversation') private conversation?: ElementRef<HTMLElement>;
+  private readonly destroyRef = inject(DestroyRef);
+  private controller?: AbortController;
+  readonly draft = signal('');
+  readonly sending = signal(false);
   readonly error = signal('');
+  readonly messages = signal<ChatMessage[]>([
+    {
+      role: 'assistant',
+      local: true,
+      content:
+        '¡Hola! Soy el asistente virtual de vetclinic. Qué gusto tenerte aquí. Puedo ayudarte con nuestros servicios, precios, horarios y los pasos para cuidar de tu mascota con nosotros. ¿Qué te gustaría saber?',
+    },
+  ]);
+  readonly suggestions = [
+    { label: 'Servicios y precios', question: '¿Qué servicios ofrecen y cuáles son sus precios?' },
+    { label: 'Agendar una cita', question: '¿Cómo registro a mi perro y agendo una cita?' },
+    { label: 'Horarios de atención', question: '¿Cuál es su horario y atienden en festivos?' },
+  ];
+  readonly faqs = [
+    {
+      question: '¿Dónde nos encuentras?',
+      answer: 'Carrera 45 # 48-31, Sede Plaza de la Paz, Barranquilla.',
+    },
+    {
+      question: '¿En qué horario atendemos?',
+      answer:
+        'Lunes a sábado de 7:00 a. m. a 6:00 p. m. Domingos de 7:00 a. m. a 1:00 p. m. Los festivos conservan el horario del día correspondiente.',
+    },
+    {
+      question: '¿Cómo cancelar o reprogramar?',
+      answer:
+        'Acércate a recepción o llama al 3042818284. No tiene cargos adicionales; la nueva fecha está sujeta a disponibilidad.',
+    },
+  ];
 
-  enviar(event: Event): void {
-    event.preventDefault();
+  constructor() {
+    this.destroyRef.onDestroy(() => this.controller?.abort());
+  }
 
-    if (!this.nombre().trim() || !this.correo().trim() || !this.mensaje().trim()) {
-      this.error.set('Completa el nombre, el correo y el mensaje.');
-      this.enviado.set(false);
-      return;
-    }
-
+  async send(question = this.draft()): Promise<void> {
+    const message = question.trim();
+    if (!message || message.length > 1200 || this.sending()) return;
+    const history = this.messages()
+      .filter((m) => !m.local)
+      .slice(-6)
+      .map((m) => ({ role: m.role, content: m.content.slice(0, 1200) }));
+    this.messages.update((list) => [...list, { role: 'user', content: message }]);
+    this.draft.set('');
     this.error.set('');
-    this.enviado.set(true);
-    this.nombre.set('');
-    this.correo.set('');
-    this.mensaje.set('');
+    this.sending.set(true);
+    this.scroll();
+    const controller = new AbortController();
+    this.controller = controller;
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      // fetch evita enviar el token de sesión del backend al servicio público del chat.
+      const response = await fetch(environment.chatbotUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, history }),
+        signal: controller.signal,
+      });
+      const data = await response.json();
+      if (!response.ok || typeof data.answer !== 'string' || !data.answer.trim()) {
+        throw new Error(
+          response.status === 429
+            ? 'Hemos recibido varias preguntas. Espera un minuto y vuelve a intentarlo.'
+            : 'No pudimos conectar con el asistente. Puedes consultar las preguntas frecuentes o llamar a recepción.',
+        );
+      }
+      this.messages.update((list) => [
+        ...list,
+        { role: 'assistant', content: data.answer.replace(/\*\*/g, '') },
+      ]);
+    } catch (error) {
+      if (!this.destroyRef.destroyed) {
+        this.error.set(
+          error instanceof Error && error.message.startsWith('Hemos')
+            ? error.message
+            : 'El asistente no pudo responder en este momento. Consulta las preguntas frecuentes o llámanos al 3042818284.',
+        );
+        // No enviar turnos fallidos como contexto en la siguiente consulta.
+        this.messages.update((list) =>
+          list.map((m, index) => (index === list.length - 1 ? { ...m, local: true } : m)),
+        );
+        this.draft.set(message);
+      }
+    } finally {
+      clearTimeout(timeout);
+      if (!this.destroyRef.destroyed) {
+        this.sending.set(false);
+        this.scroll();
+      }
+    }
+  }
+
+  submit(event: Event): void {
+    event.preventDefault();
+    void this.send();
+  }
+  private scroll(): void {
+    setTimeout(() => {
+      const panel = this.conversation?.nativeElement;
+      if (panel && !this.destroyRef.destroyed) panel.scrollTop = panel.scrollHeight;
+    });
   }
 }

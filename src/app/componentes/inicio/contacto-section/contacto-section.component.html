@@ -1,0 +1,153 @@
+<section id="contacto" class="contact-section scroll-mt-24" aria-labelledby="contact-title">
+  <div class="contact-wrap">
+    <div class="section-heading">
+      <span class="eyebrow">ESTAMOS PARA AYUDARTE</span>
+      <h2 id="contact-title">Una conversación, <span>un mejor cuidado.</span></h2>
+      <p>Resuelve tus dudas y da el siguiente paso para el bienestar de tu mascota.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow">CERCA DE TI Y DE TU MASCOTA</span>
+        <h3>Hablemos.<br />Estamos a tu lado.</h3>
+        <p class="intro">
+          Nuestro asistente te orienta sobre vetclinic. Si prefieres hablar con nuestro equipo,
+          también puedes llamarnos o visitarnos.
+        </p>
+        <div class="info-item">
+          <span class="info-icon" aria-hidden="true">↗</span>
+          <div>
+            <h4>Visítanos en Barranquilla</h4>
+            <p>Carrera 45 # 48-31<br />Sede Plaza de la Paz</p>
+            <a
+              href="https://maps.app.goo.gl/Gu1SnnxR6zzAzMX87"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Cómo llegar <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon" aria-hidden="true">◷</span>
+          <div>
+            <h4>Siempre hay tiempo para cuidarlos</h4>
+            <p>Lunes a sábado · 7:00 a. m. – 6:00 p. m.<br />Domingos · 7:00 a. m. – 1:00 p. m.</p>
+            <small>En festivos mantenemos el horario del día.</small>
+          </div>
+        </div>
+        <div class="direct-contact">
+          <a href="tel:+573042818284"
+            ><span>LLÁMANOS</span><strong>304 281 8284 <span aria-hidden="true">↗</span></strong></a
+          ><a class="email" href="mailto:fjgarrido@unibarranquilla.edu.co"
+            >fjgarrido@unibarranquilla.edu.co</a
+          >
+        </div>
+        <a class="appointment-link" routerLink="/login"
+          >Ingresar para agendar una cita <span aria-hidden="true">→</span></a
+        >
+      </div>
+      <div class="chat-card">
+        <header class="chat-header">
+          <span class="assistant-icon" aria-hidden="true"
+            ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path
+                d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l-3 3V11.5A7.5 7.5 0 0 1 9.5 4h3A7.5 7.5 0 0 1 20 11.5Z"
+              />
+              <path d="M7 11h8m-8 4h5" /></svg
+          ></span>
+          <div>
+            <h3>Asistente vetclinic</h3>
+            <p>Orientación sobre nuestros servicios</p>
+          </div>
+          <span class="ai-badge">IA</span>
+        </header>
+        <div
+          #conversation
+          class="conversation"
+          role="log"
+          aria-label="Conversación con el asistente"
+          aria-live="polite"
+          aria-relevant="additions text"
+          tabindex="0"
+          [attr.aria-busy]="sending()"
+        >
+          <p class="conversation-start">UN ESPACIO PARA TUS PREGUNTAS</p>
+          @for (message of messages(); track $index) {
+            <div class="message" [class.user-message]="message.role === 'user'">
+              <span class="message-author">{{
+                message.role === 'user' ? 'Tú' : 'Asistente vetclinic'
+              }}</span>
+              <p>{{ message.content }}</p>
+            </div>
+          }
+          @if (sending()) {
+            <div class="typing" role="status">
+              <span class="typing-dots" aria-hidden="true">•••</span> El asistente está escribiendo…
+            </div>
+          }
+        </div>
+        <div class="chat-bottom">
+          <div class="suggestions" aria-label="Preguntas sugeridas">
+            @for (suggestion of suggestions; track suggestion.label) {
+              <button type="button" [disabled]="sending()" (click)="send(suggestion.question)">
+                {{ suggestion.label }} <span aria-hidden="true">↗</span>
+              </button>
+            }
+          </div>
+          @if (error()) {
+            <div class="chat-error" role="alert">
+              {{ error() }} <a href="tel:+573042818284">Llamar a recepción</a>
+            </div>
+          }
+          <form (submit)="submit($event)" class="composer">
+            <label class="sr-only" for="chat-question">Tu pregunta para vetclinic</label
+            ><input
+              id="chat-question"
+              name="question"
+              type="text"
+              autocomplete="off"
+              maxlength="1200"
+              placeholder="Escribe tu pregunta aquí…"
+              [value]="draft()"
+              (input)="draft.set($any($event.target).value)"
+              [readOnly]="sending()"
+              aria-describedby="chat-privacy"
+            /><button
+              type="submit"
+              [disabled]="sending() || !draft().trim()"
+              aria-label="Enviar pregunta"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path d="m5 12 14-7-4 14-3-6-7-1Z" />
+                <path d="m12 13 7-8" />
+              </svg>
+            </button>
+          </form>
+          <p id="chat-privacy" class="privacy">
+            Asistente con IA. Puede cometer errores y no sustituye una consulta veterinaria. Tus
+            preguntas se procesan con Groq; evita compartir datos sensibles.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="faq-section">
+      <div>
+        <span class="eyebrow">RESPUESTAS A MANO</span>
+        <h3>También podemos<br />empezar por aquí.</h3>
+      </div>
+      <div class="faq-items">
+        @for (faq of faqs; track faq.question) {
+          <details>
+            <summary>{{ faq.question }}<span aria-hidden="true">+</span></summary>
+            <p>{{ faq.answer }}</p>
+          </details>
+        }
+      </div>
+    </div>
+  </div>
+</section>
