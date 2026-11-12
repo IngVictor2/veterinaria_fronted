@@ -187,11 +187,7 @@ export class MascotaDetailComponent implements OnInit {
   );
 
   readonly citasOrdenadas = computed(() =>
-    [...this.citas()].sort((a, b) => {
-      const fechaA = a.fechaCita + (a.horaCita || '');
-      const fechaB = b.fechaCita + (b.horaCita || '');
-      return fechaB.localeCompare(fechaA);
-    }),
+    [...this.citas()].sort((a, b) => b.idCita - a.idCita),
   );
 
   readonly totalCitasPages = computed(() => Math.max(1, Math.ceil(this.citasOrdenadas().length / this.size())));
