@@ -510,3 +510,13 @@ input[type="checkbox"], input[type="radio"] {
   border-color: #9D343C !important;
   box-shadow: 0 0 0 2px rgba(157, 52, 60, 0.12) !important;
 }
+
+/*
+ * Wompi Widget expands document.body and manages its own page scroll.
+ * DaisyUI locks the root scroll while our payment modal is open, which
+ * prevents the widget content from scrolling. Release the lock only while
+ * the Wompi overlay is visible.
+ */
+html:has(.waybox-modal:not([hidden])) {
+  overflow-y: auto !important;
+}
