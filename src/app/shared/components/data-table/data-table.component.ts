@@ -1,6 +1,11 @@
+import { TableSort } from './table-sort';
 import { Component, ContentChildren, QueryList, TemplateRef, input, output } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { ActionsTemplateDirective, CellTemplateContext, CellTemplateDirective } from './cell-template.directive';
+import {
+  ActionsTemplateDirective,
+  CellTemplateContext,
+  CellTemplateDirective,
+} from './cell-template.directive';
 
 export interface DataTableColumn {
   key: string;
@@ -11,31 +16,81 @@ export interface DataTableColumn {
 @Component({
   selector: 'app-data-table',
   imports: [NgTemplateOutlet],
+  styleUrl: './data-table.component.css',
   template: `
+    <div class="table-toolbar">
+      <span class="table-count">{{
+        loading() ? 'Cargando registros…' : data().length + ' registros en esta vista'
+      }}</span>
+      <div class="sort-controls">
+        <label
+          >Ordenar por
+          <select
+            aria-label="Ordenar registros por"
+            [value]="sortState()?.key || ''"
+            (change)="selectSort($any($event.target).value)"
+          >
+            <option value="">Orden predeterminado</option>
+            @for (col of columns(); track col.key) {
+              @if (col.sortable) {
+                <option [value]="col.key">{{ col.label }}</option>
+              }
+            }
+          </select></label
+        >
+        @if (sortState()) {
+          <button
+            type="button"
+            class="direction-button"
+            (click)="reverseSort()"
+            [attr.aria-label]="
+              sortState()?.direction === 'asc' ? 'Cambiar a descendente' : 'Cambiar a ascendente'
+            "
+          >
+            {{ sortState()?.direction === 'asc' ? '↑ Ascendente' : '↓ Descendente' }}
+          </button>
+          <button type="button" class="reset-sort" (click)="sortChange.emit(null)">
+            Restablecer
+          </button>
+        }
+      </div>
+    </div>
     <!-- Desktop table -->
-    <div class="overflow-x-auto hidden sm:block">
-      <table class="table table-zebra w-full">
+    <div class="table-frame overflow-x-auto hidden sm:block">
+      <table class="table professional-table w-full">
         <thead>
           <tr>
             @for (col of columns(); track col.key) {
               <th
-                [class]="col.sortable ? 'cursor-pointer hover:bg-base-200' : ''"
-                (click)="col.sortable && sort.emit(col.key)"
+                scope="col"
+                [attr.aria-sort]="
+                  sortState()?.key === col.key
+                    ? sortState()?.direction === 'asc'
+                      ? 'ascending'
+                      : 'descending'
+                    : 'none'
+                "
               >
-                <div class="flex items-center gap-1">
+                @if (col.sortable) {
+                  <button
+                    type="button"
+                    class="column-sort"
+                    [class.selected]="sortState()?.key === col.key"
+                    (click)="toggleSort(col.key)"
+                    [attr.aria-label]="'Ordenar por ' + col.label"
+                  >
+                    {{ col.label }}
+                    <span aria-hidden="true">{{
+                      sortState()?.key === col.key
+                        ? sortState()?.direction === 'asc'
+                          ? '↑'
+                          : '↓'
+                        : '↕'
+                    }}</span>
+                  </button>
+                } @else {
                   {{ col.label }}
-                  @if (col.sortable) {
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 opacity-50"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                    </svg>
-                  }
-                </div>
+                }
               </th>
             }
             <th class="w-24">Acciones</th>
@@ -50,7 +105,10 @@ export interface DataTableColumn {
             </tr>
           } @else if (data().length === 0) {
             <tr>
-              <td [attr.colspan]="columns().length + 1" class="text-center py-8 text-base-content/50">
+              <td
+                [attr.colspan]="columns().length + 1"
+                class="text-center py-8 text-base-content/50"
+              >
                 {{ emptyMessage() }}
               </td>
             </tr>
@@ -62,10 +120,13 @@ export interface DataTableColumn {
                     @if (getCellTemplate(col.key); as tpl) {
                       <ng-container
                         [ngTemplateOutlet]="tpl"
-                        [ngTemplateOutletContext]="{ $implicit: item, value: getNestedValue(item, col.key) }"
+                        [ngTemplateOutletContext]="{
+                          $implicit: item,
+                          value: getNestedValue(item, col.key),
+                        }"
                       />
                     } @else {
-                      {{ getNestedValue(item, col.key) }}
+                      {{ displayValue(getNestedValue(item, col.key)) }}
                     }
                   </td>
                 }
@@ -96,15 +157,21 @@ export interface DataTableColumn {
         </div>
       } @else {
         @for (item of data(); track $index) {
-          <div class="bg-gray-50 rounded-xl p-4 space-y-2">
+          <div class="mobile-record rounded-xl p-4 space-y-2">
             @for (col of columns(); track col.key) {
-              <div class="flex justify-between items-start gap-2" [class]="dimInactive() && isInactive(item) ? 'opacity-50 line-through' : ''">
+              <div
+                class="flex justify-between items-start gap-2"
+                [class]="dimInactive() && isInactive(item) ? 'opacity-50 line-through' : ''"
+              >
                 <span class="text-xs text-base-content/50 uppercase shrink-0">{{ col.label }}</span>
                 <span class="text-sm text-right">
                   @if (getCellTemplate(col.key); as tpl) {
                     <ng-container
                       [ngTemplateOutlet]="tpl"
-                      [ngTemplateOutletContext]="{ $implicit: item, value: getNestedValue(item, col.key) }"
+                      [ngTemplateOutletContext]="{
+                        $implicit: item,
+                        value: getNestedValue(item, col.key),
+                      }"
                     />
                   } @else {
                     {{ getNestedValue(item, col.key) }}
@@ -133,7 +200,30 @@ export class DataTableComponent<T = unknown> {
   readonly emptyMessage = input('No hay datos disponibles');
   readonly dimInactive = input(false);
 
-  readonly sort = output<string>();
+  readonly sortState = input<TableSort | null>(null);
+  readonly sortChange = output<TableSort | null>();
+
+  reverseSort(): void {
+    const current = this.sortState();
+    if (current)
+      this.sortChange.emit({
+        key: current.key,
+        direction: current.direction === 'asc' ? 'desc' : 'asc',
+      });
+  }
+  selectSort(key: string): void {
+    this.sortChange.emit(key ? { key, direction: 'asc' } : null);
+  }
+  toggleSort(key: string): void {
+    const current = this.sortState();
+    this.sortChange.emit(
+      current?.key !== key
+        ? { key, direction: 'asc' }
+        : current.direction === 'asc'
+          ? { key, direction: 'desc' }
+          : null,
+    );
+  }
 
   @ContentChildren(CellTemplateDirective, { descendants: true })
   private readonly cells!: QueryList<CellTemplateDirective>;
@@ -156,6 +246,16 @@ export class DataTableComponent<T = unknown> {
       }
       return undefined;
     }, obj);
+  }
+
+  displayValue(value: unknown): unknown {
+    return typeof value === 'boolean'
+      ? value
+        ? 'Activo'
+        : 'Inactivo'
+      : value == null || value === ''
+        ? '—'
+        : value;
   }
 
   isInactive(item: T): boolean {

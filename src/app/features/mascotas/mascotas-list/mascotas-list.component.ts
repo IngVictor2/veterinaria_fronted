@@ -1,3 +1,4 @@
+import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -5,8 +6,14 @@ import { firstValueFrom } from 'rxjs';
 import { MascotasApiService } from '../../../core/services/mascotas-api.service';
 import { Mascota } from '../../../core/models/mascota';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
-import { DataTableComponent, DataTableColumn } from '../../../shared/components/data-table/data-table.component';
-import { ActionsTemplateDirective, CellTemplateDirective } from '../../../shared/components/data-table/cell-template.directive';
+import {
+  DataTableComponent,
+  DataTableColumn,
+} from '../../../shared/components/data-table/data-table.component';
+import {
+  ActionsTemplateDirective,
+  CellTemplateDirective,
+} from '../../../shared/components/data-table/cell-template.directive';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 import { SearchFilterComponent } from '../../../shared/components/search-filter/search-filter.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
@@ -27,8 +34,19 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Mascotas</h1>
         <button class="btn btn-primary gap-2" (click)="router.navigate(['/mascotas/nueva'])">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
           </svg>
           Nueva Mascota
         </button>
@@ -44,7 +62,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         <div class="card-body">
           <div class="flex items-center gap-4 mb-4">
             <div class="flex-1">
-              <app-search-filter [(value)]="search" (search)="handleSearch()" placeholder="Buscar por nombre, especie..." />
+              <app-search-filter
+                [(value)]="search"
+                (search)="handleSearch()"
+                placeholder="Buscar por nombre, especie..."
+              />
             </div>
             <div class="flex items-center gap-2">
               <label class="label cursor-pointer gap-2">
@@ -60,6 +82,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
           </div>
 
           <app-data-table
+            [sortState]="tableSort()"
+            (sortChange)="setTableSort($event)"
             [columns]="columns"
             [data]="data()"
             [loading]="loading()"
@@ -72,12 +96,30 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               </span>
             </ng-template>
             <ng-template appActions let-item>
-              <button type="button" title="Ver detalle" aria-label="Ver detalle" class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/mascotas', item.idMascota])">
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </button>
+              <button
+                type="button"
+                title="Ver detalle"
+                aria-label="Ver detalle"
+                class="btn btn-ghost btn-xs text-info"
+                (click)="router.navigate(['/mascotas', item.idMascota])"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
             </ng-template>
           </app-data-table>
 
@@ -103,6 +145,12 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
   `,
 })
 export class MascotasListComponent implements OnInit {
+  readonly tableSort = signal<TableSort | null>(null);
+  setTableSort(sort: TableSort | null): void {
+    this.tableSort.set(sort);
+    this.page.set(0);
+  }
+
   readonly router = inject(Router);
   private readonly mascotasApi = inject(MascotasApiService);
 
@@ -118,33 +166,41 @@ export class MascotasListComponent implements OnInit {
 
   readonly columns: DataTableColumn[] = [
     { key: 'nombre', label: 'Nombre', sortable: true },
-    { key: 'especie', label: 'Especie' },
-    { key: 'raza', label: 'Raza' },
-    { key: 'sexo', label: 'Sexo' },
-    { key: 'nombreCliente', label: 'Dueño' },
+    { key: 'especie', label: 'Especie', sortable: true },
+    { key: 'raza', label: 'Raza', sortable: true },
+    { key: 'sexo', label: 'Sexo', sortable: true },
+    { key: 'nombreCliente', label: 'Dueño', sortable: true },
+    { key: 'estado', label: 'Estado', sortable: true },
   ];
 
-  readonly filteredData = computed(() => {
-    let result = this.allData();
-    result = result.filter((m) => (this.showInactive() ? !m.estado : m.estado));
-    const search = this.search();
-    if (search) {
-      const q = search.toLowerCase();
-      result = result.filter(
-        (m) =>
-          m.nombre?.toLowerCase().includes(q) ||
-          m.especie?.toLowerCase().includes(q) ||
-          m.raza?.toLowerCase().includes(q) ||
-          m.nombreCliente?.toLowerCase().includes(q),
-      );
-    }
-    return [...result].sort((a, b) => {
-      if (a.estado !== b.estado) return a.estado ? -1 : 1;
-      return (b.createdAt || '').localeCompare(a.createdAt || '');
-    });
-  });
+  readonly filteredData = computed(() =>
+    sortRows(
+      (() => {
+        let result = this.allData();
+        result = result.filter((m) => (this.showInactive() ? !m.estado : m.estado));
+        const search = this.search();
+        if (search) {
+          const q = search.toLowerCase();
+          result = result.filter(
+            (m) =>
+              m.nombre?.toLowerCase().includes(q) ||
+              m.especie?.toLowerCase().includes(q) ||
+              m.raza?.toLowerCase().includes(q) ||
+              m.nombreCliente?.toLowerCase().includes(q),
+          );
+        }
+        return [...result].sort((a, b) => {
+          if (a.estado !== b.estado) return a.estado ? -1 : 1;
+          return (b.createdAt || '').localeCompare(a.createdAt || '');
+        });
+      })(),
+      this.tableSort(),
+    ),
+  );
 
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredData().length / this.size())));
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredData().length / this.size())),
+  );
   readonly totalElements = computed(() => this.filteredData().length);
   readonly data = computed(() => {
     const start = this.page() * this.size();

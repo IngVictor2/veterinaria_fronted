@@ -1,3 +1,4 @@
+import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,11 +7,19 @@ import { AuthService } from '../../../core/services/auth.service';
 import { CitasApiService } from '../../../core/services/citas-api.service';
 import { EmpleadosApiService } from '../../../core/services/empleados-api.service';
 import { ServiciosApiService } from '../../../core/services/servicios-api.service';
-import { Cita, formatHora as formatHoraFn, getDuracionServicio, getHorarioLaboral } from '../../../core/models/cita';
+import {
+  Cita,
+  formatHora as formatHoraFn,
+  getDuracionServicio,
+  getHorarioLaboral,
+} from '../../../core/models/cita';
 import { Empleado } from '../../../core/models/empleado';
 import { Servicio } from '../../../core/models/servicio';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
-import { DataTableComponent, DataTableColumn } from '../../../shared/components/data-table/data-table.component';
+import {
+  DataTableComponent,
+  DataTableColumn,
+} from '../../../shared/components/data-table/data-table.component';
 import {
   ActionsTemplateDirective,
   CellTemplateDirective,
@@ -43,8 +52,19 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Citas</h1>
         @if (!esEmpleado()) {
           <button class="btn btn-primary" (click)="router.navigate(['/citas/nueva'])">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             Nueva Cita
           </button>
@@ -81,6 +101,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
           </div>
 
           <app-data-table
+            [sortState]="tableSort()"
+            (sortChange)="setTableSort($event)"
             [columns]="columns"
             [data]="data()"
             [loading]="loading()"
@@ -99,12 +121,30 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               <span class="badge" [class]="estadoColor(value)">{{ value }}</span>
             </ng-template>
             <ng-template appActions let-item>
-              <button type="button" title="Ver detalle" aria-label="Ver detalle" class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/citas', item.idCita])">
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </button>
+              <button
+                type="button"
+                title="Ver detalle"
+                aria-label="Ver detalle"
+                class="btn btn-ghost btn-xs text-info"
+                (click)="router.navigate(['/citas', item.idCita])"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
             </ng-template>
           </app-data-table>
 
@@ -152,7 +192,9 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div class="form-control">
-                    <label class="label py-0"><span class="label-text font-medium text-sm">Servicio *</span></label>
+                    <label class="label py-0"
+                      ><span class="label-text font-medium text-sm">Servicio *</span></label
+                    >
                     <app-search-select
                       [(value)]="confirmIdServicio"
                       [options]="servicioOptions()"
@@ -179,7 +221,9 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                   <div class="bg-base-200/50 rounded-lg p-3 text-sm">
                     <div class="flex items-center justify-between">
                       <span class="text-base-content/60">{{ servicio.nombre }}</span>
-                      <span class="font-bold text-primary">\${{ formatPrecio(servicio.precio) }}</span>
+                      <span class="font-bold text-primary"
+                        >\${{ formatPrecio(servicio.precio) }}</span
+                      >
                     </div>
                     <div class="text-xs text-base-content/50 mt-1">
                       Duración: {{ duracionServicio() }} minutos
@@ -188,7 +232,9 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 }
 
                 <div class="form-control">
-                  <label class="label py-0"><span class="label-text font-medium text-sm">Fecha *</span></label>
+                  <label class="label py-0"
+                    ><span class="label-text font-medium text-sm">Fecha *</span></label
+                  >
                   <div class="rounded-xl p-4 bg-base-50">
                     <app-calendar-day-picker [(value)]="confirmFechaCita" [minDate]="minDate()" />
                   </div>
@@ -208,14 +254,22 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                     (valueChange)="confirmHoraCita.set('' + $event)"
                     [options]="horaOptions()"
                     [disabled]="!confirmFechaCita() || horasDisponibles().length === 0"
-                    [placeholder]="!confirmFechaCita() ? 'Selecciona una fecha primero' : horasDisponibles().length === 0 ? 'No hay horas disponibles' : 'Seleccionar hora'"
+                    [placeholder]="
+                      !confirmFechaCita()
+                        ? 'Selecciona una fecha primero'
+                        : horasDisponibles().length === 0
+                          ? 'No hay horas disponibles'
+                          : 'Seleccionar hora'
+                    "
                     [maxListHeight]="160"
                     [required]="true"
                   />
                 </div>
 
                 <div class="form-control">
-                  <label class="label py-0"><span class="label-text font-medium text-sm">Observaciones</span></label>
+                  <label class="label py-0"
+                    ><span class="label-text font-medium text-sm">Observaciones</span></label
+                  >
                   <textarea
                     class="textarea textarea-bordered textarea-sm w-full"
                     rows="2"
@@ -244,7 +298,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 @if (confirmLoading()) {
                   <span class="loading loading-spinner loading-sm"></span>
                 }
-                {{ citaAConfirmar()?.estadoCita === 'PENDIENTE' ? 'Confirmar y asignar' : 'Reconfirmar' }}
+                {{
+                  citaAConfirmar()?.estadoCita === 'PENDIENTE'
+                    ? 'Confirmar y asignar'
+                    : 'Reconfirmar'
+                }}
               </button>
             </div>
           </div>
@@ -257,6 +315,12 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
   `,
 })
 export class CitasListComponent implements OnInit {
+  readonly tableSort = signal<TableSort | null>(null);
+  setTableSort(sort: TableSort | null): void {
+    this.tableSort.set(sort);
+    this.page.set(0);
+  }
+
   readonly router = inject(Router);
   readonly auth = inject(AuthService);
   private readonly citasApi = inject(CitasApiService);
@@ -294,10 +358,10 @@ export class CitasListComponent implements OnInit {
 
   readonly columns: DataTableColumn[] = [
     { key: 'fechaCita', label: 'Fecha', sortable: true },
-    { key: 'horaCita', label: 'Hora' },
-    { key: 'nombreMascota', label: 'Mascota' },
-    { key: 'nombreEmpleado', label: 'Profesional' },
-    { key: 'nombreServicio', label: 'Servicio' },
+    { key: 'horaCita', label: 'Hora', sortable: true },
+    { key: 'nombreMascota', label: 'Mascota', sortable: true },
+    { key: 'nombreEmpleado', label: 'Profesional', sortable: true },
+    { key: 'nombreServicio', label: 'Servicio', sortable: true },
     { key: 'estadoCita', label: 'Estado', sortable: true },
   ];
 
@@ -306,32 +370,45 @@ export class CitasListComponent implements OnInit {
     this.auth.hasAnyRole('ADMIN', 'RECEPCIONISTA', 'VETERINARIO', 'ESTILISTA'),
   );
 
-  readonly filteredData = computed(() => {
-    let result = this.allData();
-    if (this.filtroEstado()) {
-      result = result.filter((c) => c.estadoCita === this.filtroEstado());
-    }
-    const search = this.search();
-    if (search) {
-      const q = search.toLowerCase();
-      result = result.filter(
-        (c) =>
-          c.nombreMascota?.toLowerCase().includes(q) ||
-          c.nombreEmpleado?.toLowerCase().includes(q) ||
-          c.nombreServicio?.toLowerCase().includes(q),
-      );
-    }
-    const orden: Record<string, number> = { PENDIENTE: 0, CONFIRMADA: 1, ATENDIDA: 2, CANCELADA: 3 };
-    return [...result].sort((a, b) => {
-      const estadoDiff = (orden[a.estadoCita] ?? 4) - (orden[b.estadoCita] ?? 4);
-      if (estadoDiff !== 0) return estadoDiff;
-      const dateDiff = b.fechaCita.localeCompare(a.fechaCita) || b.horaCita.localeCompare(a.horaCita);
-      if (dateDiff !== 0) return dateDiff;
-      return b.idCita - a.idCita;
-    });
-  });
+  readonly filteredData = computed(() =>
+    sortRows(
+      (() => {
+        let result = this.allData();
+        if (this.filtroEstado()) {
+          result = result.filter((c) => c.estadoCita === this.filtroEstado());
+        }
+        const search = this.search();
+        if (search) {
+          const q = search.toLowerCase();
+          result = result.filter(
+            (c) =>
+              c.nombreMascota?.toLowerCase().includes(q) ||
+              c.nombreEmpleado?.toLowerCase().includes(q) ||
+              c.nombreServicio?.toLowerCase().includes(q),
+          );
+        }
+        const orden: Record<string, number> = {
+          PENDIENTE: 0,
+          CONFIRMADA: 1,
+          ATENDIDA: 2,
+          CANCELADA: 3,
+        };
+        return [...result].sort((a, b) => {
+          const estadoDiff = (orden[a.estadoCita] ?? 4) - (orden[b.estadoCita] ?? 4);
+          if (estadoDiff !== 0) return estadoDiff;
+          const dateDiff =
+            b.fechaCita.localeCompare(a.fechaCita) || b.horaCita.localeCompare(a.horaCita);
+          if (dateDiff !== 0) return dateDiff;
+          return b.idCita - a.idCita;
+        });
+      })(),
+      this.tableSort(),
+    ),
+  );
 
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredData().length / this.size())));
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredData().length / this.size())),
+  );
   readonly totalElements = computed(() => this.filteredData().length);
   readonly data = computed(() => {
     const start = this.page() * this.size();
@@ -388,7 +465,9 @@ export class CitasListComponent implements OnInit {
   );
 
   readonly placeholderEmpleado = computed(() =>
-    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA' ? 'Seleccionar estilista' : 'Seleccionar veterinario',
+    this.servicioSeleccionado()?.tipoServicio === 'ESTETICA'
+      ? 'Seleccionar estilista'
+      : 'Seleccionar veterinario',
   );
 
   readonly horarioLaboral = computed<{ inicio: number; fin: number }>(() => {
@@ -503,7 +582,10 @@ export class CitasListComponent implements OnInit {
         ? firstValueFrom(this.empleadosApi.getAll())
         : Promise.resolve(null);
       const serviciosPromise = firstValueFrom(this.serviciosApi.getAll());
-      const [empleadosRes, serviciosRes] = await Promise.allSettled([empleadosPromise, serviciosPromise]);
+      const [empleadosRes, serviciosRes] = await Promise.allSettled([
+        empleadosPromise,
+        serviciosPromise,
+      ]);
       if (empleadosRes.status === 'fulfilled' && empleadosRes.value) {
         this.empleados.set(empleadosRes.value);
       }
@@ -543,7 +625,12 @@ export class CitasListComponent implements OnInit {
   async ejecutarConfirmar(): Promise<void> {
     const cita = this.citaAConfirmar();
     if (!cita) return;
-    if (!this.confirmIdEmpleado() || !this.confirmIdServicio() || !this.confirmFechaCita() || !this.confirmHoraCita()) {
+    if (
+      !this.confirmIdEmpleado() ||
+      !this.confirmIdServicio() ||
+      !this.confirmFechaCita() ||
+      !this.confirmHoraCita()
+    ) {
       this.confirmError.set('Completa todos los campos obligatorios');
       return;
     }

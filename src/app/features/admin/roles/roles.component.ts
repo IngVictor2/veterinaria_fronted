@@ -1,22 +1,46 @@
+import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { AdminApiService } from '../../../core/services/admin-api.service';
 import { Rol } from '../../../core/models/admin';
-import { DataTableComponent, DataTableColumn } from '../../../shared/components/data-table/data-table.component';
-import { CellTemplateDirective, ActionsTemplateDirective } from '../../../shared/components/data-table/cell-template.directive';
+import {
+  DataTableComponent,
+  DataTableColumn,
+} from '../../../shared/components/data-table/data-table.component';
+import {
+  CellTemplateDirective,
+  ActionsTemplateDirective,
+} from '../../../shared/components/data-table/cell-template.directive';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-roles',
-  imports: [FormsModule, DataTableComponent, CellTemplateDirective, ActionsTemplateDirective, ConfirmDialogComponent],
+  imports: [
+    FormsModule,
+    DataTableComponent,
+    CellTemplateDirective,
+    ActionsTemplateDirective,
+    ConfirmDialogComponent,
+  ],
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
         <h1 class="text-2xl sm:text-3xl font-extrabold text-[#374151]">Roles</h1>
         <button class="btn btn-primary" (click)="openForm()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            />
           </svg>
           Nuevo Rol
         </button>
@@ -38,6 +62,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </div>
           </div>
           <app-data-table
+            [sortState]="tableSort()"
+            (sortChange)="setTableSort($event)"
             [columns]="columns"
             [data]="visibleData()"
             [loading]="loading()"
@@ -53,7 +79,9 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               <div class="flex gap-1">
                 <button class="btn btn-ghost btn-xs" (click)="openForm(item)">Editar</button>
                 @if (item.estado) {
-                  <button class="btn btn-ghost btn-xs text-error" (click)="confirmDelete(item)">Eliminar</button>
+                  <button class="btn btn-ghost btn-xs text-error" (click)="confirmDelete(item)">
+                    Eliminar
+                  </button>
                 }
               </div>
             </ng-template>
@@ -64,24 +92,52 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
       <!-- Form Modal -->
       <dialog class="modal" [class.modal-open]="showForm()">
         <div class="modal-box max-w-lg">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+          <div
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4"
+          >
             <h3 class="font-bold text-xl">{{ editMode() ? 'Editar Rol' : 'Nuevo Rol' }}</h3>
             <button class="btn btn-ghost btn-sm btn-circle" (click)="showForm.set(false)">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
           <form (ngSubmit)="handleSubmit()" class="space-y-3">
             <div class="bg-base-200/50 rounded-lg p-4 space-y-3">
-              <h4 class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <h4
+                class="text-sm font-semibold text-base-content/70 uppercase tracking-wide flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
                 </svg>
                 Información del rol
               </h4>
               <div class="form-control">
-                <label class="label py-0"><span class="label-text font-medium text-sm">Nombre *</span></label>
+                <label class="label py-0"
+                  ><span class="label-text font-medium text-sm">Nombre *</span></label
+                >
                 <input
                   name="nombre"
                   type="text"
@@ -92,12 +148,16 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
                 />
                 @if (submitted() && !nombre().trim()) {
                   <label class="label py-0">
-                    <span class="label-text-alt text-error text-xs">Debes ingresar el nombre del rol</span>
+                    <span class="label-text-alt text-error text-xs"
+                      >Debes ingresar el nombre del rol</span
+                    >
                   </label>
                 }
               </div>
               <div class="form-control">
-                <label class="label py-0"><span class="label-text font-medium text-sm">Descripción</span></label>
+                <label class="label py-0"
+                  ><span class="label-text font-medium text-sm">Descripción</span></label
+                >
                 <textarea
                   name="descripcion"
                   class="textarea textarea-bordered textarea-sm w-full"
@@ -110,10 +170,23 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </div>
 
             <div class="modal-action">
-              <button type="button" class="btn btn-ghost" (click)="showForm.set(false)">Cancelar</button>
+              <button type="button" class="btn btn-ghost" (click)="showForm.set(false)">
+                Cancelar
+              </button>
               <button type="submit" class="btn btn-primary gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 {{ editMode() ? 'Actualizar' : 'Guardar' }}
               </button>
@@ -138,6 +211,11 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
   `,
 })
 export class RolesComponent implements OnInit {
+  readonly tableSort = signal<TableSort | null>(null);
+  setTableSort(sort: TableSort | null): void {
+    this.tableSort.set(sort);
+  }
+
   private readonly adminApi = inject(AdminApiService);
 
   readonly data = signal<Rol[]>([]);
@@ -157,17 +235,23 @@ export class RolesComponent implements OnInit {
   readonly columns: DataTableColumn[] = [
     { key: 'idRol', label: 'ID', sortable: true },
     { key: 'nombre', label: 'Nombre', sortable: true },
-    { key: 'descripcion', label: 'Descripción' },
+    { key: 'descripcion', label: 'Descripción', sortable: true },
+    { key: 'estado', label: 'Estado', sortable: true },
   ];
 
-  readonly visibleData = computed(() => {
-    let result = [...this.data()];
-    result = result.filter((r) => (this.showInactive() ? !r.estado : r.estado));
-    return result.sort((a, b) => {
-      if (a.estado !== b.estado) return a.estado ? -1 : 1;
-      return a.idRol - b.idRol;
-    });
-  });
+  readonly visibleData = computed(() =>
+    sortRows(
+      (() => {
+        let result = [...this.data()];
+        result = result.filter((r) => (this.showInactive() ? !r.estado : r.estado));
+        return result.sort((a, b) => {
+          if (a.estado !== b.estado) return a.estado ? -1 : 1;
+          return a.idRol - b.idRol;
+        });
+      })(),
+      this.tableSort(),
+    ),
+  );
 
   readonly mensajeEliminar = computed(() => {
     const rol = this.selected();
@@ -221,10 +305,15 @@ export class RolesComponent implements OnInit {
       const selected = this.selected();
       if (this.editMode() && selected) {
         await firstValueFrom(
-          this.adminApi.updateRol(selected.idRol, { nombre: this.nombre(), descripcion: this.descripcion() }),
+          this.adminApi.updateRol(selected.idRol, {
+            nombre: this.nombre(),
+            descripcion: this.descripcion(),
+          }),
         );
       } else {
-        await firstValueFrom(this.adminApi.createRol({ nombre: this.nombre(), descripcion: this.descripcion() }));
+        await firstValueFrom(
+          this.adminApi.createRol({ nombre: this.nombre(), descripcion: this.descripcion() }),
+        );
       }
       this.showForm.set(false);
       await this.loadData();

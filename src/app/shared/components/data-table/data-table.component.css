@@ -1,0 +1,140 @@
+:host {
+  display: block;
+}
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 4px 0 16px;
+}
+.table-count {
+  color: #6b7280;
+  font-size: 12px;
+}
+.sort-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.sort-controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+.sort-controls select {
+  background: white;
+  border: 1px solid #d8dce2;
+  border-radius: 9px;
+  padding: 8px 30px 8px 10px;
+  color: #374151;
+  font-size: 12px;
+}
+.direction-button,
+.reset-sort {
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.direction-button {
+  color: #9d343c;
+  background: #f7eeee;
+}
+.reset-sort {
+  color: #6b7280;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.table-frame {
+  border: 1px solid #e1e4e9;
+  border-radius: 14px;
+  background: white;
+}
+.professional-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.professional-table thead th {
+  background: #f6f4f2;
+  color: #545d6c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  padding: 0 16px;
+  height: 48px;
+  border-bottom: 1px solid #e1e4e9;
+  white-space: nowrap;
+}
+.column-sort {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 0;
+  text-align: left;
+  cursor: pointer;
+}
+.column-sort span {
+  color: #8e95a1;
+  font-size: 16px;
+}
+.column-sort:hover,
+.column-sort.selected,
+.column-sort.selected span {
+  color: #9d343c;
+}
+.professional-table tbody td {
+  padding: 16px;
+  border-bottom: 1px solid #eceef1;
+  color: #374151;
+  vertical-align: middle;
+}
+.professional-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.professional-table tbody tr:nth-child(even) {
+  background: #fcfbfa;
+}
+.professional-table tbody tr:hover {
+  background: #faf0f0;
+}
+.professional-table tbody tr:focus-within {
+  background: #faf0f0;
+}
+.professional-table tbody tr {
+  transition: background-color 140ms ease;
+}
+.mobile-record {
+  background: white;
+  border: 1px solid #e1e4e9;
+  box-shadow: 0 2px 8px #26314005;
+}
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid #9d343c;
+  outline-offset: 3px;
+}
+@media (max-width: 639px) {
+  .sort-controls {
+    width: 100%;
+  }
+  .sort-controls label {
+    flex: 1;
+  }
+  .sort-controls select {
+    min-width: 0;
+    flex: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .professional-table tbody tr {
+    transition: none;
+  }
+}

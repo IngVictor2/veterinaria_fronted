@@ -1,16 +1,28 @@
+import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { PagosApiService } from '../../../core/services/pagos-api.service';
 import { Pago } from '../../../core/models/pago';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
-import { DataTableComponent, DataTableColumn } from '../../../shared/components/data-table/data-table.component';
-import { CellTemplateDirective, ActionsTemplateDirective } from '../../../shared/components/data-table/cell-template.directive';
+import {
+  DataTableComponent,
+  DataTableColumn,
+} from '../../../shared/components/data-table/data-table.component';
+import {
+  CellTemplateDirective,
+  ActionsTemplateDirective,
+} from '../../../shared/components/data-table/cell-template.directive';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 
 @Component({
   selector: 'app-pagos-list',
-  imports: [DataTableComponent, CellTemplateDirective, ActionsTemplateDirective, PaginationBarComponent],
+  imports: [
+    DataTableComponent,
+    CellTemplateDirective,
+    ActionsTemplateDirective,
+    PaginationBarComponent,
+  ],
   template: `
     <div>
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
@@ -26,6 +38,8 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
       <div class="management-card card  shadow-md">
         <div class="card-body">
           <app-data-table
+            [sortState]="tableSort()"
+            (sortChange)="setTableSort($event)"
             [columns]="columns"
             [data]="data()"
             [loading]="loading()"
@@ -39,9 +53,27 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
             </ng-template>
             <ng-template appActions let-item>
               <div class="flex gap-1">
-                <button type="button" title="Ver detalle" aria-label="Ver detalle" class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/pagos', item.idPago])">
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z" />
+                <button
+                  type="button"
+                  title="Ver detalle"
+                  aria-label="Ver detalle"
+                  class="btn btn-ghost btn-xs text-info"
+                  (click)="router.navigate(['/pagos', item.idPago])"
+                >
+                  <svg
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z"
+                    />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                 </button>
@@ -61,6 +93,12 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
   `,
 })
 export class PagosListComponent implements OnInit {
+  readonly tableSort = signal<TableSort | null>(null);
+  setTableSort(sort: TableSort | null): void {
+    this.tableSort.set(sort);
+    this.page.set(0);
+  }
+
   readonly router = inject(Router);
   private readonly pagosApi = inject(PagosApiService);
 
@@ -74,16 +112,21 @@ export class PagosListComponent implements OnInit {
     { key: 'idPago', label: '#', sortable: true },
     { key: 'fechaPago', label: 'Fecha', sortable: true },
     { key: 'monto', label: 'Monto', sortable: true },
-    { key: 'nombreMetodoPago', label: 'Método de pago' },
-    { key: 'idFactura', label: 'Factura #' },
-    { key: 'referenciaPago', label: 'Referencia' },
+    { key: 'nombreMetodoPago', label: 'Método de pago', sortable: true },
+    { key: 'idFactura', label: 'Factura #', sortable: true },
+    { key: 'referenciaPago', label: 'Referencia', sortable: true },
   ];
 
   readonly sortedData = computed(() =>
-    [...this.allData()].sort((a, b) => (b.fechaPago || '').localeCompare(a.fechaPago || '')),
+    sortRows(
+      [...this.allData()].sort((a, b) => (b.fechaPago || '').localeCompare(a.fechaPago || '')),
+      this.tableSort(),
+    ),
   );
 
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.sortedData().length / this.size())));
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.sortedData().length / this.size())),
+  );
   readonly totalElements = computed(() => this.sortedData().length);
   readonly data = computed(() => {
     const start = this.page() * this.size();

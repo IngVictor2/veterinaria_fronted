@@ -1,3 +1,4 @@
+import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -5,8 +6,14 @@ import { firstValueFrom } from 'rxjs';
 import { FacturasApiService } from '../../../core/services/facturas-api.service';
 import { Factura } from '../../../core/models/factura';
 import { getApiErrorMessage } from '../../../core/utils/api-error';
-import { DataTableComponent, DataTableColumn } from '../../../shared/components/data-table/data-table.component';
-import { CellTemplateDirective, ActionsTemplateDirective } from '../../../shared/components/data-table/cell-template.directive';
+import {
+  DataTableComponent,
+  DataTableColumn,
+} from '../../../shared/components/data-table/data-table.component';
+import {
+  CellTemplateDirective,
+  ActionsTemplateDirective,
+} from '../../../shared/components/data-table/cell-template.directive';
 import { PaginationBarComponent } from '../../../shared/components/pagination-bar/pagination-bar.component';
 import { SearchFilterComponent } from '../../../shared/components/search-filter/search-filter.component';
 
@@ -36,7 +43,11 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
         <div class="card-body">
           <div class="flex items-center gap-4 mb-4">
             <div class="flex-1">
-              <app-search-filter [(value)]="search" (search)="handleSearch()" placeholder="Buscar por cliente..." />
+              <app-search-filter
+                [(value)]="search"
+                (search)="handleSearch()"
+                placeholder="Buscar por cliente..."
+              />
             </div>
             <select
               name="filtroEstado"
@@ -52,6 +63,8 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
           </div>
 
           <app-data-table
+            [sortState]="tableSort()"
+            (sortChange)="setTableSort($event)"
             [columns]="columns"
             [data]="data()"
             [loading]="loading()"
@@ -67,12 +80,30 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
               <span class="badge" [class]="estadoColor(value)">{{ value }}</span>
             </ng-template>
             <ng-template appActions let-item>
-              <button type="button" title="Ver detalle" aria-label="Ver detalle" class="btn btn-ghost btn-xs text-info" (click)="router.navigate(['/facturas', item.idFactura])">
-                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </button>
+              <button
+                type="button"
+                title="Ver detalle"
+                aria-label="Ver detalle"
+                class="btn btn-ghost btn-xs text-info"
+                (click)="router.navigate(['/facturas', item.idFactura])"
+              >
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 12s3.5-7 9.75-7 9.75 7 9.75 7-3.5 7-9.75 7-9.75-7-9.75-7Z"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
             </ng-template>
           </app-data-table>
 
@@ -88,6 +119,12 @@ import { SearchFilterComponent } from '../../../shared/components/search-filter/
   `,
 })
 export class FacturasListComponent implements OnInit {
+  readonly tableSort = signal<TableSort | null>(null);
+  setTableSort(sort: TableSort | null): void {
+    this.tableSort.set(sort);
+    this.page.set(0);
+  }
+
   readonly router = inject(Router);
   private readonly facturasApi = inject(FacturasApiService);
 
@@ -102,31 +139,38 @@ export class FacturasListComponent implements OnInit {
   readonly columns: DataTableColumn[] = [
     { key: 'idFactura', label: '#', sortable: true },
     { key: 'fechaFactura', label: 'Fecha', sortable: true },
-    { key: 'nombreCliente', label: 'Cliente' },
+    { key: 'nombreCliente', label: 'Cliente', sortable: true },
     { key: 'total', label: 'Total', sortable: true },
     { key: 'estadoFactura', label: 'Estado', sortable: true },
   ];
 
-  readonly filteredData = computed(() => {
-    let result = this.allData();
-    if (this.filtroEstado()) {
-      result = result.filter((f) => f.estadoFactura === this.filtroEstado());
-    }
-    const search = this.search();
-    if (search) {
-      const q = search.toLowerCase();
-      result = result.filter((f) => f.nombreCliente?.toLowerCase().includes(q));
-    }
-    return [...result].sort((a, b) => {
-      const estadoOrder: Record<string, number> = { PENDIENTE: 0, PAGADA: 1, ANULADA: 2 };
-      const orderA = estadoOrder[a.estadoFactura] ?? 3;
-      const orderB = estadoOrder[b.estadoFactura] ?? 3;
-      if (orderA !== orderB) return orderA - orderB;
-      return b.idFactura - a.idFactura;
-    });
-  });
+  readonly filteredData = computed(() =>
+    sortRows(
+      (() => {
+        let result = this.allData();
+        if (this.filtroEstado()) {
+          result = result.filter((f) => f.estadoFactura === this.filtroEstado());
+        }
+        const search = this.search();
+        if (search) {
+          const q = search.toLowerCase();
+          result = result.filter((f) => f.nombreCliente?.toLowerCase().includes(q));
+        }
+        return [...result].sort((a, b) => {
+          const estadoOrder: Record<string, number> = { PENDIENTE: 0, PAGADA: 1, ANULADA: 2 };
+          const orderA = estadoOrder[a.estadoFactura] ?? 3;
+          const orderB = estadoOrder[b.estadoFactura] ?? 3;
+          if (orderA !== orderB) return orderA - orderB;
+          return b.idFactura - a.idFactura;
+        });
+      })(),
+      this.tableSort(),
+    ),
+  );
 
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filteredData().length / this.size())));
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredData().length / this.size())),
+  );
   readonly totalElements = computed(() => this.filteredData().length);
   readonly data = computed(() => {
     const start = this.page() * this.size();

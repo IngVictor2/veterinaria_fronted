@@ -524,3 +524,33 @@ input[type="checkbox"], input[type="radio"] {
 html:has(.waybox-modal:not([hidden])) {
   overflow-y: auto !important;
 }
+
+/* Invoice detail tables share the management table presentation. */
+.invoice-table {
+  background: #fff;
+  font-size: 13px;
+  border: 1px solid #e1e4e9;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.invoice-table thead th {
+  background: #f6f4f2;
+  color: #545d6c;
+  font-size: 11px;
+  letter-spacing: 0.025em;
+  padding: 14px 16px;
+}
+.invoice-table tbody td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #eceef1;
+}
+.invoice-table tbody tr:nth-child(even) {
+  background: #fcfbfa;
+}
+.invoice-table tbody tr:hover {
+  background: #faf0f0;
+}
+.invoice-table tfoot td {
+  background: #faf9f8;
+  padding: 14px 16px;
+}
