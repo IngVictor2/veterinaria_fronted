@@ -1,4 +1,3 @@
-import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
 import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +20,6 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
 @Component({
   selector: 'app-empleados-list',
   imports: [
-    TableOrderComponent,
     FormsModule,
     DataTableComponent,
     CellTemplateDirective,
@@ -77,11 +75,6 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
               />
               <span class="label-text text-sm">Mostrar inactivos</span>
             </label>
-            <app-table-order
-              [columns]="columns"
-              [value]="tableSort()"
-              (change)="setTableSort($event)"
-            />
           </div>
           <app-data-table
             [sortState]="tableSort()"
