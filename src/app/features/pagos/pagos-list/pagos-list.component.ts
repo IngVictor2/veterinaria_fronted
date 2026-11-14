@@ -1,4 +1,3 @@
-import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
 import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
@@ -19,7 +18,6 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
 @Component({
   selector: 'app-pagos-list',
   imports: [
-    TableOrderComponent,
     DataTableComponent,
     CellTemplateDirective,
     ActionsTemplateDirective,
@@ -39,13 +37,7 @@ import { PaginationBarComponent } from '../../../shared/components/pagination-ba
 
       <div class="management-card card  shadow-md">
         <div class="card-body">
-          <div class="flex justify-end mb-4">
-            <app-table-order
-              [columns]="columns"
-              [value]="tableSort()"
-              (change)="setTableSort($event)"
-            />
-          </div>
+
           <app-data-table
             [sortState]="tableSort()"
             (sortChange)="setTableSort($event)"

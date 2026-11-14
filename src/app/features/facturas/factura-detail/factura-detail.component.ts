@@ -1,5 +1,4 @@
 import { TableSort, sortRows } from '../../../shared/components/data-table/table-sort';
-import { TableOrderComponent } from '../../../shared/components/data-table/table-order.component';
 import { FacturaDetalle } from '../../../core/models/factura';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
@@ -15,7 +14,7 @@ import { WompiPaymentModalComponent } from '../../../shared/components/wompi-pay
 
 @Component({
   selector: 'app-factura-detail',
-  imports: [TableOrderComponent, ConfirmDialogComponent, WompiPaymentModalComponent],
+  imports: [ConfirmDialogComponent, WompiPaymentModalComponent],
   template: `
     <div class="max-w-5xl mx-auto">
       @if (error()) {
@@ -176,11 +175,6 @@ import { WompiPaymentModalComponent } from '../../../shared/components/wompi-pay
               No hay items en esta factura
             </div>
           } @else {
-            <app-table-order
-              [columns]="itemColumns"
-              [value]="itemsSort()"
-              (change)="itemsSort.set($event)"
-            />
             <div class="overflow-x-auto">
               <table class="table invoice-table w-full">
                 <thead>
