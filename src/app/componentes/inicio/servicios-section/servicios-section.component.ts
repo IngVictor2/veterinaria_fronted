@@ -26,8 +26,7 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
               Todo lo que tu mascota necesita, en un mismo lugar
             </h2>
             <p class="mt-4 text-sm leading-relaxed text-[#374151] sm:text-base">
-              Consulta y estética para perros y gatos. Estos son los servicios que forman parte del
-              alcance del proyecto VetClinic.
+              Consulta y estética con tarifa base, duración y alcance definidos para cada servicio.
             </p>
           </div>
 
@@ -63,7 +62,7 @@ type FiltroPortafolio = TipoServicioPortafolio | 'TODOS';
         </div>
 
         <p class="mt-6 text-xs text-[#374151]">
-          Los valores son tarifas base de demostración y pueden variar según la valoración clínica.
+          Tarifas base de demostración; pueden variar según la valoración clínica.
         </p>
       </div>
 

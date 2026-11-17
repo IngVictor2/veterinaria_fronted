@@ -21,10 +21,6 @@ import { RouterLink } from '@angular/router';
               </span>
             </span>
           </a>
-          <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#374151]">
-            Consulta, estética e información de cuidado para perros y gatos, con contenidos claros
-            para cada familia.
-          </p>
         </div>
 
         <div>
@@ -38,12 +34,17 @@ import { RouterLink } from '@angular/router';
         </div>
 
         <div>
-          <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-[#374151]">Horario</h2>
-          <ul class="mt-4 space-y-2 text-sm text-[#374151]">
-            <li>Lunes a sábado: 7:00 a 18:00</li>
-            <li>Domingos: 7:00 a 13:00</li>
-            <li>Consulta y estética con cita previa</li>
-          </ul>
+          <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-[#374151]">Visítanos</h2>
+          <p class="mt-4 text-sm text-[#374151]">Barranquilla, Atlántico · Colombia</p>
+          <a
+            href="https://maps.app.goo.gl/Gu1SnnxR6zzAzMX87"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#9D343C] transition hover:text-[#7D2931]"
+          >
+            Cómo llegar
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
         <div>
@@ -52,9 +53,6 @@ import { RouterLink } from '@angular/router';
             <li><a routerLink="/login" class="transition hover:text-[#9D343C]">Ingresar al sistema</a></li>
             <li><a routerLink="/register" class="transition hover:text-[#9D343C]">Crear una cuenta</a></li>
           </ul>
-          <p class="mt-4 text-xs leading-relaxed text-[#374151]">
-            Barranquilla, Atlántico · Colombia
-          </p>
         </div>
       </div>
 

@@ -29,9 +29,15 @@
         <div class="info-item">
           <span class="info-icon" aria-hidden="true">◷</span>
           <div>
-            <h4>Siempre hay tiempo para cuidarlos</h4>
-            <p>Lunes a sábado · 7:00 a. m. – 6:00 p. m.<br />Domingos · 7:00 a. m. – 1:00 p. m.</p>
-            <small>En festivos mantenemos el horario del día.</small>
+            <h4>Horario de atención</h4>
+            <dl class="schedule-table">
+              @for (tramo of horario; track tramo.etiqueta) {
+                <div>
+                  <dt>{{ tramo.etiqueta }}</dt>
+                  <dd>{{ tramo.horas }}</dd>
+                </div>
+              }
+            </dl>
           </div>
         </div>
         <div class="direct-contact">

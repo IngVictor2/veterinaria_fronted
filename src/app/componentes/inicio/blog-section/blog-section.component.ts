@@ -24,15 +24,6 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
               estética. Guarda los que quieras leer después.
             </p>
           </div>
-
-          @if (blog.totalGuardados() > 0) {
-            <p class="inline-flex w-fit items-center gap-2 rounded-full border border-[#9D343C]/30 bg-[#9D343C]/10 px-4 py-2 text-xs font-semibold text-[#9D343C]">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 2h12a1 1 0 0 1 1 1v18l-7-4-7 4V3a1 1 0 0 1 1-1Z" />
-              </svg>
-              {{ blog.totalGuardados() }} guardado(s) para leer
-            </p>
-          }
         </div>
 
         @if (blog.articuloDestacado(); as destacado) {
@@ -78,7 +69,7 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
                 (click)="blog.cambiarCategoria(opcion.valor)"
               >
                 {{ opcion.etiqueta }}
-                <span class="ml-1 text-[10px] opacity-60">{{ totalCategoria(opcion.valor) }}</span>
+                <span class="ml-1 text-[10px]">{{ totalCategoria(opcion.valor) }}</span>
               </button>
             }
           </div>
@@ -312,7 +303,7 @@ export class BlogSectionComponent {
       case 'SALUD':
         return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
       case 'PREVENCION':
-        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-700';
+        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-800';
       case 'NUTRICION':
         return 'border-amber-300/25 bg-amber-300/10 text-amber-800';
       case 'ESTETICA':

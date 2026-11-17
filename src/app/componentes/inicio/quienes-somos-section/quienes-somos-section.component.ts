@@ -16,110 +16,55 @@ import { Component } from '@angular/core';
             Cuidado veterinario con información clara y trato cercano
           </h2>
           <p class="mt-5 max-w-2xl text-sm leading-relaxed text-[#374151] sm:text-base">
-            VetClinic es una clínica veterinaria enfocada en perros y gatos. Reunimos consulta y
-            estética en un mismo espacio para acompañar el cuidado de cada mascota, desde la
-            prevención hasta el bienestar diario.
-          </p>
-          <p class="mt-4 max-w-2xl text-sm leading-relaxed text-[#374151] sm:text-base">
-            Trabajamos con historia clínica, agenda de citas y comunicación directa con el
-            propietario. Así cada atención queda registrada y las recomendaciones son fáciles de
-            seguir en casa.
+            VetClinic atiende perros y gatos con un enfoque simple: registrar cada atención,
+            explicar qué sigue y mantener al día el historial de cada mascota.
           </p>
 
-          <div class="mt-7 flex flex-wrap gap-2">
-            <span class="rounded-full border border-[#9D343C]/20 bg-[#9D343C]/10 px-3 py-1.5 text-xs font-semibold text-[#9D343C]">
-              Perros y gatos
-            </span>
-            <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-[#374151]">
-              Consulta y estética
-            </span>
-            <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-[#374151]">
-              Barranquilla, Atlántico
-            </span>
-          </div>
-
-          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#servicios" class="btn btn-primary h-11 rounded-full px-5 text-sm font-bold">
-              Conoce los servicios
-            </a>
-            <a
-              href="#contacto"
-              class="btn h-11 rounded-full border border-gray-200 bg-gray-50 px-5 text-sm font-semibold text-[#374151] hover:border-[#9D343C]/40 hover:bg-gray-50"
-            >
-              Escríbenos
-            </a>
-          </div>
-        </div>
-
-        <div class="relative">
-          <div class="absolute -inset-4 rounded-[2.5rem] bg-white    blur-2xl"></div>
-
-          <div class="surface-card relative rounded-[2rem] border border-gray-200  p-6 sm:p-8">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">
-                  Nuestra forma de trabajar
-                </p>
-                <p class="mt-2 text-lg font-extrabold text-[#374151]">Lo que nos define</p>
-              </div>
-              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z" />
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-5">
+              <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/15 text-[#9D343C]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z" />
                 </svg>
-              </span>
+              </div>
+              <p class="mt-3 text-sm font-bold text-[#374151]">Historia clínica digital</p>
+              <p class="mt-1 text-xs leading-relaxed text-[#374151]">
+                Cada consulta, vacuna y tratamiento queda registrado para la siguiente cita.
+              </p>
             </div>
 
-            <div class="mt-6 grid gap-3 sm:grid-cols-2">
-              <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-4">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/20 text-[#9D343C]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h8M8 14h5m-8 6V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15l-4-3-4 3-4-3-4 3Z" />
-                  </svg>
-                </div>
-                <p class="mt-3 text-sm font-bold text-[#374151]">Atención cercana</p>
-                <p class="mt-1 text-xs leading-relaxed text-[#374151]">
-                  Escuchamos el motivo de consulta y explicamos cada paso con lenguaje claro.
-                </p>
+            <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-5">
+              <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/15 text-[#9D343C]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 10h18M7 3v4m10-4v4M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z" />
+                </svg>
               </div>
-
-              <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-4">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/15 text-[#9D343C]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M11.5 3.5c0-.83-.67-1.5-1.5-1.5S8.5 2.67 8.5 3.5 9.17 5 10 5s1.5-.67 1.5-1.5Zm4 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-8 3c0-.83-.67-1.5-1.5-1.5S4.5 5.67 4.5 6.5 5.17 8 6 8s1.5-.67 1.5-1.5zm12 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zM12 22c-3 0-5.5-1.5-5.5-4 0-2 1.5-3.5 3-4.5.7-.5 1.5-.8 2.5-.8s1.8.3 2.5.8c1.5 1 3 2.5 3 4.5 0 2.5-2.5 4-5.5 4z" />
-                  </svg>
-                </div>
-                <p class="mt-3 text-sm font-bold text-[#374151]">Cuidado integral</p>
-                <p class="mt-1 text-xs leading-relaxed text-[#374151]">
-                  Consulta y estética se complementan para cubrir las necesidades de la mascota.
-                </p>
-              </div>
-
-              <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-4">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/20 text-[#9D343C]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m-6 8h6m-6 4h4" />
-                  </svg>
-                </div>
-                <p class="mt-3 text-sm font-bold text-[#374151]">Información organizada</p>
-                <p class="mt-1 text-xs leading-relaxed text-[#374151]">
-                  La historia clínica y la agenda mantienen el seguimiento al día.
-                </p>
-              </div>
-
-              <div class="rounded-2xl border border-gray-200 bg-[#FFFFFF]/60 p-4">
-                <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#9D343C]/15 text-[#9D343C]">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3 4 6v6c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V6l-8-3Zm-3 9 2 2 4-4" />
-                  </svg>
-                </div>
-                <p class="mt-3 text-sm font-bold text-[#374151]">Bienestar animal</p>
-                <p class="mt-1 text-xs leading-relaxed text-[#374151]">
-                  Adaptamos el manejo a la edad, el temperamento y el estado de salud.
-                </p>
-              </div>
+              <p class="mt-3 text-sm font-bold text-[#374151]">Agenda y pagos en línea</p>
+              <p class="mt-1 text-xs leading-relaxed text-[#374151]">
+                El cliente reserva su cita, consulta la factura y paga desde el mismo sistema.
+              </p>
             </div>
           </div>
         </div>
+
+        <aside class="relative">
+          <div class="surface-card relative rounded-[2rem] border border-gray-200 p-8 sm:p-10">
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z" />
+              </svg>
+            </span>
+
+            <blockquote class="mt-8">
+              <p class="text-2xl font-extrabold leading-snug tracking-tight text-[#374151] sm:text-3xl">
+                “Que cada familia entienda qué le pasa a su mascota y qué hacer después.”
+              </p>
+              <footer class="mt-6 text-[11px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">
+                Nuestro compromiso
+              </footer>
+            </blockquote>
+          </div>
+        </aside>
       </div>
     </section>
   `,

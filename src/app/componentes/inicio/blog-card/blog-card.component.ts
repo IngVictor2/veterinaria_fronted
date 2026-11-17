@@ -94,7 +94,7 @@ export class BlogCardComponent {
       case 'SALUD':
         return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
       case 'PREVENCION':
-        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-700';
+        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-800';
       case 'NUTRICION':
         return 'border-amber-300/25 bg-amber-300/10 text-amber-800';
       case 'ESTETICA':

@@ -1,6 +1,7 @@
 import { Component, DestroyRef, ElementRef, ViewChild, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { HORARIO_SEMANAL, formatearHora } from '../../../datos/clinica';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -21,6 +22,10 @@ export class ContactoSectionComponent {
   readonly draft = signal('');
   readonly sending = signal(false);
   readonly error = signal('');
+  readonly horario = HORARIO_SEMANAL.map((tramo) => ({
+    etiqueta: tramo.etiqueta,
+    horas: `${formatearHora(tramo.abre)} – ${formatearHora(tramo.cierra)}`,
+  }));
   readonly messages = signal<ChatMessage[]>([
     {
       role: 'assistant',
@@ -32,7 +37,10 @@ export class ContactoSectionComponent {
   readonly suggestions = [
     { label: 'Servicios y precios', question: '¿Qué servicios ofrecen y cuáles son sus precios?' },
     { label: 'Agendar una cita', question: '¿Cómo registro a mi perro y agendo una cita?' },
-    { label: 'Horarios de atención', question: '¿Cuál es su horario y atienden en festivos?' },
+    {
+      label: 'Cuidados y prevención',
+      question: '¿Qué cuidados básicos recomiendan para mi mascota?',
+    },
   ];
   readonly faqs = [
     {
@@ -40,9 +48,9 @@ export class ContactoSectionComponent {
       answer: 'Carrera 45 # 48-31, Sede Plaza de la Paz, Barranquilla.',
     },
     {
-      question: '¿En qué horario atendemos?',
+      question: '¿Cómo agendo una cita?',
       answer:
-        'Lunes a sábado de 7:00 a. m. a 6:00 p. m. Domingos de 7:00 a. m. a 1:00 p. m. Los festivos conservan el horario del día correspondiente.',
+        'Ingresa con tu cuenta o crea una y reserva la fecha y hora desde el sistema. También puedes llamarnos al 304 281 8284.',
     },
     {
       question: '¿Cómo cancelar o reprogramar?',
