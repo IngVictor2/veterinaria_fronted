@@ -402,7 +402,7 @@ Resultados de la última ejecución local:
 ## 13. Repositorio y despliegue
 
 - **Repositorio:** https://github.com/IngVictor2/veterinaria_fronted
-- **Landing en producción:** https://veterinaria-one-nu.vercel.app/
-- **Login:** https://veterinaria-one-nu.vercel.app/login
+- **Landing en producción:** https://vetclinicbaq.vercel.app/
+- **Login:** https://vetclinicbaq.vercel.app/login
 
 Vercel publica automáticamente los cambios de la rama `main`.
