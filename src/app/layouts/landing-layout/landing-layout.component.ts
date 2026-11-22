@@ -3,11 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { SiteFooterComponent } from '../../componentes/inicio/site-footer/site-footer.component';
 import { SiteHeaderComponent } from '../../componentes/inicio/site-header/site-header.component';
 
-/**
- * Estructura compartida por la landing y las vistas públicas del blog.
- * El encabezado y el pie se montan una sola vez y el router cambia solo
- * el contenido central.
- */
 @Component({
   selector: 'app-landing-layout',
   imports: [RouterOutlet, SiteHeaderComponent, SiteFooterComponent],

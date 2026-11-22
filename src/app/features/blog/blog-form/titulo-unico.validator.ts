@@ -9,10 +9,6 @@ function normalizar(texto: string): string {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-/**
- * Validador propio: impide publicar dos artículos con el mismo título,
- * sin importar mayúsculas, tildes ni espacios sobrantes.
- */
 export function tituloUnico(articulos: () => readonly ArticuloBlog[]): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const titulo = normalizar(String(control.value ?? ''));

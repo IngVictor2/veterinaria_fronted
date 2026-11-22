@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CATEGORIAS_BLOG, CategoriaBlog } from '../../../modelos/articulo-blog';
 import { BlogService } from '../../../servicios/blog.service';
-import { FormularioArticulo, convertirArticulo } from './blog-form.model';
+import { convertirArticulo } from './blog-form.model';
 import { tituloUnico } from './titulo-unico.validator';
 
 type CampoFormulario =
@@ -278,10 +278,7 @@ export class BlogFormComponent {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
-  readonly categorias = CATEGORIAS_BLOG.filter(
-    (categoria): categoria is { valor: CategoriaBlog; etiqueta: string } =>
-      categoria.valor !== 'TODAS',
-  );
+  readonly categorias = CATEGORIAS_BLOG.filter((categoria) => categoria.valor !== 'TODAS');
 
   readonly formulario = this.fb.group({
     titulo: this.fb.nonNullable.control('', [
@@ -295,7 +292,7 @@ export class BlogFormComponent {
       Validators.minLength(5),
       Validators.maxLength(60),
     ]),
-    categoria: this.fb.control<CategoriaBlog | ''>('', [Validators.required]),
+    categoria: this.fb.nonNullable.control<CategoriaBlog | ''>('', [Validators.required]),
     resumen: this.fb.nonNullable.control('', [
       Validators.required,
       Validators.minLength(40),
@@ -320,7 +317,7 @@ export class BlogFormComponent {
       return;
     }
 
-    const valor = this.formulario.getRawValue() as FormularioArticulo;
+    const valor = this.formulario.getRawValue();
     const nuevo = this.blog.crearArticulo(convertirArticulo(valor));
 
     this.formulario.reset({

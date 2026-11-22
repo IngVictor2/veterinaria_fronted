@@ -23,11 +23,6 @@ const FORMATO_FECHA_ISO = new Intl.DateTimeFormat('en-CA', {
   day: '2-digit',
 });
 
-/**
- * Dueño del estado del blog: artículos, filtro por categoría, búsqueda y
- * artículos guardados. La señal se expone como readonly y solo cambia por
- * medio de métodos con nombre.
- */
 @Injectable({ providedIn: 'root' })
 export class BlogService {
   private readonly _articulos = signal<ArticuloBlog[]>(ARTICULOS_BLOG);
@@ -72,7 +67,13 @@ export class BlogService {
         return true;
       }
 
-      return [articulo.titulo, articulo.resumen, articulo.autor, articulo.categoria, ...articulo.etiquetas]
+      return [
+        articulo.titulo,
+        articulo.resumen,
+        articulo.autor,
+        articulo.categoria,
+        ...articulo.etiquetas,
+      ]
         .map((valor) => this._normalizar(valor))
         .some((valor) => valor.includes(termino));
     });

@@ -1,11 +1,6 @@
 import { CategoriaBlog } from '../../../modelos/articulo-blog';
 import { NuevoArticuloBlog } from '../../../servicios/blog.service';
 
-/**
- * Modelo del formulario: todos los controles son textos o números simples.
- * No coincide con `ArticuloBlog` porque el identificador y la fecha los
- * genera el servicio, y el contenido y las etiquetas se escriben como texto.
- */
 export interface FormularioArticulo {
   titulo: string;
   autor: string;
@@ -17,11 +12,6 @@ export interface FormularioArticulo {
   destacado: boolean;
 }
 
-/**
- * Convierte el modelo del formulario en el modelo de datos que recibe el
- * servicio. Los párrafos se separan con una línea en blanco y las etiquetas
- * con comas.
- */
 export function convertirArticulo(valor: FormularioArticulo): NuevoArticuloBlog {
   if (!valor.categoria) {
     throw new Error('La categoría es obligatoria para publicar un artículo.');
