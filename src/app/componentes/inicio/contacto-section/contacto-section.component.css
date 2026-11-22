@@ -216,6 +216,8 @@
   margin-bottom: 24px;
 }
 .message {
+  width: fit-content;
+  min-width: 0;
   max-width: 92%;
   margin-bottom: 19px;
 }
@@ -229,7 +231,7 @@
 .message p {
   background: #f5f2f1;
   border: 1px solid #eee8e6;
-  padding: 15px 17px;
+  padding: 10px 14px;
   border-radius: 2px 15px 15px;
   font-size: 13px;
   line-height: 1.8;
