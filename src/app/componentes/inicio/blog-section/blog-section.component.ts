@@ -1,13 +1,16 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { ArticuloBlog, CategoriaBlog, CATEGORIAS_BLOG } from '../../../modelos/articulo-blog';
-import { CategoriaBlogPipe } from '../../../pipes/categoria-blog.pipe';
-import { BlogService, FiltroCategoriaBlog } from '../../../servicios/blog.service';
+import { Component, computed, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { ArticuloBlog, CATEGORIAS_BLOG } from '../../../modelos/articulo-blog';
+import { BlogService } from '../../../servicios/blog.service';
 import { BlogCardComponent } from '../blog-card/blog-card.component';
 
 @Component({
   selector: 'app-blog-section',
-  imports: [BlogCardComponent, CategoriaBlogPipe, DatePipe, DecimalPipe],
+  imports: [BlogCardComponent, DatePipe, DecimalPipe, ReactiveFormsModule, RouterLink],
   template: `
     <section id="blog" class="scroll-mt-24 border-b border-gray-200 px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-7xl">
@@ -24,13 +27,20 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
               estética. Guarda los que quieras leer después.
             </p>
           </div>
+
+          <a
+            routerLink="/blog"
+            class="btn h-11 shrink-0 rounded-full border border-[#9D343C]/25 bg-[#9D343C]/10 px-5 text-sm font-bold text-[#9D343C] hover:bg-[#9D343C]/20"
+          >
+            Ver todos los artículos
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
         @if (blog.articuloDestacado(); as destacado) {
-          <button
-            type="button"
-            class="mt-9 flex w-full flex-col gap-5 rounded-3xl border border-[#9D343C]/20 bg-white    p-6 text-left transition hover:border-[#9D343C]/40 sm:flex-row sm:items-center sm:justify-between sm:p-8"
-            (click)="abrirArticulo(destacado)"
+          <a
+            [routerLink]="['/blog', destacado.id]"
+            class="mt-9 flex w-full flex-col gap-5 rounded-3xl border border-[#9D343C]/20 bg-white p-6 text-left transition hover:border-[#9D343C]/40 sm:flex-row sm:items-center sm:justify-between sm:p-8"
           >
             <div class="max-w-3xl">
               <p class="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9D343C]">
@@ -49,7 +59,7 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
               Leer ahora
               <span aria-hidden="true">→</span>
             </span>
-          </button>
+          </a>
         }
 
         <div
@@ -69,23 +79,34 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
                 (click)="blog.cambiarCategoria(opcion.valor)"
               >
                 {{ opcion.etiqueta }}
-                <span class="ml-1 text-[10px]">{{ totalCategoria(opcion.valor) }}</span>
+                <span class="ml-1 text-[10px]">{{ blog.totalPorCategoria()[opcion.valor] }}</span>
               </button>
             }
           </div>
 
           <div class="flex flex-col gap-2 sm:flex-row">
             <label class="input input-sm flex w-full items-center gap-2 rounded-full border-gray-200 bg-[#FFFFFF] lg:w-64">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.15 6.15a7.5 7.5 0 0 0 10.5 10.5Z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 opacity-50"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.15 6.15a7.5 7.5 0 0 0 10.5 10.5Z"
+                />
               </svg>
               <input
                 type="search"
                 class="grow bg-transparent text-xs"
                 placeholder="Buscar artículo o etiqueta"
                 aria-label="Buscar artículos del blog"
-                [value]="blog.busqueda()"
-                (input)="blog.cambiarBusqueda($any($event.target).value)"
+                [formControl]="buscador"
               />
             </label>
 
@@ -93,7 +114,7 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
               <button
                 type="button"
                 class="btn btn-ghost btn-sm rounded-full text-xs text-[#9D343C]"
-                (click)="blog.reiniciarFiltros()"
+                (click)="reiniciarFiltros()"
               >
                 Limpiar filtros
               </button>
@@ -106,60 +127,30 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
             <app-blog-card
               [articulo]="articulo"
               [guardado]="blog.esGuardado(articulo.id)"
-              (ver)="abrirArticulo($event)"
+              (ver)="verArticulo($event)"
               (guardar)="blog.alternarGuardado($event)"
             />
           } @empty {
             <div class="col-span-full rounded-3xl border border-dashed border-gray-200 px-6 py-14 text-center">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-xl" aria-hidden="true">
+              <div
+                class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-xl"
+                aria-hidden="true"
+              >
                 📝
               </div>
               <p class="mt-4 text-lg font-bold text-[#374151]">No encontramos artículos</p>
-
-              @switch (blog.categoria()) {
-                @case ('TODAS') {
-                  @if (blog.busqueda()) {
-                    <p class="mx-auto mt-2 max-w-md text-sm text-[#374151]">
-                      No hay coincidencias para “{{ blog.busqueda() }}”. Prueba con otra palabra o
-                      limpia los filtros.
-                    </p>
-                  } @else {
-                    <p class="mt-2 text-sm text-[#374151]">
-                      Todavía no hay artículos publicados.
-                    </p>
-                  }
+              <p class="mx-auto mt-2 max-w-md text-sm text-[#374151]">
+                @if (blog.busqueda()) {
+                  No hay coincidencias para “{{ blog.busqueda() }}”. Prueba con otra palabra o
+                  limpia los filtros.
+                } @else {
+                  No hay artículos en esta categoría. Selecciona otra para ver el blog completo.
                 }
-                @case ('SALUD') {
-                  <p class="mt-2 text-sm text-[#374151]">
-                    No hay artículos de salud con este filtro. Revisa las demás categorías.
-                  </p>
-                }
-                @case ('PREVENCION') {
-                  <p class="mt-2 text-sm text-[#374151]">
-                    No hay artículos de prevención con este filtro.
-                  </p>
-                }
-                @case ('NUTRICION') {
-                  <p class="mt-2 text-sm text-[#374151]">
-                    No hay artículos de nutrición con este filtro.
-                  </p>
-                }
-                @case ('ESTETICA') {
-                  <p class="mt-2 text-sm text-[#374151]">
-                    No hay artículos de estética con este filtro.
-                  </p>
-                }
-                @default {
-                  <p class="mt-2 text-sm text-[#374151]">
-                    No hay artículos de la categoría clínica con este filtro.
-                  </p>
-                }
-              }
-
+              </p>
               <button
                 type="button"
                 class="btn btn-primary btn-sm mt-5 rounded-full"
-                (click)="blog.reiniciarFiltros()"
+                (click)="reiniciarFiltros()"
               >
                 Ver todos los artículos
               </button>
@@ -171,88 +162,11 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
           Mostrando {{ blog.articulosFiltrados().length }} de {{ blog.totalArticulos() }} artículos.
         </p>
       </div>
-
-      @if (seleccionado(); as articulo) {
-        <div
-          class="fixed inset-0 z-[60] flex items-end justify-center bg-black/75 backdrop-blur-sm sm:items-center sm:p-4"
-          (click)="cerrarArticulo()"
-        >
-          <article
-            class="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-gray-200 bg-[#FFFFFF] shadow-2xl sm:rounded-3xl"
-            role="dialog"
-            aria-modal="true"
-            [attr.aria-label]="articulo.titulo"
-            (click)="$event.stopPropagation()"
-          >
-            <div class="border-b border-gray-200 bg-white   p-6 sm:p-8">
-              <div class="flex items-start justify-between gap-4">
-                <span
-                  class="rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em]"
-                  [class]="claseCategoria(articulo.categoria)"
-                >
-                  {{ articulo.categoria | categoriaBlog }}
-                </span>
-                <button
-                  type="button"
-                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gray-200 text-[#374151] transition hover:bg-gray-50 hover:text-[#374151]"
-                  aria-label="Cerrar artículo"
-                  (click)="cerrarArticulo()"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              <h2 class="mt-4 text-2xl font-extrabold leading-tight text-[#374151] sm:text-3xl">
-                {{ articulo.titulo }}
-              </h2>
-              <p class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#374151]">
-                <span class="font-semibold text-[#374151]">{{ articulo.autor }}</span>
-                <span aria-hidden="true">·</span>
-                <time [attr.datetime]="articulo.fecha">
-                  {{ articulo.fecha | date: 'd MMMM y' : undefined : 'es-CO' }}
-                </time>
-                <span aria-hidden="true">·</span>
-                <span>{{ articulo.minutosLectura | number: '1.0-0' : 'es-CO' }} min de lectura</span>
-              </p>
-            </div>
-
-            <div class="space-y-4 p-6 text-sm leading-relaxed text-[#374151] sm:p-8 sm:text-[15px]">
-              @for (parrafo of articulo.contenido; track $index) {
-                <p>{{ parrafo }}</p>
-              }
-            </div>
-
-            <div class="flex flex-col gap-3 border-t border-gray-200 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <div class="flex flex-wrap gap-1.5">
-                @for (etiqueta of articulo.etiquetas; track etiqueta) {
-                  <span class="rounded-full bg-gray-50 px-2.5 py-1 text-[10px] text-[#374151]">
-                    #{{ etiqueta }}
-                  </span>
-                }
-              </div>
-
-              <button
-                type="button"
-                class="btn btn-sm rounded-full"
-                [class]="
-                  blog.esGuardado(articulo.id)
-                    ? 'border-[#9D343C]/40 bg-[#9D343C]/15 text-[#9D343C]'
-                    : 'btn-outline'
-                "
-                (click)="blog.alternarGuardado(articulo.id)"
-              >
-                {{ blog.esGuardado(articulo.id) ? 'Guardado' : 'Guardar para leer' }}
-              </button>
-            </div>
-          </article>
-        </div>
-      }
     </section>
   `,
   styles: `
-    .blog-category-filter:hover, .blog-category-filter:focus-visible {
+    .blog-category-filter:hover,
+    .blog-category-filter:focus-visible {
       box-shadow: 0 2px 8px rgba(55, 65, 81, 0.12);
     }
     .blog-category-filter[aria-pressed='true']:hover,
@@ -264,52 +178,27 @@ import { BlogCardComponent } from '../blog-card/blog-card.component';
 })
 export class BlogSectionComponent {
   readonly blog = inject(BlogService);
+  private readonly router = inject(Router);
+
   readonly categorias = CATEGORIAS_BLOG;
-  readonly seleccionado = signal<ArticuloBlog | null>(null);
+  readonly buscador = new FormControl(this.blog.busqueda(), { nonNullable: true });
 
   readonly sinFiltros = computed(
     () => this.blog.categoria() === 'TODAS' && this.blog.busqueda().trim().length === 0,
   );
 
-  totalCategoria(categoria: FiltroCategoriaBlog): number {
-    const totales = this.blog.totalPorCategoria();
-
-    switch (categoria) {
-      case 'TODAS':
-        return totales.todas;
-      case 'SALUD':
-        return totales.salud;
-      case 'PREVENCION':
-        return totales.prevencion;
-      case 'NUTRICION':
-        return totales.nutricion;
-      case 'ESTETICA':
-        return totales.estetica;
-      default:
-        return totales.clinica;
-    }
+  constructor() {
+    this.buscador.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed())
+      .subscribe((valor) => this.blog.cambiarBusqueda(valor));
   }
 
-  abrirArticulo(articulo: ArticuloBlog): void {
-    this.seleccionado.set(articulo);
+  verArticulo(articulo: ArticuloBlog): void {
+    void this.router.navigate(['/blog', articulo.id]);
   }
 
-  cerrarArticulo(): void {
-    this.seleccionado.set(null);
-  }
-
-  claseCategoria(categoria: CategoriaBlog): string {
-    switch (categoria) {
-      case 'SALUD':
-        return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
-      case 'PREVENCION':
-        return 'border-emerald-400/25 bg-emerald-400/10 text-emerald-800';
-      case 'NUTRICION':
-        return 'border-amber-300/25 bg-amber-300/10 text-amber-800';
-      case 'ESTETICA':
-        return 'border-[#9D343C]/25 bg-[#9D343C]/10 text-[#9D343C]';
-      default:
-        return 'border-[#D1D5DB]/20 bg-gray-50 text-[#374151]';
-    }
+  reiniciarFiltros(): void {
+    this.buscador.setValue('');
+    this.blog.reiniciarFiltros();
   }
 }

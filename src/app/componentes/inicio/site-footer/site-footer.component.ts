@@ -26,10 +26,24 @@ import { RouterLink } from '@angular/router';
         <div>
           <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-[#374151]">Explora</h2>
           <ul class="mt-4 space-y-2 text-sm text-[#374151]">
-            <li><a href="#quienes-somos" class="transition hover:text-[#9D343C]">Quiénes somos</a></li>
-            <li><a href="#servicios" class="transition hover:text-[#9D343C]">Servicios</a></li>
-            <li><a href="#blog" class="transition hover:text-[#9D343C]">Blog de cuidado</a></li>
-            <li><a href="#contacto" class="transition hover:text-[#9D343C]">Contacto</a></li>
+            <li>
+              <a routerLink="/" fragment="quienes-somos" class="transition hover:text-[#9D343C]">
+                Quiénes somos
+              </a>
+            </li>
+            <li>
+              <a routerLink="/" fragment="servicios" class="transition hover:text-[#9D343C]">
+                Servicios
+              </a>
+            </li>
+            <li>
+              <a routerLink="/blog" class="transition hover:text-[#9D343C]">Blog de cuidado</a>
+            </li>
+            <li>
+              <a routerLink="/" fragment="contacto" class="transition hover:text-[#9D343C]">
+                Contacto
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -61,7 +75,13 @@ import { RouterLink } from '@angular/router';
           class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-[#374151] sm:flex-row sm:px-6 lg:px-8"
         >
           <p>© {{ anio }} VetClinic · Proyecto académico COM30</p>
-          <a href="#inicio" class="transition hover:text-[#9D343C]">Volver arriba ↑</a>
+          <button
+            type="button"
+            class="transition hover:text-[#9D343C]"
+            (click)="subir()"
+          >
+            Volver arriba ↑
+          </button>
         </div>
       </div>
     </footer>
@@ -69,4 +89,8 @@ import { RouterLink } from '@angular/router';
 })
 export class SiteFooterComponent {
   readonly anio = new Date().getFullYear();
+
+  subir(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

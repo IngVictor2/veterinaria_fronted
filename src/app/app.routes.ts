@@ -3,15 +3,47 @@ import { authGuard, guestGuard, permisosGuard } from './core/guards/auth.guards'
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.component';
 
+const cargarNoEncontrado = () =>
+  import('./componentes/not-found/not-found.component').then((m) => m.NotFoundComponent);
+
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    title: 'VetClinic | Clínica veterinaria',
     loadComponent: () =>
-      import('./componentes/inicio/inicio-page/inicio-page.component').then(
-        (m) => m.InicioPageComponent,
+      import('./layouts/landing-layout/landing-layout.component').then(
+        (m) => m.LandingLayoutComponent,
       ),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        title: 'VetClinic | Clínica veterinaria',
+        loadComponent: () =>
+          import('./componentes/inicio/inicio-page/inicio-page.component').then(
+            (m) => m.InicioPageComponent,
+          ),
+      },
+      {
+        path: 'blog',
+        title: 'Blog de cuidado | VetClinic',
+        loadComponent: () =>
+          import('./features/blog/blog-list/blog-list.component').then((m) => m.BlogListComponent),
+      },
+      {
+        path: 'blog/nuevo',
+        title: 'Publicar artículo | VetClinic',
+        loadComponent: () =>
+          import('./features/blog/blog-form/blog-form.component').then((m) => m.BlogFormComponent),
+      },
+      {
+        path: 'blog/:id',
+        title: 'Artículo | VetClinic',
+        loadComponent: () =>
+          import('./features/blog/blog-detail/blog-detail.component').then(
+            (m) => m.BlogDetailComponent,
+          ),
+      },
+    ],
   },
   {
     path: '',
@@ -243,5 +275,14 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: '' },
+  {
+    path: '404',
+    title: 'Página no encontrada | VetClinic',
+    loadComponent: cargarNoEncontrado,
+  },
+  {
+    path: '**',
+    title: 'Página no encontrada | VetClinic',
+    loadComponent: cargarNoEncontrado,
+  },
 ];

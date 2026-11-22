@@ -1,10 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { BlogService } from '../../../servicios/blog.service';
 
 @Component({
   selector: 'app-site-header',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   template: `
     <header class="sticky top-0 z-50 border-b border-gray-200 bg-[var(--landing-background)]/95 backdrop-blur-xl">
       <div
@@ -29,17 +29,34 @@ import { BlogService } from '../../../servicios/blog.service';
         </a>
 
         <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
-          @for (enlace of enlaces; track enlace.href) {
-            <a [href]="enlace.href" class="nav-link rounded-full px-3 py-2 text-sm font-medium">
-              {{ enlace.texto }}
-            </a>
+          @for (enlace of enlaces; track enlace.texto) {
+            @if (enlace.activo) {
+              <a
+                [routerLink]="enlace.ruta"
+                [fragment]="enlace.fragmento"
+                routerLinkActive="nav-link-active"
+                [routerLinkActiveOptions]="{ exact: enlace.exacto ?? false }"
+                ariaCurrentWhenActive="page"
+                class="nav-link rounded-full px-3 py-2 text-sm font-medium"
+              >
+                {{ enlace.texto }}
+              </a>
+            } @else {
+              <a
+                [routerLink]="enlace.ruta"
+                [fragment]="enlace.fragmento"
+                class="nav-link rounded-full px-3 py-2 text-sm font-medium"
+              >
+                {{ enlace.texto }}
+              </a>
+            }
           }
         </nav>
 
         <div class="flex items-center gap-2">
           @if (blog.totalGuardados() > 0) {
             <a
-              href="#blog"
+              routerLink="/blog"
               class="flex items-center gap-1.5 rounded-full border border-[#9D343C]/40 bg-[#9D343C]/10 px-3 py-1.5 text-xs font-semibold text-[#9D343C] transition hover:bg-[#9D343C]/20"
               [attr.aria-label]="'Artículos guardados: ' + blog.totalGuardados()"
             >
@@ -115,14 +132,29 @@ import { BlogService } from '../../../servicios/blog.service';
           aria-label="Navegación móvil"
         >
           <div class="flex flex-col gap-1">
-            @for (enlace of enlaces; track enlace.href) {
-              <a
-                [href]="enlace.href"
-                class="nav-link rounded-xl px-3 py-2.5 text-sm font-medium"
-                (click)="cerrarMenu()"
-              >
-                {{ enlace.texto }}
-              </a>
+            @for (enlace of enlaces; track enlace.texto) {
+              @if (enlace.activo) {
+                <a
+                  [routerLink]="enlace.ruta"
+                  [fragment]="enlace.fragmento"
+                  routerLinkActive="nav-link-active"
+                  [routerLinkActiveOptions]="{ exact: enlace.exacto ?? false }"
+                  ariaCurrentWhenActive="page"
+                  class="nav-link rounded-xl px-3 py-2.5 text-sm font-medium"
+                  (click)="cerrarMenu()"
+                >
+                  {{ enlace.texto }}
+                </a>
+              } @else {
+                <a
+                  [routerLink]="enlace.ruta"
+                  [fragment]="enlace.fragmento"
+                  class="nav-link rounded-xl px-3 py-2.5 text-sm font-medium"
+                  (click)="cerrarMenu()"
+                >
+                  {{ enlace.texto }}
+                </a>
+              }
             }
           </div>
         </nav>
@@ -150,6 +182,11 @@ import { BlogService } from '../../../servicios/blog.service';
     .nav-link:active {
       background-color: #7d2931;
     }
+    .nav-link-active {
+      background-color: #9d343c;
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgb(157 52 60 / 22%);
+    }
     @media (prefers-reduced-motion: reduce) {
       .nav-link {
         transition: none;
@@ -161,12 +198,18 @@ export class SiteHeaderComponent {
   readonly blog = inject(BlogService);
   readonly menuAbierto = signal(false);
 
-  readonly enlaces: ReadonlyArray<{ texto: string; href: string }> = [
-    { texto: 'Inicio', href: '#inicio' },
-    { texto: 'Quiénes somos', href: '#quienes-somos' },
-    { texto: 'Servicios', href: '#servicios' },
-    { texto: 'Blog', href: '#blog' },
-    { texto: 'Contacto', href: '#contacto' },
+  readonly enlaces: ReadonlyArray<{
+    texto: string;
+    ruta: string;
+    fragmento?: string;
+    exacto?: boolean;
+    activo?: boolean;
+  }> = [
+    { texto: 'Inicio', ruta: '/', exacto: true, activo: true },
+    { texto: 'Quiénes somos', ruta: '/', fragmento: 'quienes-somos' },
+    { texto: 'Servicios', ruta: '/', fragmento: 'servicios' },
+    { texto: 'Blog', ruta: '/blog', activo: true },
+    { texto: 'Contacto', ruta: '/', fragmento: 'contacto' },
   ];
 
   alternarMenu(): void {

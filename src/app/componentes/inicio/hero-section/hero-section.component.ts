@@ -39,7 +39,8 @@ import { estadoApertura, fechaEnBogota } from '../../../datos/clinica';
               Agendar una cita
             </a>
             <a
-              href="#servicios"
+              routerLink="/"
+              fragment="servicios"
               class="btn h-12 rounded-full border border-gray-200 bg-gray-50 px-6 text-sm font-semibold text-[#374151] hover:border-[#9D343C]/40 hover:bg-gray-50"
             >
               Ver servicios
@@ -79,7 +80,8 @@ import { estadoApertura, fechaEnBogota } from '../../../datos/clinica';
             <p class="mt-3 text-sm leading-relaxed text-[#374151]">{{ estado().mensaje }}</p>
 
             <a
-              href="#contacto"
+              routerLink="/"
+              fragment="contacto"
               class="mt-8 flex items-center justify-between border-t border-gray-200 pt-5 text-xs font-bold text-[#9D343C]"
             >
               Ver horario completo

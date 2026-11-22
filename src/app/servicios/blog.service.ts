@@ -3,6 +3,25 @@ import { ARTICULOS_BLOG } from '../datos/articulos-blog';
 import { ArticuloBlog, CategoriaBlog } from '../modelos/articulo-blog';
 
 export type FiltroCategoriaBlog = CategoriaBlog | 'TODAS';
+export type TotalesBlog = Record<FiltroCategoriaBlog, number>;
+
+export interface NuevoArticuloBlog {
+  titulo: string;
+  autor: string;
+  categoria: CategoriaBlog;
+  resumen: string;
+  contenido: string[];
+  minutosLectura: number;
+  etiquetas: string[];
+  destacado: boolean;
+}
+
+const FORMATO_FECHA_ISO = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Bogota',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
 
 /**
  * Dueño del estado del blog: artículos, filtro por categoría, búsqueda y
@@ -25,16 +44,18 @@ export class BlogService {
 
   readonly totalGuardados = computed(() => this._guardados().size);
 
-  readonly totalPorCategoria = computed(() => {
+  readonly totalPorCategoria = computed<TotalesBlog>(() => {
     const articulos = this._articulos();
+    const contar = (categoria: CategoriaBlog): number =>
+      articulos.filter((articulo) => articulo.categoria === categoria).length;
 
     return {
-      todas: articulos.length,
-      salud: articulos.filter((articulo) => articulo.categoria === 'SALUD').length,
-      prevencion: articulos.filter((articulo) => articulo.categoria === 'PREVENCION').length,
-      nutricion: articulos.filter((articulo) => articulo.categoria === 'NUTRICION').length,
-      estetica: articulos.filter((articulo) => articulo.categoria === 'ESTETICA').length,
-      clinica: articulos.filter((articulo) => articulo.categoria === 'CLINICA').length,
+      TODAS: articulos.length,
+      SALUD: contar('SALUD'),
+      PREVENCION: contar('PREVENCION'),
+      NUTRICION: contar('NUTRICION'),
+      ESTETICA: contar('ESTETICA'),
+      CLINICA: contar('CLINICA'),
     };
   });
 
@@ -51,7 +72,7 @@ export class BlogService {
         return true;
       }
 
-      return [articulo.titulo, articulo.resumen, articulo.categoria, ...articulo.etiquetas]
+      return [articulo.titulo, articulo.resumen, articulo.autor, articulo.categoria, ...articulo.etiquetas]
         .map((valor) => this._normalizar(valor))
         .some((valor) => valor.includes(termino));
     });
@@ -67,6 +88,28 @@ export class BlogService {
 
   cambiarBusqueda(texto: string): void {
     this._busqueda.set(texto);
+  }
+
+  obtenerPorId(id: number): ArticuloBlog | undefined {
+    return this._articulos().find((articulo) => articulo.id === id);
+  }
+
+  crearArticulo(datos: NuevoArticuloBlog): ArticuloBlog {
+    const nuevo: ArticuloBlog = {
+      id: this._siguienteId(),
+      ...datos,
+      fecha: FORMATO_FECHA_ISO.format(new Date()),
+    };
+
+    this._articulos.update((articulos) => {
+      if (!nuevo.destacado) {
+        return [nuevo, ...articulos];
+      }
+
+      return [nuevo, ...articulos.map((articulo) => ({ ...articulo, destacado: false }))];
+    });
+
+    return nuevo;
   }
 
   alternarGuardado(id: number): void {
@@ -90,6 +133,10 @@ export class BlogService {
   reiniciarFiltros(): void {
     this._categoria.set('TODAS');
     this._busqueda.set('');
+  }
+
+  private _siguienteId(): number {
+    return this._articulos().reduce((maximo, articulo) => Math.max(maximo, articulo.id), 0) + 1;
   }
 
   private _normalizar(texto: string): string {
