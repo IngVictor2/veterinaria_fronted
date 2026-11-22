@@ -39,17 +39,6 @@ export const PORTAFOLIO_SERVICIOS: ServicioPortafolio[] = [
     incluye: ['Revisión previa', 'Aplicación de la vacuna', 'Registro en el carné'],
   },
   {
-    id: 4,
-    nombre: 'Consulta avanzada',
-    descripcion:
-      'Evaluación integral para casos complejos, con seguimiento y un plan de atención ampliado.',
-    tipo: 'CONSULTA',
-    icono: 'avanzada',
-    precioDesde: 100000,
-    duracion: '50 a 60 min',
-    incluye: ['Evaluación integral', 'Plan de seguimiento', 'Recomendaciones para el hogar'],
-  },
-  {
     id: 5,
     nombre: 'Baño medicado',
     descripcion:
@@ -81,5 +70,15 @@ export const PORTAFOLIO_SERVICIOS: ServicioPortafolio[] = [
     precioDesde: 60000,
     duracion: '40 a 60 min',
     incluye: ['Revisión bucal', 'Limpieza dental', 'Recomendaciones de cuidado'],
+  },
+  {
+    id: 8,
+    nombre: 'Cirugía menor',
+    descripcion: 'Procedimiento quirúrgico menor, previa valoración veterinaria.',
+    tipo: 'OTRO',
+    icono: 'cirugia',
+    precioDesde: 300000,
+    duracion: 'Según el procedimiento',
+    incluye: ['Procedimiento acordado', 'Indicaciones de cuidado posterior'],
   },
 ];

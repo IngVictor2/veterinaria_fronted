@@ -1,10 +1,10 @@
-export type TipoServicioPortafolio = 'CONSULTA' | 'ESTETICA';
+export type TipoServicioPortafolio = 'CONSULTA' | 'ESTETICA' | 'OTRO';
 
 export type IconoServicio =
   | 'consulta'
   | 'especializada'
   | 'vacunacion'
-  | 'avanzada'
+  | 'cirugia'
   | 'bano-medicado'
   | 'corte'
   | 'dental';
@@ -28,4 +28,5 @@ export const TIPOS_PORTAFOLIO: ReadonlyArray<{
   { valor: 'TODOS', etiqueta: 'Todos' },
   { valor: 'CONSULTA', etiqueta: 'Consulta' },
   { valor: 'ESTETICA', etiqueta: 'Estética' },
+  { valor: 'OTRO', etiqueta: 'Otro' },
 ];

@@ -30,9 +30,9 @@ import { ServicioPortafolio } from '../../../modelos/servicio-portafolio';
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m18 3 3 3m-2-2-7 7m0 0 2 2m-2-2-4 4m6-2 3 3m-7-1-4 4m0 0-2-2m2 2-3 3m1-7 6 6" />
               </svg>
             }
-            @case ('avanzada') {
+            @case ('cirugia') {
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6m-2 0h2v2" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 4h6v4h4v6h-4v4H9v-4H5V8h4z" />
               </svg>
             }
             @case ('bano-medicado') {
