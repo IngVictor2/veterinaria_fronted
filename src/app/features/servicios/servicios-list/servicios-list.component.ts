@@ -92,10 +92,30 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
             </ng-template>
             <ng-template appActions let-item>
               <div class="flex gap-1">
-                <button class="btn btn-ghost btn-xs" (click)="openForm(item)">Editar</button>
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-xs btn-square"
+                  aria-label="Editar"
+                  title="Editar"
+                  (click)="openForm(item)"
+                >
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m16 4 4 4M4 20l4-.8L20 7a2.8 2.8 0 0 0-4-4L4.8 15.2 4 20Z" />
+                  </svg>
+                </button>
                 @if (item.estado) {
-                  <button class="btn btn-ghost btn-xs text-error" (click)="confirmDelete(item)">
-                    Eliminar
+                  <button
+                    type="button"
+                    class="btn btn-ghost btn-xs btn-square text-error"
+                    aria-label="Eliminar"
+                    title="Eliminar"
+                    (click)="confirmDelete(item)"
+                  >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                      <path d="m6 6 12 12M18 6 6 18" />
+                    </svg>
                   </button>
                 }
               </div>
